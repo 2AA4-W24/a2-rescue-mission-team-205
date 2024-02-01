@@ -3,7 +3,7 @@
 
 - Authors:
   - [Kyle, Andrade](andradk@mcmaster.ca) 
-  - [Firstname_2, Lastname_2](macid@mcmaster.ca)
+  - [Justin, Kwinecki](kwineckj@mcmaster.ca)
   - [Firstname_3, Lastname_3](macid@mcmaster.ca)
 
 ## Product Description
