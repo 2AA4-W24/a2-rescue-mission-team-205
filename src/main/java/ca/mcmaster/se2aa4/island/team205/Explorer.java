@@ -12,6 +12,9 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
 
+    private int stage = 1;
+    private int flyCount = 0;
+
     @Override
     public void initialize(String s) {
         logger.info("** Initializing the Exploration Command Center");
@@ -26,7 +29,30 @@ public class Explorer implements IExplorerRaid {
     @Override
     public String takeDecision() {
         JSONObject decision = new JSONObject();
-        decision.put("action", "stop"); // we stop the exploration immediately
+        JSONObject parameters = new JSONObject();
+        if (stage == 1) {
+            decision.put("action", "echo");
+            parameters.put("direction", "E");
+            decision.put("parameters", parameters);
+            stage++;
+        }
+        else if (stage == 2) {
+            decision.put("action", "echo");
+            parameters.put("direction", "S");
+            decision.put("parameters", parameters);
+            stage++;
+        }
+        else if (stage == 3) {
+            decision.put("action", "echo");
+            parameters.put("direction", "N");
+            decision.put("parameters", parameters);
+            stage++;
+        }
+        else {
+            decision.put("action", "stop");
+//            decision.put("action", "fly");
+//            flyCount++;
+        }
         logger.info("** Decision: {}",decision.toString());
         return decision.toString();
     }
@@ -41,6 +67,7 @@ public class Explorer implements IExplorerRaid {
         logger.info("The status of the drone is {}", status);
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
+        logger.info("FLY COUNT: "+flyCount*3+" tiles");
     }
 
     @Override
