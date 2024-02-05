@@ -13,6 +13,7 @@ public class Explorer implements IExplorerRaid {
     private final Logger logger = LogManager.getLogger();
 
     private int stage = 1;
+    private int flyCount = 0;
 
     @Override
     public void initialize(String s) {
@@ -48,7 +49,8 @@ public class Explorer implements IExplorerRaid {
             stage++;
         }
         else {
-            decision.put("action", "stop");
+            decision.put("action", "fly");
+            flyCount++;
         }
         logger.info("** Decision: {}",decision.toString());
         return decision.toString();
@@ -64,6 +66,7 @@ public class Explorer implements IExplorerRaid {
         logger.info("The status of the drone is {}", status);
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
+        logger.info("FLY COUNT: "+flyCount*3+" tiles");
     }
 
     @Override
