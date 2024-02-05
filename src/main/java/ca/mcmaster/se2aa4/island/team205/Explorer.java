@@ -49,8 +49,9 @@ public class Explorer implements IExplorerRaid {
             stage++;
         }
         else {
-            decision.put("action", "fly");
-            flyCount++;
+            decision.put("action", "stop");
+//            decision.put("action", "fly");
+//            flyCount++;
         }
         logger.info("** Decision: {}",decision.toString());
         return decision.toString();
