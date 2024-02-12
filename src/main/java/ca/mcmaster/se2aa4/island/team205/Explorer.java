@@ -14,9 +14,10 @@ public class Explorer implements IExplorerRaid {
 
     private int stage = 1;
     private int flyCount = 0;
-
-
     //initializes drone on the map
+
+    private Drone drone;
+
     @Override
     public void initialize(String s) {
         logger.info("** Initializing the Exploration Command Center");
@@ -24,8 +25,9 @@ public class Explorer implements IExplorerRaid {
         logger.info("** Initialization info:\n {}",info.toString(2));
         String direction = info.getString("heading");
         Integer batteryLevel = info.getInt("budget");
-        logger.info("The drone is facing {}", direction);
-        logger.info("Battery level is {}", batteryLevel);
+        drone = new Drone(batteryLevel, direction);
+        logger.info("The drone is facing {}", drone.getDirection());
+        logger.info("Battery level is {}", drone.getBattery());
     }
 
     //makes decision for the drone
@@ -33,6 +35,7 @@ public class Explorer implements IExplorerRaid {
     public String takeDecision() {
         JSONObject decision = new JSONObject();
         JSONObject parameters = new JSONObject();
+
         if (stage == 1) {
             decision.put("action", "echo");
             parameters.put("direction", "E");
