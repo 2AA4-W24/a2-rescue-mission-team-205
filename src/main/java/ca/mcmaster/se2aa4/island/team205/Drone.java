@@ -19,7 +19,8 @@ public class Drone {
     public void takeCommand(){}
     public List<String> takePhoto(){
         PhotoScanner scanner = new PhotoScanner();
-        return scanner.photo();
+        //return scanner.photo();
+        return null;
     }
 
     public String useRadar(){
