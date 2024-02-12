@@ -14,6 +14,7 @@ public class Explorer implements IExplorerRaid {
 
     private int stage = 1;
     private int flyCount = 0;
+    //initializes drone on the map
 
     private Drone drone;
 
@@ -29,6 +30,7 @@ public class Explorer implements IExplorerRaid {
         logger.info("Battery level is {}", drone.getBattery());
     }
 
+    //makes decision for the drone
     @Override
     public String takeDecision() {
         JSONObject decision = new JSONObject();
