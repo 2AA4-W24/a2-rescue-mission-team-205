@@ -37,21 +37,24 @@ public class Explorer implements IExplorerRaid {
         JSONObject parameters = new JSONObject();
 
         if (stage == 1) {
-            decision.put("action", "echo");
-            parameters.put("direction", "E");
-            decision.put("parameters", parameters);
+//            decision.put("action", "echo");
+//            parameters.put("direction", "E");
+//            decision.put("parameters", parameters);
+            decision.put("action", "fly");
             stage++;
         }
         else if (stage == 2) {
-            decision.put("action", "echo");
-            parameters.put("direction", "S");
-            decision.put("parameters", parameters);
+//            decision.put("action", "echo");
+//            parameters.put("direction", "S");
+//            decision.put("parameters", parameters);
+            decision.put("action", "fly");
             stage++;
         }
         else if (stage == 3) {
-            decision.put("action", "echo");
-            parameters.put("direction", "N");
-            decision.put("parameters", parameters);
+//            decision.put("action", "echo");
+//            parameters.put("direction", "N");
+//            decision.put("parameters", parameters);
+            decision.put("action", "fly");
             stage++;
         }
         else {
@@ -73,7 +76,7 @@ public class Explorer implements IExplorerRaid {
         logger.info("The status of the drone is {}", status);
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
-        logger.info("FLY COUNT: "+flyCount*3+" tiles");
+//        logger.info("FLY COUNT: "+flyCount*3+" tiles");
     }
 
     @Override
