@@ -1,18 +1,17 @@
 package ca.mcmaster.se2aa4.island.team205;
 
-import org.json.JSONObject;
-
-import java.util.List;
 
 public class Drone {
 
-    private final Integer battery;
+    private Integer battery;
 
     private Location location;
 
     private final Radar radar = new Radar();
 
     private final PhotoScanner scanner = new PhotoScanner();
+
+    private final Information info = new UsingJSON();
 
 
     private Direction direction;
@@ -24,7 +23,7 @@ public class Drone {
 
     public void takeCommand(){
         int count = 0;
-        Movement move = new Movement(this);
+        Movement move = new Movement(this, info);
         while(!batteryTooLow()){
             if(true){
                 move.returnHome();
@@ -48,14 +47,7 @@ public class Drone {
     }
 
     private boolean batteryTooLow(){
-        return battery <= 15;
-    }
-
-    private void updateBattery(){}
-    public List<String> takePhoto(){
-        PhotoScanner scanner = new PhotoScanner();
-        //return scanner.photo();
-        return null;
+        return info.batteryLevel() <= 15;
     }
 
 
@@ -82,10 +74,15 @@ public class Drone {
 
     public void setDirection(Direction d){
         direction = d;
+        info.turnDrone(direction);
     }
 
     public Direction getDirection(){
         return direction;
+    }
+
+    public void updateBattery(Integer newBattery){
+        battery = newBattery;
     }
 
     public Integer getBattery(){

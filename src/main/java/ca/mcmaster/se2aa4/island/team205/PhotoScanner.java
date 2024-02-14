@@ -13,9 +13,7 @@ public class PhotoScanner {
         this.pointsOfInterest = new ArrayList<>();
         this.direction = 0;
     }
-    //public Photo takePhoto() {
-    //    return new Photo();
-   // }
+
     public void scanTerrain(){
 
         System.out.println("scanning terrain");

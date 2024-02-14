@@ -18,13 +18,17 @@ public class Explorer implements IExplorerRaid {
 
     private Drone drone;
 
+    private Integer batteryLevel =0;
+
     @Override
     public void initialize(String s) {
+
         logger.info("** Initializing the Exploration Command Center");
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Initialization info:\n {}",info.toString(2));
+
         String direction = info.getString("heading");
-        Integer batteryLevel = info.getInt("budget");
+        batteryLevel = info.getInt("budget");
 
         drone = new Drone(batteryLevel, direction);
         logger.info("The drone is facing {}", drone.getDirection());
@@ -73,6 +77,9 @@ public class Explorer implements IExplorerRaid {
         JSONObject response = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Response received:\n"+response.toString(2));
         Integer cost = response.getInt("cost");
+        batteryLevel -= cost;
+
+        drone.updateBattery(batteryLevel);
         logger.info("The cost of the action was {}", cost);
         String status = response.getString("status");
         logger.info("The status of the drone is {}", status);
