@@ -8,9 +8,19 @@ public class Radar {
     private int direction = 0;
 
     //uses the radar to scan for POI or biomes
-    public String useRadar() {
-        JSONObject decision = new JSONObject();
-        return decision.toString();
+    public int useRadar() {
+        switch(direction){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+        cost ++;
+        return cost;
     }
     // method to add up cost when scanning the radar
     public int getCost() {
