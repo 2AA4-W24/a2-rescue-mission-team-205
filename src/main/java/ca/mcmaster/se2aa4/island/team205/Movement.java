@@ -1,5 +1,7 @@
 package ca.mcmaster.se2aa4.island.team205;
 
+
+
 public class Movement {
 
     private final Drone drone;
@@ -10,6 +12,11 @@ public class Movement {
     }
 
     public void fly(){
+
+    }
+
+    public void returnHome(){
+
     }
 
     public void turnRight(){

@@ -25,6 +25,7 @@ public class Explorer implements IExplorerRaid {
         logger.info("** Initialization info:\n {}",info.toString(2));
         String direction = info.getString("heading");
         Integer batteryLevel = info.getInt("budget");
+
         drone = new Drone(batteryLevel, direction);
         logger.info("The drone is facing {}", drone.getDirection());
         logger.info("Battery level is {}", drone.getBattery());
@@ -33,6 +34,7 @@ public class Explorer implements IExplorerRaid {
     //makes decision for the drone
     @Override
     public String takeDecision() {
+        drone.takeCommand();
         JSONObject decision = new JSONObject();
         JSONObject parameters = new JSONObject();
 
