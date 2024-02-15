@@ -9,7 +9,7 @@ public class UsingJSON implements Information{
     private final JSONObject decision = new JSONObject();
     private final JSONObject parameter = new JSONObject();
     @Override
-    public boolean echo() {
+    public boolean echo(Drone.Direction direction) {
         return false;
     }
 
@@ -20,17 +20,23 @@ public class UsingJSON implements Information{
 
     @Override
     public Integer batteryLevel() {
+
         return null;
     }
 
     @Override
-    public void turnDrone() {
+    public void turnDrone(Drone.Direction direction) {
 
     }
 
     @Override
-    public void fly() {
+    public void goHome() {
+        decision.put("action", "stop");
+    }
 
+    @Override
+    public void fly() {
+        decision.put("action", "fly");
     }
 
     public Drone.Direction direction(){

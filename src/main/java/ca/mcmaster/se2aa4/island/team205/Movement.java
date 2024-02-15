@@ -6,17 +6,19 @@ public class Movement {
 
     private final Drone drone;
 
+    private final Information info;
 
-    public Movement(Drone user_drone){
+    public Movement(Drone user_drone, Information information){
         drone = user_drone;
+        info = information;
     }
 
     public void fly(){
-
+        info.fly();
     }
 
     public void returnHome(){
-
+        info.goHome();
     }
 
     public void turnRight(){

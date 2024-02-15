@@ -4,7 +4,8 @@ import java.util.List;
 
 public interface Information {
 
-    boolean echo();
+
+    boolean echo(Drone.Direction direction);
 
     List<String> scan();
 
@@ -12,7 +13,9 @@ public interface Information {
 
     Drone.Direction direction();
 
-    void turnDrone();
+    void goHome();
+
+    void turnDrone(Drone.Direction direction);
 
 
 
