@@ -38,7 +38,7 @@ public class Explorer implements IExplorerRaid {
     //makes decision for the drone
     @Override
     public String takeDecision() {
-        drone.takeCommand();
+      //  drone.takeCommand();
         JSONObject decision = new JSONObject();
         JSONObject parameters = new JSONObject();
 
