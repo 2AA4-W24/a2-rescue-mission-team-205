@@ -29,6 +29,7 @@ public class UsingJSON implements Information{
 
     @Override
     public List<String> scan() {
+        decision.put("action","scan");
         return null;
     }
 
