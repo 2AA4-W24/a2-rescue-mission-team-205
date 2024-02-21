@@ -13,13 +13,8 @@ public class PhotoScanner {
     }
 
     public boolean scanTerrain(){
-        info.scan();
-        if (true) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        List<String> list = info.scan();
+        return !list.contains("OCEAN");
     }
 
 
