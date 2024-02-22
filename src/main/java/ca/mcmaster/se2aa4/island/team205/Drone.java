@@ -1,6 +1,8 @@
 package ca.mcmaster.se2aa4.island.team205;
 
 
+import java.util.Objects;
+
 public class Drone {
 
     private Integer battery;
@@ -16,15 +18,13 @@ public class Drone {
 
     private Direction direction;
 
-    public Drone(Integer batteryLevel, String initial_direction){
-        battery = batteryLevel;
-        direction = initialDirection(initial_direction);
+    public Drone(){
     }
 
     public void takeCommand(){
         int count = 0;
         Movement move = new Movement(this, info);
-        while(!batteryTooLow()){
+        while(!batteryTooLow() && Objects.equals(info.status(), "OK")){
             if(true){
                 move.returnHome();
                 return;
@@ -47,7 +47,7 @@ public class Drone {
     }
 
     private boolean batteryTooLow(){
-        return info.batteryLevel() <= 15;
+        return battery <= 15;
     }
 
 
@@ -58,16 +58,16 @@ public class Drone {
     private Direction initialDirection(String new_direction){
         switch(new_direction){
             case "North" -> {
-                return Direction.NORTH;
+                return Direction.N;
             }
             case "South" -> {
-                return Direction.SOUTH;
+                return Direction.S;
             }
             case "West" -> {
-                return Direction.WEST;
+                return Direction.W;
             }
             default -> {
-                return Direction.EAST;
+                return Direction.E;
             }
         }
     }
@@ -81,18 +81,27 @@ public class Drone {
         return direction;
     }
 
-    public void updateBattery(Integer newBattery){
-        battery = newBattery;
+    public void update(String s){
+        info.results(s);
+        drain(info.cost());
+
+    }
+    private void drain(Integer cost){
+        battery -= cost;
     }
 
-    public Integer getBattery(){
-        return battery;
+    public void initialize(String s){
+        info.results(s);
+        battery = info.budget();
+        Direction initial = initialDirection(info.direction());
+        setDirection(initial);
     }
+
     public enum Direction{
-        NORTH,
-        SOUTH,
-        WEST,
-        EAST
+        N,
+        S,
+        W,
+        E
     }
 }
 
