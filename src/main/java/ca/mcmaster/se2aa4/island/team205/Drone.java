@@ -11,7 +11,7 @@ public class Drone {
 
     private final Radar radar = new Radar();
 
-    private final PhotoScanner scanner = new PhotoScanner();
+//    private final PhotoScanner scanner = new PhotoScanner();
 
     private final Information info = new UsingJSON();
 
