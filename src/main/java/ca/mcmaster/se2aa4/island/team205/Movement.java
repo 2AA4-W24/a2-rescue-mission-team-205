@@ -23,20 +23,20 @@ public class Movement {
 
     public void turnRight(){
         switch(drone.getDirection()){
-            case NORTH -> drone.setDirection(Drone.Direction.EAST);
-            case EAST -> drone.setDirection(Drone.Direction.SOUTH);
-            case SOUTH -> drone.setDirection(Drone.Direction.WEST);
-            default -> drone.setDirection(Drone.Direction.NORTH);
+            case N -> drone.setDirection(Drone.Direction.E);
+            case E -> drone.setDirection(Drone.Direction.S);
+            case S -> drone.setDirection(Drone.Direction.W);
+            default -> drone.setDirection(Drone.Direction.N);
 
         }
     }
 
     public void turnLeft(){
         switch(drone.getDirection()){
-            case NORTH -> drone.setDirection(Drone.Direction.WEST);
-            case EAST -> drone.setDirection(Drone.Direction.NORTH);
-            case SOUTH -> drone.setDirection(Drone.Direction.EAST);
-            default -> drone.setDirection(Drone.Direction.SOUTH);
+            case N -> drone.setDirection(Drone.Direction.W);
+            case E -> drone.setDirection(Drone.Direction.N);
+            case S -> drone.setDirection(Drone.Direction.E);
+            default -> drone.setDirection(Drone.Direction.S);
 
         }
     }
