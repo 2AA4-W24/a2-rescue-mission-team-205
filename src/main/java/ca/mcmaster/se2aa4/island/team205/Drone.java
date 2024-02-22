@@ -9,13 +9,13 @@ public class Drone {
 
     private Location location;
 
-    private final Radar radar = new Radar();
 
-//    private final PhotoScanner scanner = new PhotoScanner();
 
     private final Information info = new UsingJSON();
 
+    private final Radar radar = new Radar();
 
+    private final PhotoScanner scanner = new PhotoScanner(info);
     private Direction direction;
 
     public Drone(){
@@ -25,7 +25,7 @@ public class Drone {
         int count = 0;
         Movement move = new Movement(this, info);
         while(!batteryTooLow() && Objects.equals(info.status(), "OK")){
-            if(true){
+            if(scanner.scanTerrain()){
                 move.returnHome();
                 return;
             }
@@ -35,8 +35,8 @@ public class Drone {
                 }
                 else{
                     move.fly();
-                    count++;
                 }
+                count++;
             }
         }
         move.returnHome();
