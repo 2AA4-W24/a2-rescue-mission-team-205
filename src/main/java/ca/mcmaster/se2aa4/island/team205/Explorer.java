@@ -14,7 +14,7 @@ public class Explorer implements IExplorerRaid {
 
     private int stage = 1;
     private int flyCount = 0;
-    //initializes drone on the map
+    //initializes drone on the map.
 
     private Drone drone;
 
