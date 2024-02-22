@@ -1,9 +1,11 @@
 package ca.mcmaster.se2aa4.island.team205;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,7 +32,12 @@ public class UsingJSON implements Information{
     @Override
     public List<String> scan() {
         decision.put("action","scan");
-        return null;
+        JSONArray arr = extraInfo().getJSONArray("biomes");
+        List<String> list = new ArrayList<>();
+        for (int i=0;i<arr.length();i++) {
+            list.add(arr.getJSONObject(i).getString("biomes"));
+        }
+        return list;
     }
 
     @Override
