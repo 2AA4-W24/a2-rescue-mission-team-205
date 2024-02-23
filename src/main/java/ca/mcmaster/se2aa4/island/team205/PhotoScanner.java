@@ -5,14 +5,18 @@ import java.util.ArrayList;
 
 public class PhotoScanner {
     private final List <PointOfInterest> pointsOfInterest;
+    private Information info;
 
-    public PhotoScanner(){
-        this.pointsOfInterest = new ArrayList<>();
+    public PhotoScanner(Information information){
+        pointsOfInterest = new ArrayList<>();
+        info = information;
     }
 
-    public void scanTerrain(){
-        System.out.println("scanning terrain");
+    public boolean scanTerrain(){
+        List<String> list = info.scan();
+        return !list.contains("OCEAN");
     }
+
 
 }
 

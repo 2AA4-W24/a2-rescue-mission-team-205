@@ -26,10 +26,10 @@ public class Movement {
     public void turnRight(){
         //map.addMove(drone.getLocation(), drone.getDirection());
         switch(drone.getDirection()){
-            case NORTH -> drone.setDirection(Drone.Direction.EAST);
-            case EAST -> drone.setDirection(Drone.Direction.SOUTH);
-            case SOUTH -> drone.setDirection(Drone.Direction.WEST);
-            default -> drone.setDirection(Drone.Direction.NORTH);
+            case N -> drone.setDirection(Drone.Direction.E);
+            case E -> drone.setDirection(Drone.Direction.S);
+            case S -> drone.setDirection(Drone.Direction.W);
+            default -> drone.setDirection(Drone.Direction.N);
         }
         //map.addMove(drone.getLocation(), drone.getDirection());
     }
@@ -37,10 +37,12 @@ public class Movement {
     public void turnLeft(){
        // map.addMove(drone.getLocation(), drone.getDirection());
         switch(drone.getDirection()){
-            case NORTH -> drone.setDirection(Drone.Direction.WEST);
-            case EAST -> drone.setDirection(Drone.Direction.NORTH);
-            case SOUTH -> drone.setDirection(Drone.Direction.EAST);
-            default -> drone.setDirection(Drone.Direction.SOUTH);
+
+            case N -> drone.setDirection(Drone.Direction.W);
+            case E -> drone.setDirection(Drone.Direction.N);
+            case S -> drone.setDirection(Drone.Direction.E);
+            default -> drone.setDirection(Drone.Direction.S);
+
         }
         //map.addMove(drone.getLocation(), drone.getDirection());
     }
