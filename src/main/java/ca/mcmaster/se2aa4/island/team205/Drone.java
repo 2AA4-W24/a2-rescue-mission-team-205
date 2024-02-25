@@ -8,14 +8,13 @@ public class Drone {
     private Integer battery;
 
     private Location location;
-
-
-
+  
     private final Information info = new UsingJSON();
 
     private final Radar radar = new Radar();
 
     private final PhotoScanner scanner = new PhotoScanner(info);
+  
     private Direction direction;
 
     public Drone(){
