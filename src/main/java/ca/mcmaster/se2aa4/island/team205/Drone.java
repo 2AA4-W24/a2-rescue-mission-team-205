@@ -34,11 +34,14 @@ public class Drone {
 
         count ++;
         Logger logger = LogManager.getLogger();
+        if(batteryTooLow()){
+            move.returnHome();
+        }
         if (count % 5 == 0){
             scanner.scanTerrain();
             actions.add("scan");
         }
-        else if(count %11 == 0){
+        else if(count %21 == 0){
             if(!actions.isEmpty()){
                 if(actions.get(actions.size() -1).equals("fly") || actions.get(actions.size() -1).equals("turn")){
                     move.turnRight();
@@ -57,8 +60,27 @@ public class Drone {
 
         }
         else{
-            move.fly();
-            actions.add("fly");
+            if(!actions.isEmpty()){
+
+                if(actions.get(actions.size() -1).equals("scan")){
+                    if(scanner.scanResults()){
+                        move.returnHome();
+                    }
+                    else {
+                        move.fly();
+                        actions.add("fly");
+                    }
+                }
+                else{
+                    move.fly();
+                    actions.add("fly");
+                }
+            }
+            else{
+                move.fly();
+                actions.add("fly");
+            }
+
         }
 
     }
