@@ -1,6 +1,7 @@
 package ca.mcmaster.se2aa4.island.team205;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,7 @@ public interface Information {
 
     HashMap<String, String> echo(Drone.Direction direction);
 
-    List<String> scan();
+    void scan();
 
     Integer batteryLevel();
 
@@ -31,4 +32,6 @@ public interface Information {
     void fly();
 
     String decision();
+
+    JSONArray terrian();
 }

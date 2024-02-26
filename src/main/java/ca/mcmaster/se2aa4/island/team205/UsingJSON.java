@@ -30,14 +30,8 @@ public class UsingJSON implements Information{
     }
 
     @Override
-    public List<String> scan() {
+    public void scan() {
         decision.put("action","scan");
-        JSONArray arr = extraInfo().getJSONArray("biomes");
-        List<String> list = new ArrayList<>();
-        for (int i=0;i<arr.length();i++) {
-            list.add(arr.getJSONObject(i).getString("biomes"));
-        }
-        return list;
     }
 
     @Override
@@ -67,7 +61,6 @@ public class UsingJSON implements Information{
         return response.getInt("cost");
     }
 
-
     @Override
     public Integer budget(){
         return response.getInt("budget");
@@ -94,5 +87,10 @@ public class UsingJSON implements Information{
 
     public String direction(){
         return response.getString("heading");
+    }
+
+    @Override
+    public JSONArray terrian(){
+        return response.getJSONObject("extras").getJSONArray("biomes");
     }
 }

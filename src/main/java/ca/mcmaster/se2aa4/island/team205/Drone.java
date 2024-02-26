@@ -4,6 +4,8 @@ package ca.mcmaster.se2aa4.island.team205;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Drone {
@@ -18,8 +20,11 @@ public class Drone {
 
     private final PhotoScanner scanner = new PhotoScanner(info);
     private Direction direction;
+    private final Movement move = new Movement(this, info);
 
-    private int count = 0;
+    private final List<String> actions = new ArrayList<>();
+
+    private int count = 1;
 
     public Drone(){
 
@@ -27,49 +32,54 @@ public class Drone {
 
     public void takeCommand(){
 
-
+        count ++;
         Logger logger = LogManager.getLogger();
-        Movement move = new Movement(new Drone(), info);
-
-        if(!batteryTooLow() && Objects.equals(info.status(), "OK")){
-
-            if(!scanner.scanTerrain()){
-                move.returnHome();
-            }
-            else{
-                if(count % 3 ==0){
-                    chooseDirection();
-                    fly();
+        if (count % 5 == 0){
+            scanner.scanTerrain();
+            actions.add("scan");
+        }
+        else if(count %11 == 0){
+            if(!actions.isEmpty()){
+                if(actions.get(actions.size() -1).equals("fly") || actions.get(actions.size() -1).equals("turn")){
+                    move.turnRight();
+                    actions.add("turn");
                 }
                 else{
-                    fly();
+                    if(scanner.scanResults()){
+                        move.returnHome();
+                    }
+                    else {
+                        move.fly();
+                        actions.add("fly");
+                    }
                 }
-                count++;
             }
+
         }
         else{
-            fly();
+            move.fly();
+            actions.add("fly");
         }
 
     }
 
-    private void fly(){
-        Movement movement = new Movement(new Drone(), info);
-        movement.fly();
-    }
-
-    private void chooseDirection(){
+    private void chooseDirection(Direction direction){
         String direction1 = radar.chooseDirection(direction);
-        Movement movement = new Movement(this, info);
         switch(direction1){
             case "Left" -> {
-                movement.turnLeft();
+                move.turnLeft();
+                actions.add("turn");
             }
             case "Right" -> {
-               movement.turnRight();
+               move.turnRight();
+               actions.add("turn");
             }
         }
 
+    }
+
+    public String mapping(){
+        return actions.toString();
     }
     public String decision(){
         return info.decision();

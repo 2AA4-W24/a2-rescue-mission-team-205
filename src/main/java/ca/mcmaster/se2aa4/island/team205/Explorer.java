@@ -37,45 +37,12 @@ public class Explorer implements IExplorerRaid {
         logger.info("Battery level is {}", batteryLevel);
     }
 
-    //makes decision for the drone
     @Override
     public String takeDecision() {
         logger.info(flyCount);
         flyCount++;
         drone.takeCommand();
-
-
-        /*
-        JSONObject decision = new JSONObject();
-        JSONObject parameters = new JSONObject();
-
-        if (stage == 1) {
-//            decision.put("action", "echo");
-//            parameters.put("direction", "E");
-//            decision.put("parameters", parameters);
-            decision.put("action", "fly");
-            stage++;
-        }
-        else if (stage == 2) {
-//            decision.put("action", "echo");
-//            parameters.put("direction", "S");
-//            decision.put("parameters", parameters);
-            decision.put("action", "fly");
-            stage++;
-        }
-        else if (stage == 3) {
-//            decision.put("action", "echo");
-//            parameters.put("direction", "N");
-//            decision.put("parameters", parameters);
-            decision.put("action", "fly");
-            stage++;
-        }
-        else {
-            decision.put("action", "stop");
-//            decision.put("action", "fly");
-//            flyCount++;
-        }
-        logger.info("** Decision: {}",decision.toString());*/
+        logger.info("** Decision: {}",drone.decision().toString());
 
         return drone.decision();
     }
@@ -91,7 +58,7 @@ public class Explorer implements IExplorerRaid {
         logger.info("The status of the drone is {}", status);
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
-//        logger.info("FLY COUNT: "+flyCount*3+" tiles");
+        logger.info(drone.mapping());
     }
 
     @Override
