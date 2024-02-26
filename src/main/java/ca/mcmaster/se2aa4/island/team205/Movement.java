@@ -13,10 +13,9 @@ public class Movement {
         info = information;
        // this.map = map;
     }
-
     public void fly(){
         info.fly();
-       /// map.addMove(drone.getLocation(), drone.getDirection());
+
     }
 
     public void returnHome(){
@@ -24,27 +23,57 @@ public class Movement {
     }
 
     public void turnRight(){
-        //map.addMove(drone.getLocation(), drone.getDirection());
+
+
         switch(drone.getDirection()){
-            case N -> drone.setDirection(Drone.Direction.E);
-            case E -> drone.setDirection(Drone.Direction.S);
-            case S -> drone.setDirection(Drone.Direction.W);
-            default -> drone.setDirection(Drone.Direction.N);
+
+            case N -> {
+                drone.setDirection(Drone.Direction.E);
+                info.turnDrone(Drone.Direction.E);
+
+            }
+            case E -> {
+                drone.setDirection(Drone.Direction.S);
+                info.turnDrone(Drone.Direction.S);
+            }
+            case S -> {
+                drone.setDirection(Drone.Direction.W);
+                info.turnDrone(Drone.Direction.W);
+
+            }
+            default -> {
+                drone.setDirection(Drone.Direction.N);
+                info.turnDrone(Drone.Direction.N);
+            }
+
         }
-        //map.addMove(drone.getLocation(), drone.getDirection());
     }
 
+
+
     public void turnLeft(){
-       // map.addMove(drone.getLocation(), drone.getDirection());
         switch(drone.getDirection()){
 
-            case N -> drone.setDirection(Drone.Direction.W);
-            case E -> drone.setDirection(Drone.Direction.N);
-            case S -> drone.setDirection(Drone.Direction.E);
-            default -> drone.setDirection(Drone.Direction.S);
+            case N -> {
+                drone.setDirection(Drone.Direction.W);
+                info.turnDrone(Drone.Direction.W);
+
+            }
+            case E -> {
+                drone.setDirection(Drone.Direction.N);
+                info.turnDrone(Drone.Direction.N);
+            }
+            case S -> {
+                drone.setDirection(Drone.Direction.E);
+                info.turnDrone(Drone.Direction.E);
+
+            }
+            default -> {
+                drone.setDirection(Drone.Direction.S);
+                info.turnDrone(Drone.Direction.S);
+            }
 
         }
-        //map.addMove(drone.getLocation(), drone.getDirection());
     }
 
 

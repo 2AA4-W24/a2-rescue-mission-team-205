@@ -12,10 +12,19 @@ public class PhotoScanner {
         info = information;
     }
 
-    public boolean scanTerrain(){
-        List<String> list = info.scan();
-        return !list.contains("OCEAN");
+    public void scanTerrain(){
+        info.scan();
     }
+
+    public boolean scanResults(){
+        if(info.terrian().toList().contains("OCEAN")){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
 
 
 }

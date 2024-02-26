@@ -11,32 +11,6 @@ public class Radar {
     }
 
     public HashMap<String, String> useRadar(Drone.Direction droneDirection) {
-
-
-        /*
-        if(info.echo(droneDirection)){
-            result += "Front = Ground";
-        } 
-        else {
-            result += "Front: OUT_OF_RANGE";
-        }
-
-        //scan left direction
-        Drone.Direction leftDirection = getLeftDirection(droneDirection);
-        if (info.echo(leftDirection)) {
-            result += "Left: GROUND ";
-        } else {
-            result += "Left: OUT_OF_RANGE ";
-        }
-
-        // Scanning right
-        Drone.Direction rightDirection = getRightDirection(droneDirection);
-        if (info.echo(rightDirection)) {
-            result += "Right: GROUND";
-        } else {
-            result += "Right: OUT_OF_RANGE";
-        }
-        */
         return info.echo(droneDirection);
     }
 
@@ -60,7 +34,6 @@ public class Radar {
     }
 
     public String chooseDirection(Drone.Direction currentDirection){
-
         HashMap<String, String> radarResults = useRadar(currentDirection);
         for(String s : radarResults.keySet()){
             if(radarResults.get(s).equals("GROUND")){
@@ -78,25 +51,6 @@ public class Radar {
             }
         }
         return "Front";
-        /*
-            // if ground is detected in front, return the current direction
-        if (radarResults.contains("Front = Ground")) {
-            return currentDirection;
-        }
-
-        // check for ground on the left
-        if (radarResults.contains("Left: GROUND")) {
-            return getLeftDirection(currentDirection);
-        }
-
-        // check for ground on the right
-        if (radarResults.contains("Right: GROUND")) {
-            return getRightDirection(currentDirection);
-        }
-
-        // If no ground detected fly forward
-        return currentDirection;
-        */
 
     }
 }
