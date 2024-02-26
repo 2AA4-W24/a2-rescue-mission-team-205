@@ -29,4 +29,6 @@ public interface Information {
     String status();
 
     void fly();
+
+    String decision();
 }

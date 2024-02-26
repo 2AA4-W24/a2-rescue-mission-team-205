@@ -87,6 +87,11 @@ public class UsingJSON implements Information{
         return response.getJSONObject("extras");
     }
 
+    @Override
+    public String decision(){
+        return decision.toString();
+    }
+
     public String direction(){
         return response.getString("heading");
     }

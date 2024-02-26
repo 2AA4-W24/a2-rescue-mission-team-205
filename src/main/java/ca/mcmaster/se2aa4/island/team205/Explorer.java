@@ -40,7 +40,12 @@ public class Explorer implements IExplorerRaid {
     //makes decision for the drone
     @Override
     public String takeDecision() {
-      //  drone.takeCommand();
+        logger.info(flyCount);
+        flyCount++;
+        drone.takeCommand();
+
+
+        /*
         JSONObject decision = new JSONObject();
         JSONObject parameters = new JSONObject();
 
@@ -70,8 +75,9 @@ public class Explorer implements IExplorerRaid {
 //            decision.put("action", "fly");
 //            flyCount++;
         }
-        logger.info("** Decision: {}",decision.toString());
-        return decision.toString();
+        logger.info("** Decision: {}",decision.toString());*/
+
+        return drone.decision();
     }
 
     @Override
