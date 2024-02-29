@@ -16,15 +16,14 @@ public class Explorer implements IExplorerRaid {
     private int flyCount = 0;
     //initializes drone on the map.
 
-    private Drone drone;
+    private CommandCenter center;
 
     private Integer batteryLevel =0;
 
     @Override
     public void initialize(String s) {
 
-        drone = new Drone();
-        drone.initialize(s);
+        center = new CommandCenter(s);
         logger.info("** Initializing the Exploration Command Center");
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Initialization info:\n {}",info.toString(2));
@@ -33,7 +32,7 @@ public class Explorer implements IExplorerRaid {
         batteryLevel = info.getInt("budget");
 
 
-        logger.info("The drone is facing {}", drone.getDirection());
+       logger.info("The drone is facing {}", center);
         logger.info("Battery level is {}", batteryLevel);
     }
 
@@ -41,15 +40,15 @@ public class Explorer implements IExplorerRaid {
     public String takeDecision() {
         logger.info(flyCount);
         flyCount++;
-        drone.takeCommand();
-        logger.info("** Decision: {}",drone.decision().toString());
+        center.takeCommand();
+        logger.info("** Decision: {}",center.decision().toString());
 
-        return drone.decision();
+        return center.decision();
     }
 
     @Override
     public void acknowledgeResults(String s) {
-        drone.update(s);
+        center.updateInformation(s);
         JSONObject response = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Response received:\n"+response.toString(2));
         Integer cost = response.getInt("cost");
@@ -58,7 +57,7 @@ public class Explorer implements IExplorerRaid {
         logger.info("The status of the drone is {}", status);
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
-        logger.info(drone.mapping());
+      //  logger.info(drone.mapping());
     }
 
     @Override

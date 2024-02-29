@@ -13,7 +13,7 @@ public class MovementTest {
     @BeforeEach
     public void setUp() {
         Information info = new UsingJSON();
-        testDrone = new Drone();
+        testDrone = new Drone(info);
         Movement move = new Movement(testDrone, info);
         testDrone.setDirection(Drone.Direction.E);
         move.turnLeft();
