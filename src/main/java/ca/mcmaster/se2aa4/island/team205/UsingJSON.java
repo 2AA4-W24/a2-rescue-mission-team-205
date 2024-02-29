@@ -5,9 +5,6 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class UsingJSON implements Information{
 

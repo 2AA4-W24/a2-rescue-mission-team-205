@@ -1,7 +1,5 @@
 package ca.mcmaster.se2aa4.island.team205;
 
-import java.util.HashMap;
-
 public class Radar {
     
     private final Information info;
