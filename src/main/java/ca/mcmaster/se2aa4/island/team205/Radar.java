@@ -6,15 +6,46 @@ public class Radar {
     
     private final Information info;
 
+    String direction;
+
     public Radar(Information information){
         info = information;
+
     }
 
-    public HashMap<String, String> useRadar(Drone.Direction droneDirection) {
-        return info.echo(droneDirection);
+    public void useRadar(Drone.Direction d){
+        info.echo(d);
+
     }
 
-    // helper methods to help determine the drones relative direction
+    public void useRadarFront(Drone.Direction d) {
+        info.echo(d);
+        direction = "front";
+    }
+
+    public void useRadarRight(Drone.Direction d) {
+        info.echo(getRightDirection(d));
+        direction = "right";
+    }
+
+    public void useRadarLeft(Drone.Direction d) {
+        info.echo(getLeftDirection(d));
+        direction = "left";
+    }
+
+    public int distanceToLand(){
+        if(info.echoReceived().equals("GROUND")){
+            return info.range();
+        }
+        else{
+            return -1;
+        }
+    }
+
+    public String directionOfLand(){
+        return direction;
+    }
+
     private Drone.Direction getLeftDirection(Drone.Direction currentDirection) {
         return switch (currentDirection) {
             case N -> Drone.Direction.W;
@@ -33,6 +64,7 @@ public class Radar {
         };
     }
 
+    /*
     public String chooseDirection(Drone.Direction currentDirection){
         HashMap<String, String> radarResults = useRadar(currentDirection);
         for(String s : radarResults.keySet()){
@@ -53,5 +85,6 @@ public class Radar {
         return "Front";
 
     }
+    */
 }
 

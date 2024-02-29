@@ -19,14 +19,10 @@ public class UsingJSON implements Information{
     }
 
     @Override
-    public HashMap<String, String> echo(Drone.Direction direction) {
+    public void echo(Drone.Direction direction) {
         decision.put("action", "echo");
         parameters.put("direction", direction.toString());
         decision.put("parameters", parameters);
-        HashMap<String, String> range_and_found = new HashMap<>();
-        range_and_found.put("range", String.valueOf(extraInfo().getInt("range")));
-        range_and_found.put("found", extraInfo().getString("found"));
-        return range_and_found;
     }
 
     @Override
@@ -90,7 +86,17 @@ public class UsingJSON implements Information{
     }
 
     @Override
-    public JSONArray terrian(){
+    public JSONArray terrain(){
         return response.getJSONObject("extras").getJSONArray("biomes");
+    }
+
+    @Override
+    public String echoReceived(){
+        return response.getJSONObject("extras").getString("found");
+    }
+
+    @Override
+    public int range(){
+        return response.getJSONObject("extras").getInt("range");
     }
 }

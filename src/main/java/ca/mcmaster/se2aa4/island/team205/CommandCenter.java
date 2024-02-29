@@ -17,6 +17,11 @@ public class CommandCenter {
 
     private int commands = 1;
 
+    private int range;
+
+    private boolean landFound = false;
+
+
     public CommandCenter(String s){
         info.results(s);
         drone.initialize(s);
@@ -32,15 +37,28 @@ public class CommandCenter {
         if(drone.battery <= 15){
             drone.returnHome();
         }
-        if (commands % 5 == 0){
-            scanner.scanTerrain();
-            actions.add("scan");
+        if(landFound){
+            if(range > 0){
+                drone.fly();
+                range--;
+                actions.add("fly");
+            }
+            else{
+                landFound = false;
+                scanner.scanTerrain();
+                actions.add("scan");
+            }
+        }
+
+        if(!landFound && commands % 5 == 0){
+            radar.useRadarRight(drone.getDirection());
+            actions.add("radar");
         }
         else if(commands %21 == 0){
             if(!actions.isEmpty()){
                 if(actions.get(actions.size() -1).equals("fly") || actions.get(actions.size() -1).equals("turn")){
-                    drone.turnRight();
-                    actions.add("turn");
+                    drone.fly();
+                    actions.add("fly");
                 }
                 else{
                     if(scanner.scanResults()){
@@ -60,6 +78,25 @@ public class CommandCenter {
                 if(actions.get(actions.size() -1).equals("scan")){
                     if(scanner.scanResults()){
                         drone.returnHome();
+                    }
+                    else {
+                        drone.fly();
+                        actions.add("fly");
+                    }
+                }
+                else if(actions.get(actions.size() -1).equals("radar")){
+                    if(radar.distanceToLand() >= 0){
+                        landFound = true;
+                        range = radar.distanceToLand();
+                        switch(radar.directionOfLand()){
+                            case "right" -> drone.turnRight();
+                            case "left" -> drone.turnLeft();
+                            default -> {
+                                drone.fly();
+                                range--;
+                                actions.add("fly");
+                            }
+                        }
                     }
                     else {
                         drone.fly();

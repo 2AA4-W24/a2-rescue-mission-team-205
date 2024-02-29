@@ -17,7 +17,7 @@ public class PhotoScanner {
     }
 
     public boolean scanResults(){
-        if(info.terrian().toList().contains("OCEAN")){
+        if(info.terrain().toList().contains("OCEAN")){
             return false;
         }
         else{

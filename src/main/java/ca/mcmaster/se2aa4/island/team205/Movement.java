@@ -5,13 +5,13 @@ package ca.mcmaster.se2aa4.island.team205;
 public class Movement {
 
     private final Drone drone;
-   // private final Map map;
+
     private final Information info;
 
     public Movement(Drone user_drone, Information information){
         drone = user_drone;
         info = information;
-       // this.map = map;
+
     }
     public void fly(){
         info.fly();
