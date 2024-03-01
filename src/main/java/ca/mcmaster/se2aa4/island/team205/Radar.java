@@ -13,7 +13,6 @@ public class Radar {
 
     public void useRadar(Drone.Direction d){
         info.echo(d);
-
     }
 
     public void useRadarFront(Drone.Direction d) {
@@ -62,27 +61,5 @@ public class Radar {
         };
     }
 
-    /*
-    public String chooseDirection(Drone.Direction currentDirection){
-        HashMap<String, String> radarResults = useRadar(currentDirection);
-        for(String s : radarResults.keySet()){
-            if(radarResults.get(s).equals("GROUND")){
-               switch(s){
-                   case "Front" -> {
-                       return "Front";
-                   }
-                   case "Left" -> {
-                       return "Left";
-                   }
-                   case "Right" -> {
-                       return "Right";
-                   }
-               }
-            }
-        }
-        return "Front";
-
-    }
-    */
 }
 
