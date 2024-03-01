@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DroneTest {
+class DroneTest {
 
     private Drone testDrone;
 
@@ -15,7 +15,7 @@ public class DroneTest {
     private Information info;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         info = new UsingJSON();
         testDrone = new Drone(info);
         testDrone.initialize(s);
@@ -23,7 +23,7 @@ public class DroneTest {
 
 
     @Test
-    public void turnLeftTest() {
+    void turnLeftTest() {
         testDrone.turnLeft();
         Drone.Direction realDir = testDrone.getDirection();
         Drone.Direction expectedDir = Drone.Direction.N;
@@ -31,7 +31,7 @@ public class DroneTest {
     }
 
     @Test
-    public void turnRightTest() {
+    void turnRightTest() {
         testDrone.turnRight();
         Drone.Direction realDir = testDrone.getDirection();
         Drone.Direction expectedDir = Drone.Direction.S;
@@ -39,26 +39,25 @@ public class DroneTest {
     }
 
     @Test
-    public void getDirectionTest() {
+    void getDirectionTest() {
         Drone.Direction realDir = testDrone.getDirection();
         Drone.Direction expectedDir = Drone.Direction.E;
         assertEquals(realDir, expectedDir);
     }
 
     @Test
-    public void initializeTest() {
+    void initializeTest() {
         testDrone.initialize(s);
         Integer expectedBattery = info.budget();
         assertEquals(expectedBattery, testDrone.battery, "InitializeTest");
     }
     @Test
-    public void drainTest() {
+    void drainTest() {
         Integer initialBattery = testDrone.battery;
         Integer expectedDrain = initialBattery - 15;
         testDrone.drain(15);
         assertEquals(expectedDrain, testDrone.battery, "DrainTest");
     }
-
 
 
 }

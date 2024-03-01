@@ -8,6 +8,8 @@ import eu.ace_design.island.bot.IExplorerRaid;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+
+
 public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
@@ -24,7 +26,7 @@ public class Explorer implements IExplorerRaid {
     public void initialize(String s) {
 
         center = new CommandCenter(s);
-        logger.info("here" +s);
+
         logger.info("** Initializing the Exploration Command Center");
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Initialization info:\n {}",info.toString(2));
