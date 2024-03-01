@@ -24,6 +24,7 @@ public class Explorer implements IExplorerRaid {
     public void initialize(String s) {
 
         center = new CommandCenter(s);
+        logger.info("here" +s);
         logger.info("** Initializing the Exploration Command Center");
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Initialization info:\n {}",info.toString(2));
