@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PhotoScannerTest {
+class PhotoScannerTest {
 
     private PhotoScanner photoScanner;
     private UsingJSON usingJSON;
