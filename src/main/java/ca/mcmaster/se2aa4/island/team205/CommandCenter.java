@@ -28,6 +28,7 @@ public class CommandCenter {
         info.results(s);
         drone.initialize(s);
     }
+
     public void updateInformation(String s){
         info.results(s);
         drone.drain(info.cost());
