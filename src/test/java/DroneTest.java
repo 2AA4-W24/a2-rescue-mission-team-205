@@ -1,6 +1,5 @@
 import ca.mcmaster.se2aa4.island.team205.Drone;
 import ca.mcmaster.se2aa4.island.team205.Information;
-import ca.mcmaster.se2aa4.island.team205.Movement;
 import ca.mcmaster.se2aa4.island.team205.UsingJSON;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
