@@ -11,19 +11,19 @@ public class PhotoScannerTest {
     private UsingJSON usingJSON;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         usingJSON = new UsingJSON();
         photoScanner = new PhotoScanner(usingJSON);
     }
 
     @Test
-    public void testScanResultsWhenOceanIsNotPresent() {
+    void testScanResultsWhenOceanIsNotPresent() {
         usingJSON.results("{\"extras\":{\"biomes\":[\"LAND\", \"MOUNTAIN\"]}}");
         assertTrue(photoScanner.scanResults());
     }
 
     @Test
-    public void testScanResultsWhenOceanIsPresent() {
+    void testScanResultsWhenOceanIsPresent() {
         usingJSON.results("{\"extras\":{\"biomes\":[\"LAND\", \"OCEAN\"]}}");
         assertFalse(photoScanner.scanResults());
     }

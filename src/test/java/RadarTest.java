@@ -12,46 +12,46 @@ public class RadarTest {
     private UsingJSON usingJSON;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         usingJSON = new UsingJSON();
         radar = new Radar(usingJSON);
     }
 
     @Test
-    public void testUseRadar() {
+    void testUseRadar() {
         radar.useRadar(Drone.Direction.N);
         assertEquals("{\"action\":\"echo\",\"parameters\":{\"direction\":\"N\"}}", usingJSON.decision());
     }
 
     @Test
-    public void testUseRadarFront() {
+    void testUseRadarFront() {
         radar.useRadarFront(Drone.Direction.N);
         assertEquals("{\"action\":\"echo\",\"parameters\":{\"direction\":\"N\"}}", usingJSON.decision());
         assertEquals("front", radar.directionOfLand());
     }
 
     @Test
-    public void testUseRadarRight() {
+    void testUseRadarRight() {
         radar.useRadarRight(Drone.Direction.N);
         assertEquals("{\"action\":\"echo\",\"parameters\":{\"direction\":\"E\"}}", usingJSON.decision());
         assertEquals("right", radar.directionOfLand());
     }
 
     @Test
-    public void testUseRadarLeft() {
+    void testUseRadarLeft() {
         radar.useRadarLeft(Drone.Direction.N);
         assertEquals("{\"action\":\"echo\",\"parameters\":{\"direction\":\"W\"}}", usingJSON.decision());
         assertEquals("left", radar.directionOfLand());
     }
 
     @Test
-    public void testDistanceToLandWhenGround() {
+    void testDistanceToLandWhenGround() {
         usingJSON.results("{\"status\":\"OK\",\"extras\":{\"found\":\"GROUND\",\"range\":5}}");
         assertEquals(5, radar.distanceToLand());
     }
 
     @Test
-    public void testDistanceToLandWhenNotGround() {
+    void testDistanceToLandWhenNotGround() {
         usingJSON.results("{\"status\":\"OK\",\"extras\":{\"found\":\"WATER\"}}");
         assertEquals(-1, radar.distanceToLand());
     }
