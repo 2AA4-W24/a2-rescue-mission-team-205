@@ -59,6 +59,4 @@ public class DroneTest {
         assertEquals(expectedDrain, testDrone.battery, "DrainTest");
     }
 
-
-
 }
