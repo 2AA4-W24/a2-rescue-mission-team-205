@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class PhotoScanner {
+
     private final List <PointOfInterest> pointsOfInterest;
+
     private Information info;
 
     public PhotoScanner(Information information){
@@ -17,12 +19,7 @@ public class PhotoScanner {
     }
 
     public boolean scanResults(){
-        if(info.terrain().toList().contains("OCEAN")){
-            return false;
-        }
-        else{
-            return true;
-        }
+        return !info.terrain().toList().contains("OCEAN");
     }
 
 

@@ -9,7 +9,6 @@ public class Drone {
 
     private Information info;
 
-
     private Direction direction;
     private final Movement move;
 
@@ -34,7 +33,6 @@ public class Drone {
     public void turnLeft(){
         move.turnLeft();
     }
-
 
     public Location getLocation(){
         return location;
