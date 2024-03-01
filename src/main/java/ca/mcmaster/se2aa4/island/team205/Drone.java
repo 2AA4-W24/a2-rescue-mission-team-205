@@ -5,9 +5,7 @@ public class Drone {
 
     public Integer battery;
 
-    private Location location;
-
-    private Information info;
+    private final Information info;
 
     private Direction direction;
     private final Movement move;
@@ -34,9 +32,6 @@ public class Drone {
         move.turnLeft();
     }
 
-    public Location getLocation(){
-        return location;
-    }
 
     private Direction initialDirection(String new_direction){
         switch(new_direction){
