@@ -14,13 +14,7 @@ public class Explorer implements IExplorerRaid {
 
     private final Logger logger = LogManager.getLogger();
 
-    private int stage = 1;
-    private int flyCount = 0;
-    //initializes drone on the map.
-
     private CommandCenter center;
-
-    private Integer batteryLevel =0;
 
     @Override
     public void initialize(String s) {
@@ -31,8 +25,7 @@ public class Explorer implements IExplorerRaid {
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
         logger.info("** Initialization info:\n {}",info.toString(2));
 
-        String direction = info.getString("heading");
-        batteryLevel = info.getInt("budget");
+        Integer batteryLevel = info.getInt("budget");
 
 
        logger.info("The drone is facing {}", center);
@@ -41,10 +34,9 @@ public class Explorer implements IExplorerRaid {
 
     @Override
     public String takeDecision() {
-        logger.info(flyCount);
-        flyCount++;
         center.takeCommand();
-        logger.info("** Decision: {}",center.decision().toString());
+        String decision = center.decision();
+        logger.info("** Decision: {}",decision);
 
         return center.decision();
     }
@@ -60,7 +52,6 @@ public class Explorer implements IExplorerRaid {
         logger.info("The status of the drone is {}", status);
         JSONObject extraInfo = response.getJSONObject("extras");
         logger.info("Additional information received: {}", extraInfo);
-      //  logger.info(drone.mapping());
     }
 
     @Override

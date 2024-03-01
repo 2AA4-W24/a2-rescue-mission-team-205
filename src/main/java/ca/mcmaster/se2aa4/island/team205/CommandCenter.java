@@ -1,12 +1,7 @@
 package ca.mcmaster.se2aa4.island.team205;
 
-import java.util.ArrayList;
-import java.util.List;
-//test
 
 public class CommandCenter {
-
-    private final List<String> actions = new ArrayList<>();
 
     private final Information info = new UsingJSON();
 
@@ -22,101 +17,100 @@ public class CommandCenter {
 
     private boolean landFound = false;
 
+    private boolean landSpotted = false;
+
+    private boolean emergencySiteFound = false;
+
+    private boolean closestCreekFound = false;
+
 
     public CommandCenter(String s){
         info.results(s);
         drone.initialize(s);
     }
+
     public void updateInformation(String s){
         info.results(s);
         drone.drain(info.cost());
     }
 
     public void takeCommand(){
-        commands ++;
 
         if(drone.battery <= 15){
             drone.returnHome();
         }
-        if(landFound){
-            if(range > 0){
-                drone.fly();
-                range--;
-                actions.add("fly");
-            }
-            else{
-                landFound = false;
-                scanner.scanTerrain();
-                actions.add("scan");
-            }
+        else if(!landFound){
+            //find next movement from record class
+            findLand();
+            commands ++;
+        }
+        else if(!emergencySiteFound){
+            findSite();
+            commands ++;
+        }
+        else if(!closestCreekFound){
+            closestCreek();
+            commands ++;
         }
 
-        if(!landFound && commands % 5 == 0){
+
+    }
+
+    private void findLand(){
+        //will be a nested if statement checking if the last action was fly
+        if(commands % 5 == 0){
             radar.useRadarRight(drone.getDirection());
-            actions.add("radar");
-        }
-        else if(commands %21 == 0){
-            if(!actions.isEmpty()){
-                if(actions.get(actions.size() -1).equals("fly") || actions.get(actions.size() -1).equals("turn")){
-                    drone.fly();
-                    actions.add("fly");
-                }
-                else{
-                    if(scanner.scanResults()){
-                        drone.returnHome();
-                    }
-                    else {
-                        drone.fly();
-                        actions.add("fly");
-                    }
-                }
-            }
-
+            //add action to records class
         }
         else{
-            if(!actions.isEmpty()){
+            drone.fly();
+        }
 
-                if(actions.get(actions.size() -1).equals("scan")){
-                    if(scanner.scanResults()){
-                        drone.returnHome();
-                    }
-                    else {
+        //this will be if the last action was radar
+
+        if(radar.distanceToLand() > 0){
+            if(!landSpotted){
+                range = radar.distanceToLand();
+                //find what way we used radar
+                switch(radar.directionOfLand()){
+                    case "right" -> drone.turnRight();
+                    case "left" -> drone.turnLeft();
+                    default -> {
                         drone.fly();
-                        actions.add("fly");
+                        range--;
                     }
                 }
-                else if(actions.get(actions.size() -1).equals("radar")){
-                    if(radar.distanceToLand() >= 0){
-                        landFound = true;
-                        range = radar.distanceToLand();
-                        switch(radar.directionOfLand()){
-                            case "right" -> drone.turnRight();
-                            case "left" -> drone.turnLeft();
-                            default -> {
-                                drone.fly();
-                                range--;
-                                actions.add("fly");
-                            }
-                        }
-                    }
-                    else {
-                        drone.fly();
-                        actions.add("fly");
-                    }
-                }
-                else{
-                    drone.fly();
-                    actions.add("fly");
-                }
+                landSpotted = true;
             }
             else{
                 drone.fly();
-                actions.add("fly");
+                range--;
             }
-
+        }
+        else if(range == 0){
+            scanner.scanTerrain();
+            //add action
+            landFound = true;
+        }
+        else {
+            drone.fly();
         }
 
     }
+
+    private void findSite(){
+        //implement grid search
+        //if last move was fly or radar do
+        scanner.scanTerrain();
+        //else check radar result and fly
+        emergencySiteFound = true;
+    }
+
+    private void closestCreek(){
+    //start looking radially outward
+        closestCreekFound = true;
+    }
+
 
     public String decision(){
         return info.decision();
