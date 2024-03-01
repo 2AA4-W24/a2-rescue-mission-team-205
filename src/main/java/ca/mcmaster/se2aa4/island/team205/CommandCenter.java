@@ -11,7 +11,10 @@ public class CommandCenter {
 
     private final Drone drone = new Drone(info);
 
+    private SearchAlgorithm search = new GridSearch();
+
     private int commands = 1;
+
 
     private int range;
 
@@ -21,7 +24,11 @@ public class CommandCenter {
 
     private boolean emergencySiteFound = false;
 
+    private boolean creekSearching = true;
+
     private boolean closestCreekFound = false;
+
+    private PointOfInterest creek;
 
 
     public CommandCenter(String s){
@@ -44,15 +51,21 @@ public class CommandCenter {
             findLand();
             commands ++;
         }
+        else if(creekSearching){
+            findCreeks();
+            commands++;
+        }
         else if(!emergencySiteFound){
             findSite();
             commands ++;
         }
         else if(!closestCreekFound){
-            closestCreek();
+            creek = closestCreek();
             commands ++;
         }
-
+        else {
+            drone.returnHome();
+        }
 
     }
 
@@ -98,17 +111,28 @@ public class CommandCenter {
 
     }
 
+    private void findCreeks(){
+        //implement grid search
+        search.findCreeks();
+        //once done looking
+        creekSearching = false;
+    }
+
     private void findSite(){
         //implement grid search
         //if last move was fly or radar do
-        scanner.scanTerrain();
+        search.findEmergencySite();
         //else check radar result and fly
         emergencySiteFound = true;
     }
 
-    private void closestCreek(){
+    private PointOfInterest closestCreek(){
     //start looking radially outward
-        closestCreekFound = true;
+        return search.closestCreek();
+    }
+
+    public String finalReport(){
+        return creek.identifier;
     }
 
 

@@ -8,6 +8,8 @@ public class Movement {
 
     private final Information info;
 
+    private final int[] coordinatesOfPath = {0,0};
+
     public Movement(Drone user_drone, Information information){
         drone = user_drone;
         info = information;
@@ -15,7 +17,7 @@ public class Movement {
     }
     public void fly(){
         info.fly();
-
+        adjustPosition();
     }
 
     public void returnHome(){
@@ -23,7 +25,6 @@ public class Movement {
     }
 
     public void turnRight(){
-
 
         switch(drone.getDirection()){
 
@@ -48,7 +49,6 @@ public class Movement {
 
         }
     }
-
 
 
     public void turnLeft(){
@@ -77,4 +77,19 @@ public class Movement {
     }
 
 
+    private void adjustPosition (){
+        switch(drone.getDirection()) {
+            case N -> coordinatesOfPath[1]++;
+
+            case E -> coordinatesOfPath[0]++;
+
+            case S -> coordinatesOfPath[1]--;
+
+            default -> coordinatesOfPath[0]--;
+        }
+    }
+
+    public int[] getCoordinates(){
+        return coordinatesOfPath;
+    }
 }

@@ -8,7 +8,9 @@ public class Drone {
     private final Information info;
 
     private Direction direction;
+
     private final Movement move;
+
 
     public Drone(Information information){
         info = information;
@@ -34,18 +36,23 @@ public class Drone {
 
 
     private Direction initialDirection(String new_direction){
+        Direction startingDirection;
         switch(new_direction){
             case "North" -> {
-                return Direction.N;
+                startingDirection = Direction.N;
+                return startingDirection;
             }
             case "South" -> {
-                return Direction.S;
+                startingDirection = Direction.S;
+                return startingDirection;
             }
             case "West" -> {
-                return Direction.W;
+                startingDirection = Direction.W;
+                return startingDirection;
             }
             default -> {
-                return Direction.E;
+                startingDirection = Direction.E;
+                return startingDirection;
             }
         }
     }
@@ -53,6 +60,10 @@ public class Drone {
     public void setDirection(Direction d){
         direction = d;
         info.turnDrone(direction);
+    }
+
+    public int[] getLocation(){
+        return move.getCoordinates();
     }
 
     public Direction getDirection(){
