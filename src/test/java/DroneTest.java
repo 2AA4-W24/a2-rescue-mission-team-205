@@ -34,6 +34,4 @@ public class DroneTest {
         Drone.Direction expectedDir = Drone.Direction.E;
         assertEquals(realDir, expectedDir);
     }
-
-
 }
