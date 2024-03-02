@@ -7,18 +7,13 @@ public class CommandCenter {
 
     private final Radar radar = new Radar(info);
 
-    private final PhotoScanner scanner = new PhotoScanner(info);
-
     private final Drone drone = new Drone(info);
 
-    private SearchAlgorithm search = new GridSearch();
+    private final SearchAlgorithm search = new GridSearch();
 
     private int commands = 1;
 
-
-    private int range;
-
-    private boolean landFound = false;
+    private int range = -1;
 
     private boolean landSpotted = false;
 
@@ -30,10 +25,16 @@ public class CommandCenter {
 
     private PointOfInterest creek;
 
+    private final ActionLog actionLog = new ActionLog();
+
 
     public CommandCenter(String s){
         info.results(s);
         drone.initialize(s);
+    }
+
+    public Drone getDrone(){
+        return drone;
     }
 
     public void updateInformation(String s){
@@ -46,12 +47,12 @@ public class CommandCenter {
         if(drone.battery <= 15){
             drone.returnHome();
         }
-        else if(!landFound){
-            //find next movement from record class
-            findLand();
+        else if(range != 0){
+            phaseOne();
             commands ++;
         }
         else if(creekSearching){
+            drone.returnHome();
             findCreeks();
             commands++;
         }
@@ -69,50 +70,93 @@ public class CommandCenter {
 
     }
 
-    private void findLand(){
-        //will be a nested if statement checking if the last action was fly
-        if(commands % 5 == 0){
-            radar.useRadarRight(drone.getDirection());
-            //add action to records class
+    private void phaseOne(){
+        if(!landSpotted) {
+            findLand();
         }
         else{
-            drone.fly();
+            flyToLand();
         }
+    }
 
-        //this will be if the last action was radar
 
-        if(radar.distanceToLand() > 0){
-            if(!landSpotted){
-                range = radar.distanceToLand();
-                //find what way we used radar
-                switch(radar.directionOfLand()){
-                    case "right" -> drone.turnRight();
-                    case "left" -> drone.turnLeft();
-                    default -> {
-                        drone.fly();
-                        range--;
-                    }
-                }
-                landSpotted = true;
-            }
-            else{
-                drone.fly();
-                range--;
-            }
-        }
-        else if(range == 0){
-            scanner.scanTerrain();
-            //add action
-            landFound = true;
+    private void generalMovement(){
+        if (commands % 5 == 0) {
+            radar.useRadarFront(drone.getDirection());
+            actionLog.addLog(Action.ECHOF);
         }
         else {
             drone.fly();
+            actionLog.addLog(Action.FLY);
+        }
+    }
+    
+    private void findLand(){
+        if (actionLog.getPrev() == Action.NONE || actionLog.getPrev() == Action.FLY) {
+            generalMovement();
+        }
+        else if (actionLog.getPrev() == Action.ECHOF) {
+            if (radar.distanceToLand() != -1) {
+                findRange();
+                drone.fly();
+                range--;
+                actionLog.addLog(Action.FLY);
+            }
+            else {
+                radar.useRadarRight(drone.getDirection());
+                actionLog.addLog(Action.ECHOR);
+            }
+        }
+        else if (actionLog.getPrev() == Action.ECHOR) {
+            if (radar.distanceToLand() != -1) {
+                findRange();
+                drone.turnRight();
+                actionLog.addLog(Action.TURN);
+            }
+            else {
+                radar.useRadarLeft(drone.getDirection());
+                actionLog.addLog(Action.ECHOL);
+
+            }
+        }
+        else if (actionLog.getPrev() == Action.ECHOL) {
+            if (radar.distanceToLand() != -1) {
+                findRange();
+                drone.turnLeft();
+                actionLog.addLog(Action.TURN);
+            }
+            else {
+                drone.fly();
+                actionLog.addLog(Action.FLY);
+            }
         }
 
     }
 
+    private void findRange(){
+        range = radar.distanceToLand();
+        landSpotted = true;
+    }
+
+    public int getRange(){
+        return range;
+    }
+
+    private void flyToLand(){
+        if(range > 0){
+            drone.fly();
+            range --;
+            actionLog.addLog(Action.FLY);
+        }
+        else{
+            drone.fly();
+            actionLog.addLog(Action.FLY);
+        }
+    }
+
     private void findCreeks(){
         //implement grid search
+        drone.returnHome();
         search.findCreeks();
         //once done looking
         creekSearching = false;
