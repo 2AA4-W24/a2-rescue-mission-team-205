@@ -18,11 +18,25 @@ public class PhotoScanner {
         info.scan();
     }
 
-    public boolean scanResults(){
-        return !info.terrain().toList().contains("OCEAN");
+    public List<String> getCreekResults(){
+        return info.creek();
     }
 
+    public List<String> getSiteResults(){
+        return info.site();
+    }
 
+    public boolean scanCreek(){
+        return !info.creek().isEmpty();
+    }
+
+    public boolean scanSite(){
+        return !info.site().isEmpty();
+    }
+
+    public boolean scanOcean(){
+        return info.terrain().contains("OCEAN");
+    }
 
 }
 

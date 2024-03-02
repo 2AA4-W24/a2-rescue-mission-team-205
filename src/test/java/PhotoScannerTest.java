@@ -19,13 +19,13 @@ class PhotoScannerTest {
     @Test
     void testScanResultsWhenOceanIsNotPresent() {
         usingJSON.results("{\"extras\":{\"biomes\":[\"LAND\", \"MOUNTAIN\"]}}");
-        assertTrue(photoScanner.scanResults());
+        assertFalse(photoScanner.scanOcean());
     }
 
     @Test
     void testScanResultsWhenOceanIsPresent() {
         usingJSON.results("{\"extras\":{\"biomes\":[\"LAND\", \"OCEAN\"]}}");
-        assertFalse(photoScanner.scanResults());
+        assertTrue(photoScanner.scanOcean());
     }
 
 }
