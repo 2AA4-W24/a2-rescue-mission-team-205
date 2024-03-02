@@ -33,6 +33,10 @@ public class CommandCenter {
         drone.initialize(s);
     }
 
+    public Drone getDrone(){
+        return drone;
+    }
+
     public void updateInformation(String s){
         info.results(s);
         drone.drain(info.cost());
@@ -44,7 +48,6 @@ public class CommandCenter {
             drone.returnHome();
         }
         else if(range != 0){
-            //find next movement from record class
             phaseOne();
             commands ++;
         }
@@ -87,6 +90,7 @@ public class CommandCenter {
             actionLog.addLog(Action.FLY);
         }
     }
+    
     private void findLand(){
         if (actionLog.getPrev() == Action.NONE || actionLog.getPrev() == Action.FLY) {
             generalMovement();
