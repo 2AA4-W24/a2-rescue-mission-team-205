@@ -9,8 +9,6 @@ public class CommandCenter {
 
     private final Drone drone = new Drone(info);
 
-    private final SearchAlgorithm search = new GridSearch();
-
     private int commands = 1;
 
     private int range = -1;
@@ -26,6 +24,8 @@ public class CommandCenter {
     private PointOfInterest creek;
 
     private final ActionLog actionLog = new ActionLog();
+
+    private final SearchAlgorithm search = new GridSearch(actionLog);
 
 
     public CommandCenter(String s){
