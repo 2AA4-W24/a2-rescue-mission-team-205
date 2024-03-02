@@ -5,6 +5,8 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsingJSON implements Information{
 
@@ -83,8 +85,21 @@ public class UsingJSON implements Information{
     }
 
     @Override
-    public JSONArray terrain(){
-        return response.getJSONObject("extras").getJSONArray("biomes");
+    public List<String> terrain(){
+        List<Object> list = response.getJSONObject("extras").getJSONArray("biomes").toList();
+        return toArrayList(list);
+    }
+
+    @Override
+    public List<String> creek(){
+        List<Object> list = response.getJSONObject("extras").getJSONArray("creeks").toList();
+        return toArrayList(list);
+    }
+
+    @Override
+    public List<String> site(){
+        List<Object> list = response.getJSONObject("extras").getJSONArray("sites").toList();
+        return toArrayList(list);
     }
 
     @Override
@@ -95,5 +110,14 @@ public class UsingJSON implements Information{
     @Override
     public int range(){
         return response.getJSONObject("extras").getInt("range");
+    }
+
+    @Override
+    public List<String> toArrayList(List<Object> list) {
+        List<String> result = new ArrayList<>();
+        for (Object obj: list) {
+            result.add(obj.toString());
+        }
+        return result;
     }
 }
