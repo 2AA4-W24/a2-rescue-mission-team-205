@@ -3,7 +3,7 @@ import ca.mcmaster.se2aa4.island.team205.PhotoScanner;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Assertions;
 
 class PhotoScannerTest {
 
@@ -19,13 +19,13 @@ class PhotoScannerTest {
     @Test
     void testScanResultsWhenOceanIsNotPresent() {
         usingJSON.results("{\"extras\":{\"biomes\":[\"LAND\", \"MOUNTAIN\"]}}");
-        assertFalse(photoScanner.scanOcean());
+        Assertions.assertFalse(photoScanner.scanOcean());
     }
 
     @Test
     void testScanResultsWhenOceanIsPresent() {
         usingJSON.results("{\"extras\":{\"biomes\":[\"LAND\", \"OCEAN\"]}}");
-        assertTrue(photoScanner.scanOcean());
+        Assertions.assertTrue(photoScanner.scanOcean());
     }
 
 }

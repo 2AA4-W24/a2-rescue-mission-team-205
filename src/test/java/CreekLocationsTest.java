@@ -3,7 +3,7 @@ import ca.mcmaster.se2aa4.island.team205.CreekLocations;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Assertions;
 
 class CreekLocationsTest {
 
@@ -15,7 +15,7 @@ class CreekLocationsTest {
     }
 
     @Test
-    void testClosestCreak() {
+    void testClosestCreek() {
         PointOfInterest creek1 = new PointOfInterest("Creek1", new int[]{10, 10});
         PointOfInterest creek2 = new PointOfInterest("Creek2", new int[]{20, 20});
 
@@ -26,6 +26,6 @@ class CreekLocationsTest {
 
         PointOfInterest closestCreek = creekLocations.closestCreak(site);
 
-        assertEquals(creek1, closestCreek, "Closest creek should be Creek1");
+        Assertions.assertEquals(creek1, closestCreek, "Closest creek should be Creek1");
     }
 }
