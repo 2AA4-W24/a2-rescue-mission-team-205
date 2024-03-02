@@ -1,28 +1,59 @@
 import ca.mcmaster.se2aa4.island.team205.Drone;
-import ca.mcmaster.se2aa4.island.team205.Information;
 import ca.mcmaster.se2aa4.island.team205.Movement;
 import ca.mcmaster.se2aa4.island.team205.UsingJSON;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MovementTest {
+class MovementTest {
 
     private Drone testDrone;
+    private Movement movement;
+    private UsingJSON usingJSON;
 
     @BeforeEach
-    public void setUp() {
-        Information info = new UsingJSON();
-        testDrone = new Drone(info);
-        Movement move = new Movement(testDrone, info);
-        testDrone.setDirection(Drone.Direction.E);
-        move.turnLeft();
+    void setUp() {
+        usingJSON = new UsingJSON();
+        testDrone = new Drone(usingJSON);
+        movement = new Movement(testDrone, usingJSON);
     }
 
     @Test
-    public void sampleTest() {
-        Drone.Direction curDir = testDrone.getDirection();
-        Drone.Direction expectedDir = Drone.Direction.N;
-        assertEquals(curDir, expectedDir);
+    void testFlyMethod(){
+        int [] initialCoordinates = {0,0};
+        testDrone.setDirection(Drone.Direction.N);
+        assertArrayEquals(initialCoordinates, movement.getCoordinates());
+        movement.fly();
+        int [] expectedCoordinates = {0, 1};
+        assertArrayEquals(expectedCoordinates, movement.getCoordinates());
     }
+
+    @Test
+    void testReturnHome() {
+        movement.returnHome();
+        String decision = usingJSON.decision();
+        assertTrue(decision.contains("\"action\":\"stop\"")); 
+    }
+
+    @Test
+    void testTurnRight() {
+        testDrone.setDirection(Drone.Direction.N);
+        movement.turnRight();
+        assertEquals(Drone.Direction.E, testDrone.getDirection());
+    }
+
+    @Test
+    void testTurnLeft() {
+        testDrone.setDirection(Drone.Direction.N);
+        movement.turnLeft();
+        assertEquals(Drone.Direction.W, testDrone.getDirection());
+    }
+
+    @Test
+    void testAdjustPosition() {
+        testDrone.setDirection(Drone.Direction.N);
+        movement.fly(); // incremets y coord
+        assertArrayEquals(new int[]{0, 1}, movement.getCoordinates());
+    }
+
 }
