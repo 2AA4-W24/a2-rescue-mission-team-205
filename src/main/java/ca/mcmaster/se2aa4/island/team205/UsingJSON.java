@@ -1,5 +1,7 @@
 package ca.mcmaster.se2aa4.island.team205;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -11,6 +13,8 @@ public class UsingJSON implements Information{
     private final JSONObject decision = new JSONObject();
     private final JSONObject parameters = new JSONObject();
     private JSONObject response;
+
+    private final Logger logger = LogManager.getLogger();
 
     public UsingJSON(){
     }
@@ -25,6 +29,7 @@ public class UsingJSON implements Information{
     @Override
     public void scan() {
         decision.put("action","scan");
+        logger.info(decision.toString());
     }
 
     @Override
@@ -85,6 +90,16 @@ public class UsingJSON implements Information{
     @Override
     public JSONArray terrain(){
         return response.getJSONObject("extras").getJSONArray("biomes");
+    }
+
+    @Override
+    public JSONArray site(){
+        return response.getJSONObject("extras").getJSONArray("sites");
+    }
+
+    @Override
+    public JSONArray creek(){
+        return response.getJSONObject("extras").getJSONArray("creeks");
     }
 
     @Override

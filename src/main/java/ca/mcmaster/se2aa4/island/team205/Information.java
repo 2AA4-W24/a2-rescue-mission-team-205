@@ -31,6 +31,10 @@ public interface Information {
 
     JSONArray terrain();
 
+    JSONArray site();
+
+    JSONArray creek();
+
     String echoReceived();
 
     int range();

@@ -32,14 +32,14 @@ class RadarTest {
 
     @Test
     void testUseRadarRight() {
-        radar.useRadarRight(Drone.Direction.N);
+        radar.useRadarRight(Drone.Direction.E);
         assertEquals("{\"action\":\"echo\",\"parameters\":{\"direction\":\"E\"}}", usingJSON.decision());
         assertEquals("right", radar.directionOfLand());
     }
 
     @Test
     void testUseRadarLeft() {
-        radar.useRadarLeft(Drone.Direction.N);
+        radar.useRadarLeft(Drone.Direction.W);
         assertEquals("{\"action\":\"echo\",\"parameters\":{\"direction\":\"W\"}}", usingJSON.decision());
         assertEquals("left", radar.directionOfLand());
     }

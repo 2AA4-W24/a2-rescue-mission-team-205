@@ -9,9 +9,14 @@ public class PhotoScanner {
 
     private Information info;
 
-    public PhotoScanner(Information information){
+    private Drone drone;
+
+    PointOfInterest site = null;
+
+    public PhotoScanner(Information information, Drone drone1){
         pointsOfInterest = new ArrayList<>();
         info = information;
+        drone = drone1;
     }
 
     public void scanTerrain(){
@@ -22,6 +27,24 @@ public class PhotoScanner {
         return !info.terrain().toList().contains("OCEAN");
     }
 
+    public boolean siteFound(){
+        if(!info.site().toList().isEmpty()){
+            site = new PointOfInterest(info.site().toString(), drone.getLocation());
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public PointOfInterest getSite(){
+        if(site != null){
+            return site;
+        }
+        else{
+            return null;
+        }
+    }
 
 
 }

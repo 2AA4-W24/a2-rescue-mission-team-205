@@ -1,3 +1,4 @@
+import ca.mcmaster.se2aa4.island.team205.Drone;
 import ca.mcmaster.se2aa4.island.team205.UsingJSON;
 import ca.mcmaster.se2aa4.island.team205.PhotoScanner;
 
@@ -10,10 +11,13 @@ class PhotoScannerTest {
     private PhotoScanner photoScanner;
     private UsingJSON usingJSON;
 
+    private Drone drone;
+
     @BeforeEach
     void setUp() {
         usingJSON = new UsingJSON();
-        photoScanner = new PhotoScanner(usingJSON);
+        drone = new Drone(usingJSON);
+        photoScanner = new PhotoScanner(usingJSON, drone);
     }
 
     @Test
