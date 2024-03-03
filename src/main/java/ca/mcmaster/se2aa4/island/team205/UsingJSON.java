@@ -1,6 +1,5 @@
 package ca.mcmaster.se2aa4.island.team205;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -15,6 +14,7 @@ public class UsingJSON implements Information{
     private JSONObject response;
 
     public UsingJSON(){
+        // empty constructor
     }
 
     @Override
@@ -71,9 +71,9 @@ public class UsingJSON implements Information{
         return response.getString("status");
     }
 
-    private JSONObject extraInfo(){
-        return response.getJSONObject("extras");
-    }
+    //private JSONObject extraInfo(){
+        //return response.getJSONObject("extras");
+    //}
 
     @Override
     public String decision(){

@@ -10,8 +10,8 @@ public class Movement {
 
     private final int[] coordinatesOfPath = {0,0};
 
-    public Movement(Drone user_drone, Information information){
-        drone = user_drone;
+    public Movement(Drone userDrone, Information information){
+        drone = userDrone;
         info = information;
 
     }
