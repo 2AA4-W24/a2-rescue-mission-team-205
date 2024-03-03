@@ -3,8 +3,7 @@ import ca.mcmaster.se2aa4.island.team205.CommandCenter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import org.junit.jupiter.api.Assertions;
 
 class CommandCenterTest {
 
@@ -25,8 +24,8 @@ class CommandCenterTest {
     void takeCommandTest() {
         testCommands.takeCommand();
         String actualFly = testCommands.decision();
-        assertEquals(expectedFly, actualFly);
-        assertNotEquals(unexpectedFly, actualFly);
+        Assertions.assertEquals(expectedFly, actualFly);
+        Assertions.assertNotEquals(unexpectedFly, actualFly);
     }
 
 
