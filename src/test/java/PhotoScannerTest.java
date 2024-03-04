@@ -1,3 +1,4 @@
+import ca.mcmaster.se2aa4.island.team205.CreekLocations;
 import ca.mcmaster.se2aa4.island.team205.Drone;
 import ca.mcmaster.se2aa4.island.team205.UsingJSON;
 import ca.mcmaster.se2aa4.island.team205.PhotoScanner;
@@ -17,7 +18,7 @@ class PhotoScannerTest {
     void setUp() {
         usingJSON = new UsingJSON();
         drone = new Drone(usingJSON);
-        photoScanner = new PhotoScanner(usingJSON, drone);
+        photoScanner = new PhotoScanner(usingJSON, drone, new CreekLocations());
     }
 
     @Test
@@ -28,7 +29,7 @@ class PhotoScannerTest {
 
     @Test
     void testScanResultsWhenOceanIsPresent() {
-        usingJSON.results("{\"extras\":{\"biomes\":[\"LAND\", \"OCEAN\"]}}");
+        usingJSON.results("{\"extras\":{\"biomes\":[\"OCEAN\"]}}");
         assertFalse(photoScanner.scanResults());
     }
 

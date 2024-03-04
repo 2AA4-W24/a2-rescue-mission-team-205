@@ -14,7 +14,7 @@ public class CommandCenter {
 
     private final ActionLog actionLog = new ActionLog();
 
-    private final SearchAlgorithm search = new GridSearch2(info, drone, radar, actionLog, drone.getDirection());
+    private final SearchAlgorithm search = new GridSearch2(info, drone, radar, actionLog);
 
     private int commands = 1;
 
@@ -54,10 +54,10 @@ public class CommandCenter {
     public void takeCommand(){
         logger.info(count);
         logger.info(drone.battery);
-        if(count > 300){
+        if(count > 2000){
             drone.returnHome();
         }
-        else if(drone.battery <= 15){
+        else if(drone.battery <= 30){
             drone.returnHome();
             count++;
         }
@@ -101,7 +101,7 @@ public class CommandCenter {
 
 
     private void generalMovement(){
-        if (commands % 11 == 0) {
+        if (commands % 2 == 0) {
             radar.useRadarFront(drone.getDirection());
             actionLog.addLog(Action.ECHOF);
         }
@@ -177,7 +177,13 @@ public class CommandCenter {
 
     private void findCreeks(){
         //implement grid search
-        search.findCreeks();
+        if(search.isSiteFound()){
+            creek = closestCreek();
+            drone.returnHome();
+        }
+        else{
+            search.findCreeks();
+        }
 
     }
 
@@ -196,6 +202,7 @@ public class CommandCenter {
     }
 
     public String finalReport(){
+
         return creek.identifier;
     }
 

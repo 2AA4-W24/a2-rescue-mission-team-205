@@ -7,4 +7,5 @@ public interface SearchAlgorithm {
     void findCreeks();
 
     PointOfInterest closestCreek();
+    boolean isSiteFound();
 }

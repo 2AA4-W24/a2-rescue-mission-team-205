@@ -25,5 +25,8 @@ public class CreekLocations {
         return closest;
     }
 
+    public Map<PointOfInterest, int[]> all(){
+        return creeks;
+    }
 
 }

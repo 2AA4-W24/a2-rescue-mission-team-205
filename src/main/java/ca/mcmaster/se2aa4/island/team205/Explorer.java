@@ -56,6 +56,8 @@ public class Explorer implements IExplorerRaid {
 
     @Override
     public String deliverFinalReport() {
+
+        logger.info("final Report: " + center.finalReport());
         return center.finalReport();
     }
 

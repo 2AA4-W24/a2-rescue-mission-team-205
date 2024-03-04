@@ -23,4 +23,9 @@ public class GridSearch implements SearchAlgorithm{
     public PointOfInterest closestCreek(){
         return creeks.closestCreak(site);
     }
+
+    @Override
+    public boolean isSiteFound() {
+        return false;
+    }
 }
