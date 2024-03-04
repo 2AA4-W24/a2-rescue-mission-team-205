@@ -157,7 +157,7 @@ public class CommandCenter {
     private void findCreeks(){
         //implement grid search
         drone.returnHome();
-        search.findCreeks();
+        //search.findCreeks();
         //once done looking
         creekSearching = false;
     }
