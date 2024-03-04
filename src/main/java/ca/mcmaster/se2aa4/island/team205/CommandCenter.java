@@ -54,7 +54,7 @@ public class CommandCenter {
     public void takeCommand(){
         logger.info(count);
         logger.info(drone.battery);
-        if(count > 1130){
+        if(count > 300){
             drone.returnHome();
         }
         else if(drone.battery <= 15){

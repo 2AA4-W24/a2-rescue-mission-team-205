@@ -33,7 +33,7 @@ public class GridSearch2 implements SearchAlgorithm{
         radar = radar1;
         drone = drone1;
         photoScanner = new PhotoScanner(info, drone);
-        searchingDirection = drone.getDirection();
+        searchingDirection = Drone.Direction.E;
         actionLog = log;
 
     }
@@ -50,7 +50,7 @@ public class GridSearch2 implements SearchAlgorithm{
             }
             else{
                 logger.info(searchingDirection);
-                switch(Drone.Direction.S){
+                switch(Drone.Direction.E){
                     case N, S -> horizontalSearch();
                     default -> verticalSearch();
                 }
@@ -61,7 +61,7 @@ public class GridSearch2 implements SearchAlgorithm{
             switch(drone.getDirection()){
                 case N, S -> {
                     previousD = drone.getDirection();
-                    drone.turnLeft();
+                    drone.fly();
                     actionLog.addLog(Action.FLY);
                     //add logic to find this
                 }
@@ -70,8 +70,8 @@ public class GridSearch2 implements SearchAlgorithm{
             i++;
         }
         else{
-            logger.info(searchingDirection);
-            switch(Drone.Direction.S){
+            //logger.info(searchingDirection);
+            switch(Drone.Direction.E){
                 case N, S -> horizontalSearch();
                 default -> verticalSearch();
             }
@@ -185,7 +185,7 @@ public class GridSearch2 implements SearchAlgorithm{
         else{
             if(drone.getDirection()== Drone.Direction.E){
                 logger.info(previousD);
-                if(previousD == Drone.Direction.N){
+                if(previousD == Drone.Direction.S){
                     drone.turnLeft();
 
                 }
