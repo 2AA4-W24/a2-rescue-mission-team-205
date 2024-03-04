@@ -31,7 +31,7 @@ public class Radar {
     }
 
     public int distanceToLand(){
-        if(info.echoReceived().equals("GROUND")){
+        if("GROUND".equals(info.echoReceived())){
             return info.range();
         }
         else{

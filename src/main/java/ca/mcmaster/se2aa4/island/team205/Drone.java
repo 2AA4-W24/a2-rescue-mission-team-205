@@ -35,9 +35,9 @@ public class Drone {
     }
 
 
-    private Direction initialDirection(String new_direction){
+    private Direction initialDirection(String newDirection){
         Direction startingDirection;
-        switch(new_direction){
+        switch(newDirection){
             case "North" -> {
                 startingDirection = Direction.N;
                 return startingDirection;
