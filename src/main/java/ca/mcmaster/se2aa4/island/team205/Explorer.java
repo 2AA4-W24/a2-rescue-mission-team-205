@@ -12,7 +12,7 @@ import org.json.JSONTokener;
 
 public class Explorer implements IExplorerRaid {
 
-    private final Logger logger = LogManager.getLogger();
+ private final Logger logger = LogManager.getLogger();
 
     private CommandCenter center;
 
@@ -21,15 +21,14 @@ public class Explorer implements IExplorerRaid {
 
         center = new CommandCenter(s);
 
-        if (logger.isInfoEnabled()) {
-            logger.info("** Initializing the Exploration Command Center");
-            JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
-            logger.info("** Initialization info:\n {}", info.toString(2));
+       // logger.info("** Initializing the Exploration Command Center");
+        JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
+        //String start = info.toString(2);
+       // logger.info("** Initialization info:\n {}",start);
+       // Integer batteryLevel = info.getInt("budget");
 
-            Integer batteryLevel = info.getInt("budget");
-            logger.info("The drone is facing {}", center);
-            logger.info("Battery level is {}", batteryLevel);
-        }
+       // logger.info("The drone is facing {}", center);
+        //logger.info("Battery level is {}", batteryLevel);
     }
 
     @Override
@@ -45,24 +44,20 @@ public class Explorer implements IExplorerRaid {
     public void acknowledgeResults(String s) {
         center.updateInformation(s);
         JSONObject response = new JSONObject(new JSONTokener(new StringReader(s)));
-        if (logger.isInfoEnabled()) {
-            logger.info("** Response received:\n" + response.toString(2));
-
-            Integer cost = response.getInt("cost");
-            logger.info("The cost of the action was {}", cost);
-
-            String status = response.getString("status");
-            logger.info("The status of the drone is {}", status);
-
-            JSONObject extraInfo = response.getJSONObject("extras");
-            logger.info("Additional information received: {}", extraInfo);
-            logger.info(center.getRange());
-        }
+        logger.info("** Response received:\n"+response.toString(2));
+        Integer cost = response.getInt("cost");
+       // logger.info("The cost of the action was {}", cost);
+        String status = response.getString("status");
+       // logger.info("The status of the drone is {}", status);
+        JSONObject extraInfo = response.getJSONObject("extras");
+        logger.info("Additional information received: {}", extraInfo);
+        logger.info(center.getRange());
     }
 
     @Override
     public String deliverFinalReport() {
+
+        logger.info("final Report: " + center.finalReport());
         return center.finalReport();
     }
-
 }
