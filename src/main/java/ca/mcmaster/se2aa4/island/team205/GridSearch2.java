@@ -85,7 +85,7 @@ public class GridSearch2 implements SearchAlgorithm{
         if(sliding){
             verticalSlide();
         }
-        else if(actionLog.getPrev() == Action.TURN && !sliding){
+        else if(actionLog.getPrev() == Action.TURN){
             if(transition){
                 drone.fly();
                 actionLog.addLog(Action.FLY);
@@ -98,72 +98,10 @@ public class GridSearch2 implements SearchAlgorithm{
 
         }
         else if(actionLog.getPrev() == Action.SCAN){
-            if(photoScanner.siteFound()){
-                drone.fly();
-                actionLog.addLog(Action.FLY);
-                siteFound = true;
-
-            }
-            else if(photoScanner.scanResults()){
-                drone.fly();
-                actionLog.addLog(Action.FLY);
-            }
-            else{
-                if(drone.getDirection() == Drone.Direction.N || drone.getDirection() == Drone.Direction.S) {
-                    radar.useRadarFront(drone.getDirection());
-                    actionLog.addLog(Action.ECHOF);
-                }
-                else{
-                    drone.fly();
-                    actionLog.addLog(Action.FLY);
-                }
-            }
+            scanDecision();
         }
-        else if(actionLog.getPrev() == Action.ECHOF){
-            if(radar.distanceToLand() == -1 && afterSlide){
-
-                if(slideDirection == Drone.Direction.E){
-                   // searchingDirection = Drone.Direction.S;
-                    slideDirection = Drone.Direction.W;
-                    afterSlide = false;
-                    if(drone.getDirection() == Drone.Direction.N){
-                        drone.turnLeft();
-                    }
-                    else{
-                        drone.turnRight();
-                    }
-
-                    actionLog.addLog(Action.TURN);
-                    slideStage = 2;
-                    transition = true;
-
-                }
-                else{
-                    slideDirection = Drone.Direction.E;
-                    afterSlide = false;
-                    if(drone.getDirection() == Drone.Direction.S){
-                        drone.turnLeft();
-                    }
-                    else{
-                        drone.turnRight();
-                    }
-
-                    actionLog.addLog(Action.TURN);
-                    slideStage = 2;
-                    transition = true;
-
-                }
-            }
-            else if(radar.distanceToLand() == -1){
-                verticalSlide();
-            }
-            else{
-                range = radar.distanceToLand();
-                drone.fly();
-                actionLog.addLog(Action.FLY);
-                range --;
-            }
-            afterSlide = false;
+        else if(actionLog.getPrev() == Action.ECHOF) {
+            echoFrontDecision();
         }
         else{
             if(transition){
@@ -218,6 +156,69 @@ public class GridSearch2 implements SearchAlgorithm{
             slideStage = 1;
             sliding = false;
         }
+    }
+
+    private void scanDecision(){
+        if(photoScanner.siteFound()){
+            drone.fly();
+            actionLog.addLog(Action.FLY);
+            siteFound = true;
+
+        }
+        else if(photoScanner.scanResults()){
+            drone.fly();
+            actionLog.addLog(Action.FLY);
+        }
+        else{
+            if(drone.getDirection() == Drone.Direction.N || drone.getDirection() == Drone.Direction.S) {
+                radar.useRadarFront(drone.getDirection());
+                actionLog.addLog(Action.ECHOF);
+            }
+            else{
+                drone.fly();
+                actionLog.addLog(Action.FLY);
+            }
+        }
+    }
+
+    private void echoFrontDecision(){
+        if(radar.distanceToLand() == -1 && afterSlide){
+            if(slideDirection == Drone.Direction.E){
+                slideDirection = Drone.Direction.W;
+                afterSlide = false;
+                if(drone.getDirection() == Drone.Direction.N){
+                    drone.turnLeft();
+                }
+                else{
+                    drone.turnRight();
+                }
+
+            }
+            else{
+                slideDirection = Drone.Direction.E;
+                afterSlide = false;
+                if(drone.getDirection() == Drone.Direction.S){
+                    drone.turnLeft();
+                }
+                else{
+                    drone.turnRight();
+                }
+
+            }
+            actionLog.addLog(Action.TURN);
+            slideStage = 2;
+            transition = true;
+        }
+        else if(radar.distanceToLand() == -1){
+            verticalSlide();
+        }
+        else{
+            range = radar.distanceToLand();
+            drone.fly();
+            actionLog.addLog(Action.FLY);
+            range --;
+        }
+        afterSlide = false;
     }
 
 
