@@ -1,5 +1,7 @@
 package ca.mcmaster.se2aa4.island.team205;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CommandCenter {
 
@@ -8,6 +10,10 @@ public class CommandCenter {
     private final Radar radar = new Radar(info);
 
     private final Drone drone = new Drone(info);
+
+    private final ActionLog actionLog = new ActionLog();
+
+    private final SearchAlgorithm search = new GridSearch2(info, drone, radar, actionLog);
 
     private int commands = 1;
 
@@ -21,11 +27,13 @@ public class CommandCenter {
 
     private boolean closestCreekFound = false;
 
+    private boolean land = false;
+
+    private final Logger logger = LogManager.getLogger();
+
+    int count = 0;
+
     private PointOfInterest creek;
-
-    private final ActionLog actionLog = new ActionLog();
-
-    private final SearchAlgorithm search = new GridSearch(actionLog);
 
 
     public CommandCenter(String s){
@@ -43,26 +51,37 @@ public class CommandCenter {
     }
 
     public void takeCommand(){
-
-        if(drone.battery <= 15){
+        logger.info(count);
+        logger.info(drone.battery);
+        if(count > 2000){
             drone.returnHome();
         }
-        else if(range != 0){
+        else if(drone.battery <= 30){
+            creek = closestCreek();
+            drone.returnHome();
+            count++;
+        }
+        else if(range != 0 && !land){
+            logger.info("battery --" + drone.battery);
             phaseOne();
             commands ++;
+            count++;
         }
         else if(creekSearching){
-            drone.returnHome();
+
             findCreeks();
+            count++;
             commands++;
         }
         else if(!emergencySiteFound){
             findSite();
             commands ++;
+            count++;
         }
         else if(!closestCreekFound){
             creek = closestCreek();
             commands ++;
+            count++;
         }
         else {
             drone.returnHome();
@@ -72,16 +91,18 @@ public class CommandCenter {
 
     private void phaseOne(){
         if(!landSpotted) {
+
             findLand();
         }
         else{
+
             flyToLand();
         }
     }
 
 
     private void generalMovement(){
-        if (commands % 5 == 0) {
+        if (commands % 1 == 0) {
             radar.useRadarFront(drone.getDirection());
             actionLog.addLog(Action.ECHOF);
         }
@@ -103,7 +124,7 @@ public class CommandCenter {
                 actionLog.addLog(Action.FLY);
             }
             else {
-                radar.useRadarRight(drone.getDirection());
+                radar.useRadarRight(drone.getRightDirection());
                 actionLog.addLog(Action.ECHOR);
             }
         }
@@ -114,7 +135,7 @@ public class CommandCenter {
                 actionLog.addLog(Action.TURN);
             }
             else {
-                radar.useRadarLeft(drone.getDirection());
+                radar.useRadarLeft(drone.getLeftDirection());
                 actionLog.addLog(Action.ECHOL);
 
             }
@@ -151,20 +172,20 @@ public class CommandCenter {
         else{
             drone.fly();
             actionLog.addLog(Action.FLY);
+            land = true;
         }
     }
 
     private void findCreeks(){
         //implement grid search
-        drone.returnHome();
-        //search.findCreeks();
-        //once done looking
-        creekSearching = false;
+        search.findCreeks();
+
     }
 
     private void findSite(){
         //implement grid search
         //if last move was fly or radar do
+        drone.returnHome();
         search.findEmergencySite();
         //else check radar result and fly
         emergencySiteFound = true;
@@ -176,6 +197,7 @@ public class CommandCenter {
     }
 
     public String finalReport(){
+
         return creek.identifier;
     }
 
