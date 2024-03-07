@@ -7,6 +7,8 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsingJSON implements Information{
 
@@ -14,9 +16,8 @@ public class UsingJSON implements Information{
     private final JSONObject parameters = new JSONObject();
     private JSONObject response;
 
-    private final Logger logger = LogManager.getLogger();
-
     public UsingJSON(){
+        // empty constructor
     }
 
     @Override
@@ -29,7 +30,6 @@ public class UsingJSON implements Information{
     @Override
     public void scan() {
         decision.put("action","scan");
-        logger.info(decision.toString());
     }
 
     @Override
@@ -74,9 +74,9 @@ public class UsingJSON implements Information{
         return response.getString("status");
     }
 
-    private JSONObject extraInfo(){
-        return response.getJSONObject("extras");
-    }
+    //private JSONObject extraInfo(){
+    //return response.getJSONObject("extras");
+    //}
 
     @Override
     public String decision(){
@@ -88,18 +88,21 @@ public class UsingJSON implements Information{
     }
 
     @Override
-    public JSONArray terrain(){
-        return response.getJSONObject("extras").getJSONArray("biomes");
+    public List<String> terrain(){
+        List<Object> list = response.getJSONObject("extras").getJSONArray("biomes").toList();
+        return toArrayList(list);
     }
 
     @Override
-    public JSONArray site(){
-        return response.getJSONObject("extras").getJSONArray("sites");
+    public List<String> creek(){
+        List<Object> list = response.getJSONObject("extras").getJSONArray("creeks").toList();
+        return toArrayList(list);
     }
 
     @Override
-    public JSONArray creek(){
-        return response.getJSONObject("extras").getJSONArray("creeks");
+    public List<String> site(){
+        List<Object> list = response.getJSONObject("extras").getJSONArray("sites").toList();
+        return toArrayList(list);
     }
 
     @Override
@@ -110,5 +113,14 @@ public class UsingJSON implements Information{
     @Override
     public int range(){
         return response.getJSONObject("extras").getInt("range");
+    }
+
+    @Override
+    public List<String> toArrayList(List<Object> list) {
+        List<String> result = new ArrayList<>();
+        for (Object obj: list) {
+            result.add(obj.toString());
+        }
+        return result;
     }
 }

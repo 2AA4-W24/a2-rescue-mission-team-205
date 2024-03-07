@@ -27,8 +27,8 @@ public class PhotoScanner {
 
     public boolean scanResults(){
 
-        if(info.terrain().toList().size() == 1){
-            return !info.terrain().toList().contains("OCEAN");
+        if(info.terrain().size() == 1){
+            return !info.terrain().contains("OCEAN");
         }
         else{
             return true;
@@ -36,7 +36,7 @@ public class PhotoScanner {
     }
 
     public boolean siteFound(){
-        if(!info.site().toList().isEmpty()){
+        if(!info.site().isEmpty()){
             site = new PointOfInterest(info.site().toString(), drone.getLocation());
             return true;
         }
@@ -47,8 +47,8 @@ public class PhotoScanner {
 
     public boolean overCoast(){
 
-        if(info.terrain().toList().size() >= 2){
-            return info.terrain().toList().contains("OCEAN");
+        if(info.terrain().size() >= 2){
+            return info.terrain().contains("OCEAN");
         }
         else{
             return false;
@@ -57,9 +57,9 @@ public class PhotoScanner {
 
 
     public void creekScan(){
-        List<Object> creekList = info.creek().toList();
-        if(!info.creek().toList().isEmpty()){
-            String identifier = creekList.get(0).toString();
+        List<String> creekList = info.creek();
+        if(!info.creek().isEmpty()){
+            String identifier = creekList.get(0);
             creeks.addCreek(new PointOfInterest(identifier, drone.getLocation()));
         }
     }
@@ -72,6 +72,26 @@ public class PhotoScanner {
         else{
             return null;
         }
+    }
+
+    public List<String> getCreekResults(){
+        return info.creek();
+    }
+
+    public List<String> getSiteResults(){
+        return info.site();
+    }
+
+    public boolean scanCreek(){
+        return !info.creek().isEmpty();
+    }
+
+    public boolean scanSite(){
+        return !info.site().isEmpty();
+    }
+
+    public boolean scanOcean(){
+        return info.terrain().contains("OCEAN");
     }
 
 

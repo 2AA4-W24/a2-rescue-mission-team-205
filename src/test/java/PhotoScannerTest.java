@@ -3,6 +3,7 @@ import ca.mcmaster.se2aa4.island.team205.Drone;
 import ca.mcmaster.se2aa4.island.team205.UsingJSON;
 import ca.mcmaster.se2aa4.island.team205.PhotoScanner;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,25 +13,25 @@ class PhotoScannerTest {
     private PhotoScanner photoScanner;
     private UsingJSON usingJSON;
 
-    private Drone drone;
+    private Drone drone = new Drone(usingJSON);
 
+    private CreekLocations creeks = new CreekLocations();
     @BeforeEach
     void setUp() {
         usingJSON = new UsingJSON();
-        drone = new Drone(usingJSON);
-        photoScanner = new PhotoScanner(usingJSON, drone, new CreekLocations());
+        photoScanner = new PhotoScanner(usingJSON, drone, creeks);
     }
 
     @Test
     void testScanResultsWhenOceanIsNotPresent() {
         usingJSON.results("{\"extras\":{\"biomes\":[\"LAND\", \"MOUNTAIN\"]}}");
-        assertTrue(photoScanner.scanResults());
+        Assertions.assertFalse(photoScanner.scanOcean());
     }
 
     @Test
     void testScanResultsWhenOceanIsPresent() {
-        usingJSON.results("{\"extras\":{\"biomes\":[\"OCEAN\"]}}");
-        assertFalse(photoScanner.scanResults());
+        usingJSON.results("{\"extras\":{\"biomes\":[\"LAND\", \"OCEAN\"]}}");
+        Assertions.assertTrue(photoScanner.scanOcean());
     }
 
 }
