@@ -45,6 +45,17 @@ public class PhotoScanner {
         }
     }
 
+    public boolean overCoast(){
+
+        if(info.terrain().toList().size() >= 2){
+            return info.terrain().toList().contains("OCEAN");
+        }
+        else{
+            return false;
+        }
+    }
+
+
     public void creekScan(){
         List<Object> creekList = info.creek().toList();
         if(!info.creek().toList().isEmpty()){

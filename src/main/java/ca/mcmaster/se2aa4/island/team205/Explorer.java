@@ -23,7 +23,7 @@ public class Explorer implements IExplorerRaid {
 
        // logger.info("** Initializing the Exploration Command Center");
         JSONObject info = new JSONObject(new JSONTokener(new StringReader(s)));
-        String start = info.toString(2);
+        //String start = info.toString(2);
        // logger.info("** Initialization info:\n {}",start);
        // Integer batteryLevel = info.getInt("budget");
 

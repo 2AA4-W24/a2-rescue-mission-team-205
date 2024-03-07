@@ -58,16 +58,18 @@ public class CommandCenter {
             drone.returnHome();
         }
         else if(drone.battery <= 30){
+            creek = closestCreek();
             drone.returnHome();
             count++;
         }
         else if(range != 0 && !land){
+            logger.info("battery --" + drone.battery);
             phaseOne();
             commands ++;
             count++;
         }
         else if(creekSearching){
-            logger.info("creek");
+
             findCreeks();
             count++;
             commands++;
@@ -90,18 +92,18 @@ public class CommandCenter {
 
     private void phaseOne(){
         if(!landSpotted) {
-            logger.info("finding land");
+
             findLand();
         }
         else{
-            logger.info("fly to land");
+
             flyToLand();
         }
     }
 
 
     private void generalMovement(){
-        if (commands % 2 == 0) {
+        if (commands % 1 == 0) {
             radar.useRadarFront(drone.getDirection());
             actionLog.addLog(Action.ECHOF);
         }
@@ -177,13 +179,7 @@ public class CommandCenter {
 
     private void findCreeks(){
         //implement grid search
-        if(search.isSiteFound()){
-            creek = closestCreek();
-            drone.returnHome();
-        }
-        else{
-            search.findCreeks();
-        }
+        search.findCreeks();
 
     }
 
