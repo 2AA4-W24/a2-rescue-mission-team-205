@@ -19,4 +19,16 @@ public class ActionLog {
             return Action.NONE;
         }
     }
+
+    public String getList(){
+        return log.toString();
+    }
+    public Action getPrev(int previousActions){
+        if (!log.isEmpty()) {
+            return log.get(log.size()-1 - previousActions);
+        }
+        else {
+            return Action.NONE;
+        }
+    }
 }

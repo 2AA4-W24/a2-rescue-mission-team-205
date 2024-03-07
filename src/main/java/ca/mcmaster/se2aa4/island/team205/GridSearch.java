@@ -20,7 +20,7 @@ public class GridSearch implements SearchAlgorithm{
 
     private final Drone drone = new Drone(info);
 
-    private final PhotoScanner scanner = new PhotoScanner(info, drone, new CreekLocations());
+    private final PhotoScanner scanner = new PhotoScanner(info, drone,  new CreekLocations());
 
     private final Radar radar = new Radar(info);
 
@@ -60,6 +60,11 @@ public class GridSearch implements SearchAlgorithm{
     @Override
     public PointOfInterest closestCreek(){
         return creeks.closestCreak(site);
+    }
+
+    @Override
+    public boolean isSiteFound() {
+        return false;
     }
 
     public void initialize() {

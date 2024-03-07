@@ -30,21 +30,21 @@ public class Movement {
 
             case N -> {
                 drone.setDirection(Drone.Direction.E);
-                info.turnDrone(Drone.Direction.E);
+                //info.turnDrone(Drone.Direction.E);
 
             }
             case E -> {
                 drone.setDirection(Drone.Direction.S);
-                info.turnDrone(Drone.Direction.S);
+               // info.turnDrone(Drone.Direction.S);
             }
             case S -> {
                 drone.setDirection(Drone.Direction.W);
-                info.turnDrone(Drone.Direction.W);
+               // info.turnDrone(Drone.Direction.W);
 
             }
-            default -> {
+            case W -> {
                 drone.setDirection(Drone.Direction.N);
-                info.turnDrone(Drone.Direction.N);
+                //nfo.turnDrone(Drone.Direction.N);
             }
 
         }
@@ -56,21 +56,21 @@ public class Movement {
 
             case N -> {
                 drone.setDirection(Drone.Direction.W);
-                info.turnDrone(Drone.Direction.W);
+               // info.turnDrone(Drone.Direction.W);
 
             }
             case E -> {
                 drone.setDirection(Drone.Direction.N);
-                info.turnDrone(Drone.Direction.N);
+                //info.turnDrone(Drone.Direction.N);
             }
             case S -> {
                 drone.setDirection(Drone.Direction.E);
-                info.turnDrone(Drone.Direction.E);
+                //info.turnDrone(Drone.Direction.E);
 
             }
-            default -> {
+            case W -> {
                 drone.setDirection(Drone.Direction.S);
-                info.turnDrone(Drone.Direction.S);
+                //info.turnDrone(Drone.Direction.S);
             }
 
         }

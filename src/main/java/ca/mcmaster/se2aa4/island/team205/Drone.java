@@ -81,6 +81,24 @@ public class Drone {
         setDirection(initial);
     }
 
+    public Direction getRightDirection() {
+        return switch (getDirection()) {
+            case N -> Drone.Direction.E;
+            case S -> Drone.Direction.W;
+            case W -> Drone.Direction.N;
+            case E -> Drone.Direction.S;
+        };
+    }
+
+    public Direction getLeftDirection() {
+        return switch (getDirection()) {
+            case N -> Drone.Direction.W;
+            case S -> Drone.Direction.E;
+            case W -> Drone.Direction.S;
+            case E -> Drone.Direction.N;
+        };
+    }
+
     public enum Direction{
         N,
         S,
