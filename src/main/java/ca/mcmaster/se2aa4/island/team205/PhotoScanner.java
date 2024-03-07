@@ -14,7 +14,9 @@ public class PhotoScanner {
 
     PointOfInterest site = null;
 
-    public PhotoScanner(Information information, Drone drone1, CreekLocations creekLocations){
+ 
+   public PhotoScanner(Information information, Drone drone1, CreekLocations creekLocations){
+
         pointsOfInterest = new ArrayList<>();
         info = information;
         drone = drone1;
@@ -24,7 +26,6 @@ public class PhotoScanner {
     public void scanTerrain(){
         info.scan();
     }
-
     public boolean scanResults(){
 
         if(info.terrain().size() == 1){
@@ -62,7 +63,6 @@ public class PhotoScanner {
             String identifier = creekList.get(0);
             creeks.addCreek(new PointOfInterest(identifier, drone.getLocation()));
         }
-    }
 
 
     public PointOfInterest getSite(){
@@ -93,7 +93,6 @@ public class PhotoScanner {
     public boolean scanOcean(){
         return info.terrain().contains("OCEAN");
     }
-
 
 }
 

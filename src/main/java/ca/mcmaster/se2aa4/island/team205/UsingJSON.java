@@ -3,6 +3,7 @@ package ca.mcmaster.se2aa4.island.team205;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
+
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -73,10 +74,6 @@ public class UsingJSON implements Information{
     public String status(){
         return response.getString("status");
     }
-
-    //private JSONObject extraInfo(){
-    //return response.getJSONObject("extras");
-    //}
 
     @Override
     public String decision(){

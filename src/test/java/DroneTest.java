@@ -4,13 +4,13 @@ import ca.mcmaster.se2aa4.island.team205.UsingJSON;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Assertions;
 
 class DroneTest {
 
     private Drone testDrone;
 
-    private final String s = "{\"heading\":\"E\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+    private static final String s = "{\"heading\":\"E\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
 
     private Information info;
 
@@ -27,7 +27,7 @@ class DroneTest {
         testDrone.turnLeft();
         Drone.Direction realDir = testDrone.getDirection();
         Drone.Direction expectedDir = Drone.Direction.N;
-        assertEquals(realDir, expectedDir);
+        Assertions.assertEquals(realDir, expectedDir);
     }
 
     @Test
@@ -35,28 +35,28 @@ class DroneTest {
         testDrone.turnRight();
         Drone.Direction realDir = testDrone.getDirection();
         Drone.Direction expectedDir = Drone.Direction.S;
-        assertEquals(realDir, expectedDir);
+        Assertions.assertEquals(realDir, expectedDir);
     }
 
     @Test
     void getDirectionTest() {
         Drone.Direction realDir = testDrone.getDirection();
         Drone.Direction expectedDir = Drone.Direction.E;
-        assertEquals(realDir, expectedDir);
+        Assertions.assertEquals(realDir, expectedDir);
     }
 
     @Test
     void initializeTest() {
         testDrone.initialize(s);
         Integer expectedBattery = info.budget();
-        assertEquals(expectedBattery, testDrone.battery, "InitializeTest");
+        Assertions.assertEquals(expectedBattery, testDrone.battery, "InitializeTest");
     }
     @Test
     void drainTest() {
         Integer initialBattery = testDrone.battery;
         Integer expectedDrain = initialBattery - 15;
         testDrone.drain(15);
-        assertEquals(expectedDrain, testDrone.battery, "DrainTest");
+        Assertions.assertEquals(expectedDrain, testDrone.battery, "DrainTest");
     }
 
 

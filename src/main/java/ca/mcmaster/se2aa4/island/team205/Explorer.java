@@ -12,7 +12,7 @@ import org.json.JSONTokener;
 
 public class Explorer implements IExplorerRaid {
 
-    private final Logger logger = LogManager.getLogger();
+ private final Logger logger = LogManager.getLogger();
 
     private CommandCenter center;
 
@@ -60,5 +60,4 @@ public class Explorer implements IExplorerRaid {
         logger.info("final Report: " + center.finalReport());
         return center.finalReport();
     }
-
 }
