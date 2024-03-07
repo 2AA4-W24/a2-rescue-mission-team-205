@@ -9,9 +9,14 @@ public class PhotoScanner {
 
     private Information info;
 
-    public PhotoScanner(Information information){
+    private final CreekLocations creeks;
+    private Drone drone;
+
+   public PhotoScanner(Information information, Drone drone1, CreekLocations creekLocations){
         pointsOfInterest = new ArrayList<>();
         info = information;
+        drone = drone1;
+        creeks = creekLocations;
     }
 
     public void scanTerrain(){
