@@ -20,7 +20,7 @@ public class GridSearch implements SearchAlgorithm{
 
     private final Drone drone = new Drone(info);
 
-    private final PhotoScanner scanner = new PhotoScanner(info);
+    private final PhotoScanner scanner = new PhotoScanner(info, drone, new CreekLocations());
 
     private final Radar radar = new Radar(info);
 
