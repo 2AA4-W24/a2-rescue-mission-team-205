@@ -27,7 +27,7 @@ public class Explorer implements IExplorerRaid {
        // logger.info("** Initialization info:\n {}",start);
        // Integer batteryLevel = info.getInt("budget");
 
-       // logger.info("The drone is facing {}", center);
+       logger.info("The drone is facing {}", info.getString("heading"));
         //logger.info("Battery level is {}", batteryLevel);
     }
 

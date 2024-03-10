@@ -38,15 +38,15 @@ public class Drone {
     private Direction initialDirection(String newDirection){
         Direction startingDirection;
         switch(newDirection){
-            case "North" -> {
+            case "N" -> {
                 startingDirection = Direction.N;
                 return startingDirection;
             }
-            case "South" -> {
+            case "S" -> {
                 startingDirection = Direction.S;
                 return startingDirection;
             }
-            case "West" -> {
+            case "W" -> {
                 startingDirection = Direction.W;
                 return startingDirection;
             }
@@ -69,6 +69,11 @@ public class Drone {
     public Direction getDirection(){
         return direction;
     }
+
+    public boolean isTurning(){
+        return move.inTurnProcess();
+    }
+
 
     public void drain(Integer cost){
         battery -= cost;

@@ -10,6 +10,10 @@ public class Movement {
 
     private final int[] coordinatesOfPath = {0,0};
 
+    private boolean turning = false;
+
+    private int stage = 0;
+
     public Movement(Drone userDrone, Information information){
         drone = userDrone;
         info = information;
@@ -48,6 +52,10 @@ public class Movement {
             }
 
         }
+    }
+
+    public boolean inTurnProcess(){
+        return turning;
     }
 
 
@@ -91,5 +99,35 @@ public class Movement {
 
     public int[] getCoordinates(){
         return coordinatesOfPath;
+    }
+
+    public void tightTurnLeft(){
+        turning = true;
+        switch(stage){
+            case 0 -> drone.turnRight();
+            case 1, 2 -> drone.turnLeft();
+            default -> {
+                drone.turnRight();
+                stage = -1;
+                turning = false;
+            }
+        }
+            stage++;
+
+
+    }
+
+    public void tightTurnRight(){
+        turning = true;
+        switch(stage){
+            case 0 -> drone.turnLeft();
+            case 1, 2 -> drone.turnRight();
+            default -> {
+                drone.turnLeft();
+                stage = -1;
+                turning = false;
+            }
+        }
+        stage++;
     }
 }
