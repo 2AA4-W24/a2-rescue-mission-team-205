@@ -3,9 +3,6 @@ package ca.mcmaster.se2aa4.island.team205;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 public class CommandCenter {
 
     private final Information info = new UsingJSON();
