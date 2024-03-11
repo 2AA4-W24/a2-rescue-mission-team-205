@@ -1,7 +1,4 @@
-import ca.mcmaster.se2aa4.island.team205.CreekLocations;
-import ca.mcmaster.se2aa4.island.team205.Drone;
-import ca.mcmaster.se2aa4.island.team205.UsingJSON;
-import ca.mcmaster.se2aa4.island.team205.PhotoScanner;
+import ca.mcmaster.se2aa4.island.team205.*;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +10,9 @@ class PhotoScannerTest {
     private PhotoScanner photoScanner;
     private UsingJSON usingJSON;
 
-    private Drone drone = new Drone(usingJSON);
+    private Point point = new Point();
+
+    private Drone drone = new Drone(usingJSON, point);
 
     private CreekLocations creeks = new CreekLocations();
     @BeforeEach
