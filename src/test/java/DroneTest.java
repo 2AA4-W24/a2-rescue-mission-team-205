@@ -1,5 +1,6 @@
 import ca.mcmaster.se2aa4.island.team205.Drone;
 import ca.mcmaster.se2aa4.island.team205.Information;
+import ca.mcmaster.se2aa4.island.team205.Point;
 import ca.mcmaster.se2aa4.island.team205.UsingJSON;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,8 @@ class DroneTest {
     @BeforeEach
     void setUp() {
         info = new UsingJSON();
-        testDrone = new Drone(info);
+        Point point = new Point();
+        testDrone = new Drone(info, point);
         testDrone.initialize(s);
     }
 

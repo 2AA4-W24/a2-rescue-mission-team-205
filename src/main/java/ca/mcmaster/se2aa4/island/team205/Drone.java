@@ -11,10 +11,13 @@ public class Drone {
 
     private final Movement move;
 
+    private final Point point;
 
-    public Drone(Information information){
+
+    public Drone(Information information, Point myPoint){
         info = information;
-        move = new Movement(this, info);
+        point = myPoint;
+        move = new Movement(this, info, point);
     }
 
 
@@ -63,7 +66,7 @@ public class Drone {
     }
 
     public int[] getLocation(){
-        return move.getCoordinates();
+        return point.getCoordinates();
     }
 
     public Direction getDirection(){

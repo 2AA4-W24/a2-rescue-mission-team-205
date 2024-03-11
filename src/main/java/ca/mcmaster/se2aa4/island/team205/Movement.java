@@ -8,12 +8,14 @@ public class Movement {
 
     private final Information info;
 
-    private final int[] coordinatesOfPath = {0,0};
+    private final Point point;
 
-    public Movement(Drone userDrone, Information information){
+//    private final int[] coordinatesOfPath = {0,0};
+
+    public Movement(Drone userDrone, Information information, Point myPoint){
         drone = userDrone;
         info = information;
-
+        point = myPoint;
     }
     public void fly(){
         info.fly();
@@ -79,17 +81,17 @@ public class Movement {
 
     private void adjustPosition (){
         switch(drone.getDirection()) {
-            case N -> coordinatesOfPath[1]++;
+            case N -> point.incrementY();
 
-            case E -> coordinatesOfPath[0]++;
+            case E -> point.incrementX();
 
-            case S -> coordinatesOfPath[1]--;
+            case S -> point.decrementY();
 
-            default -> coordinatesOfPath[0]--;
+            default -> point.decrementX();
         }
     }
 
-    public int[] getCoordinates(){
-        return coordinatesOfPath;
-    }
+//    public int[] getCoordinates(){
+//        return coordinatesOfPath;
+//    }
 }
