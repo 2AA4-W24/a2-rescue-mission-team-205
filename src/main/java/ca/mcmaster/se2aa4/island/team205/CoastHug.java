@@ -28,6 +28,8 @@ public class CoastHug implements SearchAlgorithm {
 
     private final CreekLocations creeks = new CreekLocations();
 
+    int turns = 1;
+
 
     int range = -1;
 
@@ -57,24 +59,49 @@ public class CoastHug implements SearchAlgorithm {
 
     @Override
     public void findCreeks() {
-        if(actionLog.getPrev()  == Action.ECHOL){
+        logger.info(range);
+        if(actionLog.getPrev()  == Action.SCAN){
+            if(photoScanner.overCoast()){
+                sliding = false;
+                drone.fly();
+                actionLog.addLog(Action.FLY);
+            }
+            else if(photoScanner.scanResults()){
+                radar.useRadarRight(drone.getRightDirection());
+                actionLog.addLog(Action.ECHOR);
+            }
+            else{
+                sliding = false;
+                radar.useRadarLeft(drone.getLeftDirection());
+                actionLog.addLog(Action.ECHOL);
+            }
+        }
+        else if(actionLog.getPrev() == Action.ECHOR){
+               if(radar.distanceToLand() != 0){
+                   drone.fly();
+                   actionLog.addLog(Action.FLY);
+               }
+               else if (radar.distanceToLand() == -1){
+                   drone.fly();
+                   actionLog.addLog(Action.FLY);
+               }
+               else{
+                   goToCoast();
+               }
+
+        }
+        else if(actionLog.getPrev() == Action.ECHOL){
             if(radar.distanceToLand() == 0){
                 photoScanner.scanTerrain();
                 actionLog.addLog(Action.SCAN);
             }
-            else if (radar.distanceToLand() != -1){
-                range = radar.distanceToLand();
+            else if (radar.distanceToLand() == -1){
+                uTurn();
+            }
+            else{
                 recovering = true;
                 recover();
             }
-            else{
-                turning = true;
-                uTurn();
-            }
-        }
-        else if(actionLog.getPrev() == Action.SCAN){
-                drone.fly();
-                actionLog.addLog(Action.FLY);
 
         }
         else if(range > -1){
@@ -97,6 +124,24 @@ public class CoastHug implements SearchAlgorithm {
 
     }
 
+
+    private void goToCoast(){
+        if(slideStage % 3 == 1){
+            drone.turnRight();
+            actionLog.addLog(Action.TURN);
+            slideStage++;
+        }
+        else if(slideStage % 3 == 2){
+            drone.fly();
+            actionLog.addLog(Action.TURN);
+            slideStage++;
+        }
+        else{
+            photoScanner.scanTerrain();
+            actionLog.addLog(Action.SCAN);
+            slideStage = 1;
+        }
+    }
     private void gen(){
         if(range > 0){
             drone.fly();
@@ -113,15 +158,22 @@ public class CoastHug implements SearchAlgorithm {
     }
 
     private void uTurn(){
-        if(!turning){
+        if(turns %3 == 1){
             drone.turnLeft();
             actionLog.addLog(Action.TURN);
             turning = true;
+            turns ++;
+        }
+        else if(turns %3 == 2){
+            drone.turnLeft();
+            actionLog.addLog(Action.TURN);
+            turns ++;
         }
         else{
             drone.turnLeft();
             actionLog.addLog(Action.TURN);
             turning = false;
+            turns = 1;
         }
     }
 

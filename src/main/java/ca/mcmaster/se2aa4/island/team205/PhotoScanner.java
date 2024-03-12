@@ -61,7 +61,10 @@ public class PhotoScanner {
         List<String> creekList = info.creek();
         if (!info.creek().isEmpty()) {
             String identifier = creekList.get(0);
-            creeks.addCreek(new PointOfInterest(identifier, drone.getLocation()));
+            if(!creeks.identifiers().contains(identifier)){
+                creeks.addCreek(new PointOfInterest(identifier, drone.getLocation()));
+            }
+
         }
     }
 

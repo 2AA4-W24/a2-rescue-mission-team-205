@@ -29,11 +29,14 @@ public class CircleSearch implements SearchAlgorithm{
 
     boolean siteFound = false;
 
+    boolean recovering = false;
     private Drone.Direction previousD;
 
     private Drone.Direction slideDirection = Drone.Direction.E;
 
     boolean both = false;
+
+    boolean general = false;
 
     int i = 0;
 
@@ -44,6 +47,8 @@ public class CircleSearch implements SearchAlgorithm{
     boolean getToCoast = false;
 
     boolean getToLand = false;
+
+    boolean turning = false;
 
     public CircleSearch(Information information, Drone drone1, Radar radar1, ActionLog log){
         info = information;
@@ -73,32 +78,49 @@ public class CircleSearch implements SearchAlgorithm{
         }
         else if(actionLog.getPrev() == Action.ECHOL){
             if(radar.distanceToLand() == -1){
-                drone.turnLeft();
-                actionLog.addLog(Action.TURN);
+                uTurn();
             }
             else if(radar.distanceToLand() != 0){
+                radar.useRadarRight(drone.getRightDirection());
+                actionLog.addLog(Action.ECHOR);
+               //recovering = true;
+                //recover();
+                /*
                 drone.turnLeft();
                 actionLog.addLog(Action.TURN);
                 range = radar.distanceToLand();
                 getToLand = true;
+                */
 
 
             }
             else{
-                radar.useRadarRight(drone.getRightDirection());
-                actionLog.addLog(Action.ECHOR);
+                drone.fly();
+                actionLog.addLog(Action.FLY);
             }
         }
         else if(actionLog.getPrev() == Action.ECHOR){
-            if(radar.distanceToLand() == -1){
+            if(radar.distanceToLand() !=0 ){
                 drone.fly();
                 actionLog.addLog(Action.FLY);
             }
             else{
-                drone.turnRight();
-                actionLog.addLog(Action.TURN);
-                getToCoast = true;
+                recovering = true;
+                recover();
             }
+        }
+        else if(range > -1){
+            general = true;
+            gen();
+        }
+        else if(recovering){
+            recover();
+        }
+        else if(turning){
+            uTurn();
+        }
+        else if(general){
+            gen();
         }
         else if(getToCoast){
             toCoast();
@@ -112,8 +134,55 @@ public class CircleSearch implements SearchAlgorithm{
         }
     }
 
+
+    private void gen(){
+        if(range > 0){
+            drone.fly();
+            actionLog.addLog(Action.FLY);
+            range --;
+        }
+        else if(range == 0){
+
+            drone.turnRight();
+            actionLog.addLog(Action.TURN);
+
+        }
+        else{
+            photoScanner.scanTerrain();
+            actionLog.addLog(Action.SCAN);
+            range = -1;
+            general =false;
+        }
+
+    }
+
+    private void recover(){
+        if(slideStage % 4 == 1){
+            drone.fly();
+            actionLog.addLog(Action.FLY);
+            slideStage++;
+        }
+        else if(slideStage %4 == 2){
+            drone.turnLeft();
+            actionLog.addLog(Action.TURN);
+            slideStage++;
+        }
+        else if(slideStage %4 == 3){
+            drone.turnLeft();
+            actionLog.addLog(Action.TURN);
+            slideStage++;
+        }
+        else{
+            drone.turnRight();
+            actionLog.addLog(Action.TURN);
+            slideStage = 1;
+            recovering = false;
+            general = true;
+        }
+    }
     private void toLand(){
-        if(range >= 0){
+        logger.info("----------toLAND");
+        if(range > 0){
             drone.fly();
             actionLog.addLog(Action.FLY);
             range--;
@@ -127,24 +196,35 @@ public class CircleSearch implements SearchAlgorithm{
     }
 
     private void toCoast(){
-        if(actionLog.getPrev() == Action.FLY){
-            photoScanner.scanTerrain();
-            actionLog.addLog(Action.SCAN);
+        logger.info("----------toCoast");
+        if(slideStage %3 == 1){
+           drone.turnRight();
+           slideStage++;
+           actionLog.addLog(Action.TURN);
         }
-        else if(actionLog.getPrev() == Action.SCAN){
-            if(!photoScanner.scanResults()){
-                drone.turnLeft();
-                actionLog.addLog(Action.TURN);
-                getToCoast = false;
-            }
-            else{
+        else if(slideStage%3 == 2){
                 drone.fly();
+                slideStage++;
                 actionLog.addLog(Action.FLY);
-            }
         }
         else{
-            drone.fly();
-            actionLog.addLog(Action.FLY);
+            getToCoast = false;
+            slideStage = 1;
+            drone.turnLeft();
+            actionLog.addLog(Action.TURN);
+        }
+    }
+
+    private void uTurn(){
+        if(!turning){
+            drone.turnLeft();
+            actionLog.addLog(Action.TURN);
+            turning = true;
+        }
+        else{
+            drone.turnLeft();
+            actionLog.addLog(Action.TURN);
+            turning = false;
         }
     }
 

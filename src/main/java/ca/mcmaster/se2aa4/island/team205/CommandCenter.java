@@ -16,7 +16,7 @@ public class CommandCenter {
 
     private final ActionLog actionLog = new ActionLog();
 
-    private final SearchAlgorithm search = new CoastHug(info, drone, radar, actionLog);
+    private final SearchAlgorithm search = new Coast(info, drone, radar, actionLog);
 
     private int commands = 1;
 
@@ -55,9 +55,10 @@ public class CommandCenter {
     }
 
     public void takeCommand(){
+
         logger.info(count);
         logger.info(drone.battery);
-        if(count > 139){
+        if(count > 1700){
             drone.returnHome();
         }
         else if(drone.battery <= 30){

@@ -29,7 +29,7 @@ public class Movement {
     }
 
     public void turnRight(){
-
+        adjustPosition();
         switch(drone.getDirection()){
 
             case N -> {
@@ -60,6 +60,7 @@ public class Movement {
 
 
     public void turnLeft(){
+        adjustPosition();
         switch(drone.getDirection()){
 
             case N -> {

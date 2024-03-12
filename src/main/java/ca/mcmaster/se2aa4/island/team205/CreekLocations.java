@@ -1,6 +1,8 @@
 package ca.mcmaster.se2aa4.island.team205;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CreekLocations {
@@ -27,6 +29,14 @@ public class CreekLocations {
 
     public Map<PointOfInterest, int[]> all(){
         return creeks;
+    }
+
+    public List<String> identifiers(){
+        List<String> identifiers = new ArrayList<>();
+        for(PointOfInterest pointOfInterest : creeks.keySet()){
+            identifiers.add(pointOfInterest.identifier);
+        }
+        return identifiers;
     }
 
     public int numberOfCreeks(){
