@@ -32,7 +32,7 @@ public class Coast implements SearchAlgorithm{
     private final CreekLocations creeks = new CreekLocations();
 
 
-
+    boolean duplicate = false;
     int turns = 1;
 
 
@@ -210,11 +210,16 @@ public class Coast implements SearchAlgorithm{
         }
     }
     private void scanLogic(){
-        photoScanner.creekScan();
-        if(photoScanner.overCoast()){
+        if(!photoScanner.creekScan()){
+            duplicate = true;
+            photoScanner.scanTerrain();
+            actionLog.addLog(Action.SCAN);
+        }
+        else if(photoScanner.overCoast()){
             drone.fly();
             actionLog.addLog(Action.FLY);
             reachedCoast = true;
+
         }
         else if(photoScanner.scanResults()){
             radar.useRadarRight(drone.getRightDirection());
@@ -236,6 +241,6 @@ public class Coast implements SearchAlgorithm{
 
     @Override
     public boolean isSiteFound() {
-        return false;
+        return duplicate;
     }
 }
