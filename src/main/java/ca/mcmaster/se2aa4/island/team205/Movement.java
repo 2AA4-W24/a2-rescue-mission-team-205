@@ -8,16 +8,14 @@ public class Movement {
 
     private final Information info;
 
-    private final int[] coordinatesOfPath = {0,0};
+    private final Point point;
 
-    private boolean turning = false;
 
-    private int stage = 0;
+    public Movement(Drone userDrone, Information information, Point myPoint){
 
-    public Movement(Drone userDrone, Information information){
         drone = userDrone;
         info = information;
-
+        point = myPoint;
     }
     public void fly(){
         info.fly();
@@ -34,30 +32,18 @@ public class Movement {
 
             case N -> {
                 drone.setDirection(Drone.Direction.E);
-                //info.turnDrone(Drone.Direction.E);
-
             }
             case E -> {
                 drone.setDirection(Drone.Direction.S);
-               // info.turnDrone(Drone.Direction.S);
             }
             case S -> {
                 drone.setDirection(Drone.Direction.W);
-               // info.turnDrone(Drone.Direction.W);
-
             }
             case W -> {
                 drone.setDirection(Drone.Direction.N);
-                //nfo.turnDrone(Drone.Direction.N);
             }
-
         }
     }
-
-    public boolean inTurnProcess(){
-        return turning;
-    }
-
 
     public void turnLeft(){
         adjustPosition();
@@ -65,70 +51,29 @@ public class Movement {
 
             case N -> {
                 drone.setDirection(Drone.Direction.W);
-               // info.turnDrone(Drone.Direction.W);
-
             }
             case E -> {
                 drone.setDirection(Drone.Direction.N);
-                //info.turnDrone(Drone.Direction.N);
             }
             case S -> {
                 drone.setDirection(Drone.Direction.E);
-                //info.turnDrone(Drone.Direction.E);
-
             }
             case W -> {
                 drone.setDirection(Drone.Direction.S);
-                //info.turnDrone(Drone.Direction.S);
             }
-
         }
     }
-
 
     private void adjustPosition (){
         switch(drone.getDirection()) {
-            case N -> coordinatesOfPath[1]++;
+            case N -> point.incrementY();
 
-            case E -> coordinatesOfPath[0]++;
+            case E -> point.incrementX();
 
-            case S -> coordinatesOfPath[1]--;
+            case S -> point.decrementY();
 
-            default -> coordinatesOfPath[0]--;
+            default -> point.decrementX();
         }
     }
 
-    public int[] getCoordinates(){
-        return coordinatesOfPath;
-    }
-
-    public void tightTurnLeft(){
-        turning = true;
-        switch(stage){
-            case 0 -> drone.turnRight();
-            case 1, 2 -> drone.turnLeft();
-            default -> {
-                drone.turnRight();
-                stage = -1;
-                turning = false;
-            }
-        }
-            stage++;
-
-
-    }
-
-    public void tightTurnRight(){
-        turning = true;
-        switch(stage){
-            case 0 -> drone.turnLeft();
-            case 1, 2 -> drone.turnRight();
-            default -> {
-                drone.turnLeft();
-                stage = -1;
-                turning = false;
-            }
-        }
-        stage++;
-    }
 }

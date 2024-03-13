@@ -3,16 +3,15 @@ package ca.mcmaster.se2aa4.island.team205;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 public class CommandCenter {
 
     private final Information info = new UsingJSON();
 
+    private final Point point = new Point();
+
     private final Radar radar = new Radar(info);
 
-    private final Drone drone = new Drone(info);
+    private final Drone drone = new Drone(info, point);
 
     private final ActionLog actionLog = new ActionLog();
 
