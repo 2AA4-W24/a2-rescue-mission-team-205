@@ -73,9 +73,6 @@ public class Drone {
         return direction;
     }
 
-    public boolean isTurning(){
-        return move.inTurnProcess();
-    }
 
 
     public void drain(Integer cost){
