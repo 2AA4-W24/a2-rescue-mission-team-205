@@ -35,7 +35,7 @@ public class CommandCenter {
 
     private final Logger logger = LogManager.getLogger();
 
-    boolean mappedCoast = false;
+    boolean mappedCoast = true;
 
     int count = 0;
 
@@ -61,7 +61,7 @@ public class CommandCenter {
 
         logger.info(count);
         logger.info(drone.battery);
-        if(count > 11967){
+        if(count > 11000){
             drone.returnHome();
         }
         else if(drone.battery <= 30){
@@ -75,28 +75,35 @@ public class CommandCenter {
             commands ++;
             count++;
         }
+        else if(creekSearching && mappedCoast){
+            if(search2.isSiteFound()){
+                findCreeks2();
+            }
+            else{
+                findCreeks2();
+            }
+
+            count++;
+            commands++;
+        }
         else if(creekSearching && !mappedCoast){
             if(!search.isSiteFound()){
                 findCreeks();
             }
             else{
-                mappedCoast = true;
-                if(drone.getDirection() == Drone.Direction.N ||drone.getDirection() == Drone.Direction.S){
+              if(drone.getDirection() == Drone.Direction.N ||drone.getDirection() == Drone.Direction.S){
                     findCreeks2();
                 }
                 else{
                     drone.turnLeft();
                     actionLog.addLog(Action.TURN);
                 }
+
+
             }
             count++;
             commands++;
 
-        }
-        else if(creekSearching && mappedCoast){
-            findCreeks2();
-            count++;
-            commands++;
         }
         else if(!emergencySiteFound){
             findSite();
@@ -224,11 +231,11 @@ public class CommandCenter {
 
     private PointOfInterest closestCreek(){
     //start looking radially outward
-        return search.closestCreek();
+        return search2.closestCreek();
     }
 
     public String finalReport(){
-
+        creek = closestCreek();
         return creek.identifier;
     }
 

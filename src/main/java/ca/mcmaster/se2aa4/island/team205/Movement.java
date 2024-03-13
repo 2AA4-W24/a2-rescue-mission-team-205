@@ -17,6 +17,7 @@ public class Movement {
         info = information;
         point = myPoint;
     }
+
     public void fly(){
         info.fly();
         adjustPosition();
@@ -43,6 +44,7 @@ public class Movement {
                 drone.setDirection(Drone.Direction.N);
             }
         }
+        adjustPosition();
     }
 
     public void turnLeft(){
@@ -62,6 +64,7 @@ public class Movement {
                 drone.setDirection(Drone.Direction.S);
             }
         }
+        adjustPosition();
     }
 
     private void adjustPosition (){
