@@ -61,7 +61,7 @@ public class CommandCenter {
 
         logger.info(count);
         logger.info(drone.battery);
-        if(count > 11967){
+        if(count > 11000){
             drone.returnHome();
         }
         else if(drone.battery <= 30){
@@ -81,13 +81,16 @@ public class CommandCenter {
             }
             else{
                 mappedCoast = true;
-                if(drone.getDirection() == Drone.Direction.N ||drone.getDirection() == Drone.Direction.S){
+                drone.returnHome();
+              /*  if(drone.getDirection() == Drone.Direction.N ||drone.getDirection() == Drone.Direction.S){
                     findCreeks2();
                 }
                 else{
                     drone.turnLeft();
                     actionLog.addLog(Action.TURN);
                 }
+
+               */
             }
             count++;
             commands++;

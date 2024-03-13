@@ -58,12 +58,12 @@ public class Coast implements SearchAlgorithm{
         drone = drone1;
         photoScanner = new PhotoScanner(info, drone, creeks);
         actionLog = log;
-        start = new int[]{drone.getLocation()[0], drone.getLocation()[1]};
+
 
     }
     @Override
     public void findEmergencySite() {
-
+        start = new int[]{drone.getLocation()[0], drone.getLocation()[1]};
     }
 
     private boolean close(){
@@ -79,9 +79,12 @@ public class Coast implements SearchAlgorithm{
     public void findCreeks() {
      //   logger.info(actionLog.getList().toString());
 
-        //logger.info(Arrays.toString(drone.getLocation()) + " " + Arrays.toString(start));
+        logger.info(Arrays.toString(drone.getLocation()) + " " + Arrays.toString(start));
         logger.info(creeks.numberOfCreeks());
-        if(i == 1){
+        if(close()){
+            drone.returnHome();
+        }
+        else if(i == 1){
             drone.fly();
             actionLog.addLog(Action.FLY);
             i++;

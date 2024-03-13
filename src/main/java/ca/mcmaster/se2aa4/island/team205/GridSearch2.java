@@ -3,6 +3,8 @@ package ca.mcmaster.se2aa4.island.team205;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Arrays;
+
 public class GridSearch2 implements SearchAlgorithm{
 
     private final Information info;
@@ -59,6 +61,7 @@ public class GridSearch2 implements SearchAlgorithm{
     @Override
     public void findCreeks() {
         logger.info(creeks.numberOfCreeks());
+        logger.info(Arrays.toString(drone.getLocation()));
         if(actionLog.getPrev() == Action.SCAN){
             photoScanner.creekScan();
 
