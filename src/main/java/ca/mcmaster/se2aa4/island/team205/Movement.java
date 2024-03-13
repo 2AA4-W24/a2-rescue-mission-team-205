@@ -10,7 +10,9 @@ public class Movement {
 
     private final Point point;
 
+
     public Movement(Drone userDrone, Information information, Point myPoint){
+
         drone = userDrone;
         info = information;
         point = myPoint;
@@ -25,7 +27,7 @@ public class Movement {
     }
 
     public void turnRight(){
-
+        adjustPosition();
         switch(drone.getDirection()){
 
             case N -> {
@@ -44,6 +46,7 @@ public class Movement {
     }
 
     public void turnLeft(){
+        adjustPosition();
         switch(drone.getDirection()){
 
             case N -> {
@@ -72,4 +75,5 @@ public class Movement {
             default -> point.decrementX();
         }
     }
+
 }

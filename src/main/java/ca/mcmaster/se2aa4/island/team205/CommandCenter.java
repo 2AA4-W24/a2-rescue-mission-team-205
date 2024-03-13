@@ -15,7 +15,9 @@ public class CommandCenter {
 
     private final ActionLog actionLog = new ActionLog();
 
-    private final SearchAlgorithm search = new GridSearch2(info, drone, radar, actionLog);
+    private SearchAlgorithm search = new Coast(info, drone, radar, actionLog);
+
+    SearchAlgorithm search2 = new GridSearch2(info, drone, radar, actionLog);
 
     private int commands = 1;
 
@@ -33,6 +35,8 @@ public class CommandCenter {
 
     private final Logger logger = LogManager.getLogger();
 
+    boolean mappedCoast = false;
+
     int count = 0;
 
     private PointOfInterest creek;
@@ -41,6 +45,7 @@ public class CommandCenter {
     public CommandCenter(String s){
         info.results(s);
         drone.initialize(s);
+        logger.info(drone.getDirection());
     }
 
     public Drone getDrone(){
@@ -53,9 +58,10 @@ public class CommandCenter {
     }
 
     public void takeCommand(){
+
         logger.info(count);
         logger.info(drone.battery);
-        if(count > 2000){
+        if(count > 11967){
             drone.returnHome();
         }
         else if(drone.battery <= 30){
@@ -69,9 +75,26 @@ public class CommandCenter {
             commands ++;
             count++;
         }
-        else if(creekSearching){
+        else if(creekSearching && !mappedCoast){
+            if(!search.isSiteFound()){
+                findCreeks();
+            }
+            else{
+                mappedCoast = true;
+                if(drone.getDirection() == Drone.Direction.N ||drone.getDirection() == Drone.Direction.S){
+                    findCreeks2();
+                }
+                else{
+                    drone.turnLeft();
+                    actionLog.addLog(Action.TURN);
+                }
+            }
+            count++;
+            commands++;
 
-            findCreeks();
+        }
+        else if(creekSearching && mappedCoast){
+            findCreeks2();
             count++;
             commands++;
         }
@@ -181,6 +204,12 @@ public class CommandCenter {
     private void findCreeks(){
         //implement grid search
         search.findCreeks();
+
+    }
+
+    private void findCreeks2(){
+        //implement grid search
+        search2.findCreeks();
 
     }
 
