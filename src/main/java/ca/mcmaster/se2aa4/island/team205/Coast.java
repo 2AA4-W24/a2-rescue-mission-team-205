@@ -81,10 +81,7 @@ public class Coast implements SearchAlgorithm{
 
         logger.info(Arrays.toString(drone.getLocation()) + " " + Arrays.toString(start));
         logger.info(creeks.numberOfCreeks());
-        if(close()){
-            drone.returnHome();
-        }
-        else if(i == 1){
+        if(i == 1){
             drone.fly();
             actionLog.addLog(Action.FLY);
             i++;

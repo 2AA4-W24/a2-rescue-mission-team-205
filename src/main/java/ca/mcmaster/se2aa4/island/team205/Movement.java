@@ -17,6 +17,7 @@ public class Movement {
         info = information;
         point = myPoint;
     }
+
     public void fly(){
         info.fly();
         adjustPosition();

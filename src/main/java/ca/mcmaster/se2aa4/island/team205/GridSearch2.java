@@ -62,15 +62,34 @@ public class GridSearch2 implements SearchAlgorithm{
     public void findCreeks() {
         logger.info(creeks.numberOfCreeks());
         logger.info(Arrays.toString(drone.getLocation()));
+
+
         if(actionLog.getPrev() == Action.SCAN){
             photoScanner.creekScan();
+            /*
+            if(photoScanner.siteFound()){
+                siteFound = true;
+                drone.fly();
+                actionLog.addLog(Action.FLY);
+            }
 
+             */
         }
+
+
+
 
         if(i == 0){
             previousD = drone.getDirection();
-            drone.fly();
-            actionLog.addLog(Action.FLY);
+            if(drone.getDirection() == Drone.Direction.E || drone.getDirection() == Drone.Direction.W){
+                drone.turnLeft();
+                actionLog.addLog(Action.TURN);
+            }
+            else{
+                drone.fly();
+                actionLog.addLog(Action.FLY);
+            }
+
 
             i++;
         }
