@@ -3,8 +3,6 @@ package ca.mcmaster.se2aa4.island.team205;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Arrays;
-
 public class GridSearch2 implements SearchAlgorithm{
 
     private final Information info;
@@ -20,8 +18,6 @@ public class GridSearch2 implements SearchAlgorithm{
     private boolean sliding = false;
 
     private int slideStage = 1;
-
-    private Drone.Direction searchingDirection;
 
     private final Logger logger = LogManager.getLogger();
 
@@ -45,11 +41,9 @@ public class GridSearch2 implements SearchAlgorithm{
 
     public GridSearch2(Information information, Drone drone1, Radar radar1, ActionLog log){
         info = information;
-
         radar = radar1;
         drone = drone1;
         photoScanner = new PhotoScanner(info, drone, creeks);
-        searchingDirection = Drone.Direction.E;
         actionLog = log;
 
     }
@@ -61,8 +55,6 @@ public class GridSearch2 implements SearchAlgorithm{
     @Override
     public void findCreeks() {
         logger.info(creeks.numberOfCreeks());
-        logger.info(Arrays.toString(drone.getLocation()));
-
 
         if(actionLog.getPrev() == Action.SCAN){
             photoScanner.creekScan();
@@ -75,8 +67,6 @@ public class GridSearch2 implements SearchAlgorithm{
 
              */
         }
-
-
 
 
         if(i == 0){
@@ -149,7 +139,6 @@ public class GridSearch2 implements SearchAlgorithm{
 
         }
     }
-
 
     private void verticalSlide(){
 

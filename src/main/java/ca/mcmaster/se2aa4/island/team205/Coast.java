@@ -3,7 +3,6 @@ package ca.mcmaster.se2aa4.island.team205;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Arrays;
 
 public class Coast implements SearchAlgorithm{
 
@@ -15,38 +14,23 @@ public class Coast implements SearchAlgorithm{
 
     private final Drone drone;
 
-    boolean trying = false;
-
     private final ActionLog actionLog;
-
-    private boolean sliding = false;
 
     private int slideStage = 1;
 
     boolean reachedCoast = true;
 
-    private Drone.Direction searchingDirection;
-
     private final Logger logger = LogManager.getLogger();
 
     private final CreekLocations creeks = new CreekLocations();
 
-
     boolean duplicate = false;
-    int turns = 1;
-
 
     int i = 1;
-    int range = -1;
-
 
     boolean recoveringLeft = false;
 
     boolean recoveringRight = false;
-
-    boolean turning = false;
-
-    boolean general = false;
 
     boolean edge = false;
 
@@ -67,19 +51,12 @@ public class Coast implements SearchAlgorithm{
     }
 
     private boolean close(){
-        if(Math.abs(drone.getLocation()[0] - start[0]) <= 4 && Math.abs(drone.getLocation()[1] - start[1]) <= 4){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return Math.abs(drone.getLocation()[0] - start[0]) <= 4 && Math.abs(drone.getLocation()[1] - start[1]) <= 4;
     }
 
     @Override
     public void findCreeks() {
-     //   logger.info(actionLog.getList().toString());
 
-        logger.info(Arrays.toString(drone.getLocation()) + " " + Arrays.toString(start));
         logger.info(creeks.numberOfCreeks());
         if(i == 1){
             drone.fly();
@@ -121,12 +98,7 @@ public class Coast implements SearchAlgorithm{
     }
 
     void returnToCoast(){
-        if(slideStage % 3 == 1){
-            drone.turnRight();
-            actionLog.addLog(Action.TURN);
-            slideStage++;
-        }
-        else if(slideStage %3 == 2){
+        if(slideStage % 3 == 1 || slideStage %3 == 2){
             drone.turnRight();
             actionLog.addLog(Action.TURN);
             slideStage++;
@@ -152,17 +124,7 @@ public class Coast implements SearchAlgorithm{
     }
 
     private void recoverLeft(){
-        if(slideStage % 5 == 1){
-            drone.turnLeft();
-            actionLog.addLog(Action.TURN);
-            slideStage++;
-        }
-        else if(slideStage %5 == 2){
-            drone.turnLeft();
-            actionLog.addLog(Action.TURN);
-            slideStage++;
-        }
-        else if(slideStage %5 == 3){
+        if(slideStage % 5 == 1 || slideStage % 5 == 2 || slideStage %5 == 3){
             drone.turnLeft();
             actionLog.addLog(Action.TURN);
             slideStage++;
@@ -181,17 +143,7 @@ public class Coast implements SearchAlgorithm{
     }
 
     private void recoverRight(){
-        if(slideStage % 5 == 1){
-            drone.turnRight();
-            actionLog.addLog(Action.TURN);
-            slideStage++;
-        }
-        else if(slideStage %5 == 2){
-            drone.turnRight();
-            actionLog.addLog(Action.TURN);
-            slideStage++;
-        }
-        else if(slideStage %5 == 3){
+        if(slideStage % 5 == 1 || slideStage % 5 == 2 || slideStage %5 == 3){
             drone.turnRight();
             actionLog.addLog(Action.TURN);
             slideStage++;
@@ -206,7 +158,7 @@ public class Coast implements SearchAlgorithm{
             actionLog.addLog(Action.TURN);
             slideStage = 1;
             recoveringRight = false;
-             reachedCoast = false;
+            reachedCoast = false;
         }
     }
     private void scanLogic(){
@@ -229,8 +181,6 @@ public class Coast implements SearchAlgorithm{
 
             radar.useRadarLeft(drone.getLeftDirection());
             actionLog.addLog(Action.ECHOL);
-            //recoveringRight = true;
-            //recoverRight();
         }
     }
 
