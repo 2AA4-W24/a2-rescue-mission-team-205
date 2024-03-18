@@ -58,18 +58,17 @@ public class GridSearch2 implements SearchAlgorithm{
 
         if(actionLog.getPrev() == Action.SCAN){
             photoScanner.creekScan();
-            /*
+
             if(photoScanner.siteFound()){
                 siteFound = true;
                 drone.fly();
                 actionLog.addLog(Action.FLY);
             }
 
-             */
+
         }
 
-
-        if(i == 0){
+        if(i == 0 && !siteFound){
             previousD = drone.getDirection();
             if(drone.getDirection() == Drone.Direction.E || drone.getDirection() == Drone.Direction.W){
                 drone.turnLeft();

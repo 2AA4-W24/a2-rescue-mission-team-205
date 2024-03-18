@@ -80,8 +80,8 @@ public class PhotoScanner {
         }
     }
 
-    public List<String> getCreekResults(){
-        return info.creek();
+    public int numberOfCreeks(){
+        return creeks.numberOfCreeks();
     }
 
     public List<String> getSiteResults(){

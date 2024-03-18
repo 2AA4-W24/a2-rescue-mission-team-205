@@ -33,6 +33,8 @@ public class CommandCenter {
 
     private final Logger logger = LogManager.getLogger();
 
+    private final Spiral spiral = new Spiral(info, drone, actionLog, point);
+
     boolean mappedCoast = true;
 
     int count = 0;
@@ -58,7 +60,10 @@ public class CommandCenter {
     public void takeCommand(){
         logger.info(count);
         logger.info(drone.battery);
-        if(drone.battery <= 30){
+        if (count >= 2450){
+            drone.returnHome();
+        }
+        else if(drone.battery <= 30){
             creek = closestCreek();
             drone.returnHome();
             count++;
@@ -173,7 +178,14 @@ public class CommandCenter {
 
     private void findSite(){
         //implement grid search
-        gridSearch.findCreeks();
+        if(gridSearch.isSiteFound()){
+            spiral.searchRadially();
+        }
+        else{
+            spiral.searchRadially();
+            //gridSearch.findCreeks();
+        }
+
 
     }
 
