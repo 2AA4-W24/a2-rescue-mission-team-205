@@ -60,7 +60,7 @@ public class CommandCenter {
     public void takeCommand(){
         logger.info(count);
         logger.info(drone.battery);
-        if (count >= 2450){
+        if (count >= 2000){
             drone.returnHome();
         }
         else if(drone.battery <= 30){
@@ -177,6 +177,7 @@ public class CommandCenter {
     }
 
     private void findSite(){
+        logger.info("------------------FACING: "+drone.getDirection());
         //implement grid search
         if(gridSearch.isSiteFound()){
             spiral.searchRadially();

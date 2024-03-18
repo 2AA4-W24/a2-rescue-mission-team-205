@@ -27,7 +27,7 @@ public class Spiral {
 
     private int curAmount = 0;
 
-    private boolean turnComplete = false;
+    private boolean turnComplete = true;
 
     private boolean spiralComplete = false;
 
@@ -42,26 +42,33 @@ public class Spiral {
     private void tightTurnLeft() {
         turnComplete = false;
         if (turnStage % 5 == 1) {
+            logger.info("----------------------tight turn1");
             drone.fly();
             actionLog.addLog(Action.FLY);
         }
         else if (turnStage % 5 == 2) {
+            logger.info("----------------------tight turn2");
             drone.turnRight();
             actionLog.addLog(Action.TURN);
         }
         else if (turnStage % 5 == 3) {
+            logger.info("----------------------tight turn3");
             drone.turnRight();
             actionLog.addLog(Action.TURN);
         }
         else if (turnStage % 5 == 4) {
+            logger.info("----------------------tight turn4");
             drone.turnRight();
             actionLog.addLog(Action.TURN);
         }
         else {
+            logger.info("----------------------tight turn5");
             drone.fly();
             actionLog.addLog(Action.FLY);
             turnComplete = true;
             turnStage = 0;
+            spiralStage++;
+            curAmount = 0;
         }
         turnStage++;
     }
@@ -75,44 +82,55 @@ public class Spiral {
         // spiraling not done
         logger.info("-----------------------------------spirl");
         if (!spiralComplete) {
-            if (actionLog.getPrev() == Action.FLY && turnComplete) {
+            if (!turnComplete) {
+                logger.info("----------------------first if");
+                tightTurnLeft();
+            }
+            else if (actionLog.getPrev() == Action.FLY) {
+                logger.info("----------------------second if");
                 photoScanner.scanTerrain();
                 actionLog.addLog(Action.SCAN);
             }
             else if(actionLog.getPrev() == Action.SCAN) {
+                logger.info("----------------------third if");
                 // creek found
                 int i = photoScanner.numberOfCreeks();
-                if (photoScanner.creekScan()) {
+                if (photoScanner.creekScan()) { // true if new creek or no creek
                     // check creek by comparing their points
                     // same creek -> spiral is complete, the old creek was the closest
                     // new creek -> spiral is complete, the new creek is the closest
-                    if (i != photoScanner.numberOfCreeks()) {
+                    if (i != photoScanner.numberOfCreeks()) { // new creek is added
+                        logger.info("----------------------spiral complete1");
                         spiralComplete = true;
                         drone.returnHome();
-                    } else {
+                    } else { // no creek
+                        logger.info("----------------------third if - no creek scanned");
                         if (curAmount < flyAmount) {
+                            logger.info("----------------------if cur<fly");
                             drone.fly();
                             actionLog.addLog(Action.FLY);
                             curAmount++;
                         } else if (curAmount == flyAmount) {
+                            logger.info("----------------------if cur=fly");
                             tightTurnLeft();
-                            if (turnComplete) {
-                                spiralStage++;
-                                curAmount = 0;
-                            }
+//                            logger.info("----------------------just ran tightTurnLeft()");
+//                            if (turnComplete) {
+//                                logger.info("----------------------TURN COMPLETE");
+//                                spiralStage++;
+//                                curAmount = 0;
+//                            }
                         }
                         if (spiralStage % 3 == 0) {
+                            logger.info("----------------------new spiral stage");
                             flyAmount++;
                             spiralStage++;
                         }
                     }
                 } else {
+                    logger.info("----------------------spiral complete2");
                     spiralComplete = true;
                     drone.returnHome();
                 }
-            }
-            else if(!turnComplete){
-                tightTurnLeft();
             }
                 /* no creek found
                 if (curAmount < flyAmount) {
