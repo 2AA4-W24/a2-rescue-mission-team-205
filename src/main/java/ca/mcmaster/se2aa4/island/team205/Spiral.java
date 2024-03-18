@@ -100,9 +100,8 @@ public class Spiral {
                 }
             }
         }
-        // spiraling done
         else {
-            // should this return something to signify that it is done?
+            drone.returnHome();
         }
     }
 }
