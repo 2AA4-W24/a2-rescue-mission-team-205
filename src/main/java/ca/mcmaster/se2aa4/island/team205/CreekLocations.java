@@ -7,6 +7,8 @@ import java.util.Map;
 
 public class CreekLocations {
 
+    int x = 1000;
+    int y = 1000;
     private final Map<PointOfInterest, int[]> creeks = new HashMap<>();
 
 
@@ -16,6 +18,7 @@ public class CreekLocations {
 
     public PointOfInterest closestCreak(PointOfInterest site){
         int minimum = 1000;
+
         PointOfInterest closest = null;
         if(site == null){
             for(PointOfInterest poi : creeks.keySet()){
@@ -25,11 +28,17 @@ public class CreekLocations {
         for(PointOfInterest poi : creeks.keySet()){
             int distanceToSite = Math.abs(poi.location[0] -  site.location[0]) + Math.abs(poi.location[1] -  site.location[1]);
             if(distanceToSite <= minimum){
+                x = Math.abs(poi.location[0] -  site.location[0]);
+                y = Math.abs(poi.location[1] -  site.location[1]);
                 minimum = distanceToSite;
                 closest = poi;
             }
         }
         return closest;
+    }
+
+    public int[] coord(){
+        return new int[] {x,y};
     }
 
     public Map<PointOfInterest, int[]> all(){

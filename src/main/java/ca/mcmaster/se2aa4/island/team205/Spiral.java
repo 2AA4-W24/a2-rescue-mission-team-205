@@ -31,12 +31,15 @@ public class Spiral {
 
     private boolean spiralComplete = false;
 
-    public Spiral(Information information, Drone drone1, ActionLog log, Point point1){
+    Radar radar;
+
+    public Spiral(Information information, Drone drone1, ActionLog log, Point point1, Radar radar1){
         info = information;
         drone = drone1;
         photoScanner = new PhotoScanner(info, drone, creeks);
         actionLog = log;
         curCreekLoc = point1;
+        radar = radar1;
     }
 
     private void tightTurnLeft() {
@@ -79,7 +82,7 @@ public class Spiral {
 
     // call this continuously
     public void searchRadially() {
-        // spiraling not done
+
         logger.info("-----------------------------------spirl");
         if (!spiralComplete) {
             if (!turnComplete) {
@@ -91,14 +94,17 @@ public class Spiral {
                 photoScanner.scanTerrain();
                 actionLog.addLog(Action.SCAN);
             }
+            else if (actionLog.getPrev() == Action.ECHOL) {
+                logger.info("----------------------second if");
+                photoScanner.scanTerrain();
+                actionLog.addLog(Action.SCAN);
+            }
             else if(actionLog.getPrev() == Action.SCAN) {
                 logger.info("----------------------third if");
                 // creek found
                 int i = photoScanner.numberOfCreeks();
                 if (photoScanner.creekScan()) { // true if new creek or no creek
-                    // check creek by comparing their points
-                    // same creek -> spiral is complete, the old creek was the closest
-                    // new creek -> spiral is complete, the new creek is the closest
+
                     if (i != photoScanner.numberOfCreeks()) { // new creek is added
                         logger.info("----------------------spiral complete1");
                         spiralComplete = true;
@@ -113,12 +119,6 @@ public class Spiral {
                         } else if (curAmount == flyAmount) {
                             logger.info("----------------------if cur=fly");
                             tightTurnLeft();
-//                            logger.info("----------------------just ran tightTurnLeft()");
-//                            if (turnComplete) {
-//                                logger.info("----------------------TURN COMPLETE");
-//                                spiralStage++;
-//                                curAmount = 0;
-//                            }
                         }
                         if (spiralStage % 3 == 0) {
                             logger.info("----------------------new spiral stage");
@@ -132,25 +132,6 @@ public class Spiral {
                     drone.returnHome();
                 }
             }
-                /* no creek found
-                if (curAmount < flyAmount) {
-                    drone.fly();
-                    actionLog.addLog(Action.FLY);
-                    curAmount++;
-                }
-                if (curAmount == flyAmount) {
-                    tightTurnLeft();
-                    if (turnComplete) {
-                        spiralStage++;
-                        curAmount = 0;
-                    }
-                }
-                if (spiralStage % 3 == 0) {
-                    flyAmount++;
-                    spiralStage++;
-                }
-
-                 */
 
         }
         else {
