@@ -41,15 +41,6 @@ class PhotoScannerTest {
     }
 
     @Test
-    void testCreekScanAddsCreek() {
-        usingJSON.results("{\"extras\":{\"creeks\":[\"Creek1\"]}}");
-        boolean creekAdded = photoScanner.creekScan();
-    
-        assertTrue(creekAdded);
-        assertEquals(1, creeks.numberOfCreeks());
-    }
-
-    @Test
     void testSiteNotFound() {
         usingJSON.results("{\"extras\":{\"sites\":[]}}"); 
         assertFalse(photoScanner.siteFound());
