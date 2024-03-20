@@ -54,6 +54,36 @@ class MovementTest {
     }
 
     @Test
+    void testTurnBack() {
+        testDrone.setDirection(Drone.Direction.S);
+        movement.turnLeft();
+        movement.turnRight();
+        Assertions.assertEquals(Drone.Direction.S, testDrone.getDirection());
+    }
+
+    @Test
+    void testTurnLeftFromWest() {
+        testDrone.setDirection(Drone.Direction.W);
+        movement.turnLeft();
+        Assertions.assertEquals(Drone.Direction.S, testDrone.getDirection());
+    }
+
+    @Test
+    void testTurnRightFromSouth() {
+        testDrone.setDirection(Drone.Direction.S);
+        movement.turnRight();
+        Assertions.assertEquals(Drone.Direction.W, testDrone.getDirection());
+    }
+
+    @Test
+    void testTurnRightFromWest() {
+        testDrone.setDirection(Drone.Direction.W);
+        movement.turnRight();
+        Assertions.assertEquals(Drone.Direction.N, testDrone.getDirection());
+    }
+
+
+    @Test
     void testAdjustPosition() {
         testDrone.setDirection(Drone.Direction.N);
         movement.fly(); // incremets y coord
