@@ -61,5 +61,13 @@ class DroneTest {
         Assertions.assertEquals(expectedDrain, testDrone.getBattery(), "DrainTest");
     }
 
+    @Test
+    void testSequentialTurns() {
+        testDrone.setDirection(Drone.Direction.N);
+        testDrone.turnRight(); 
+        testDrone.turnLeft(); 
+        testDrone.turnLeft();
+        Assertions.assertEquals(Drone.Direction.W, testDrone.getDirection(), "Direction after sequential turns");
+    }
 
 }
