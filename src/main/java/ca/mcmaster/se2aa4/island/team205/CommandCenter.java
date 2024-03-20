@@ -1,8 +1,5 @@
 package ca.mcmaster.se2aa4.island.team205;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 public class CommandCenter {
 
     private final Information info = new UsingJSON();
@@ -15,35 +12,19 @@ public class CommandCenter {
 
     private final ActionLog actionLog = new ActionLog();
 
-    private final SearchAlgorithm coastSearch = new Coast(info, drone, radar, actionLog);
-
     private final SearchAlgorithm gridSearch = new GridSearch2(info, drone, radar, actionLog);
 
     private int range = -1;
 
     private boolean landSpotted = false;
 
-    private boolean emergencySiteFound = false;
-
-    private boolean creekSearching = true;
-
-    private boolean closestCreekFound = false;
-
     private boolean land = false;
 
-    private final Logger logger = LogManager.getLogger();
-
-    boolean mappedCoast = true;
-
-    int count = 0;
-
     private PointOfInterest creek;
-
 
     public CommandCenter(String s){
         info.results(s);
         drone.initialize(s);
-        logger.info(drone.getDirection());
     }
 
     public Drone getDrone(){
@@ -56,34 +37,16 @@ public class CommandCenter {
     }
 
     public void takeCommand(){
-        logger.info(count);
-        logger.info(drone.battery);
-        if(drone.battery <= 30){
+        if(drone.getBattery() <= 30){
             creek = closestCreek();
             drone.returnHome();
-            count++;
         }
         else if(range != 0 && !land){
             phaseOne();
-            count++;
-        }
-        else if(creekSearching){
-            findSite();
-            count++;
-
-        }
-        else if(!emergencySiteFound){
-            findSite();
-            count++;
-        }
-        else if(!closestCreekFound){
-            creek = closestCreek();
-            count++;
         }
         else {
-            drone.returnHome();
+            findSite();
         }
-
     }
 
     private void phaseOne(){
@@ -149,10 +112,6 @@ public class CommandCenter {
         landSpotted = true;
     }
 
-    public int getRange(){
-        return range;
-    }
-
     private void flyToLand(){
         if(range > 0){
             drone.fly();
@@ -166,20 +125,11 @@ public class CommandCenter {
         }
     }
 
-    private void findCreeks(){
-        coastSearch.findCreeks();
-
-    }
-
     private void findSite(){
-        //implement grid search
-        gridSearch.findCreeks();
-
+        gridSearch.findEmergencySite();
     }
-
 
     private PointOfInterest closestCreek(){
-    //start looking radially outward
         return gridSearch.closestCreek();
     }
 
@@ -187,7 +137,6 @@ public class CommandCenter {
         creek = closestCreek();
         return creek.identifier;
     }
-
 
     public String decision(){
         return info.decision();

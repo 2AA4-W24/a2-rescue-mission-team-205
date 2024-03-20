@@ -51,14 +51,14 @@ class DroneTest {
     void initializeTest() {
         testDrone.initialize(s);
         Integer expectedBattery = info.budget();
-        Assertions.assertEquals(expectedBattery, testDrone.battery, "InitializeTest");
+        Assertions.assertEquals(expectedBattery, testDrone.getBattery(), "InitializeTest");
     }
     @Test
     void drainTest() {
-        Integer initialBattery = testDrone.battery;
+        Integer initialBattery = testDrone.getBattery();
         Integer expectedDrain = initialBattery - 15;
         testDrone.drain(15);
-        Assertions.assertEquals(expectedDrain, testDrone.battery, "DrainTest");
+        Assertions.assertEquals(expectedDrain, testDrone.getBattery(), "DrainTest");
     }
 
 

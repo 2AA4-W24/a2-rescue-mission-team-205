@@ -1,9 +1,8 @@
 package ca.mcmaster.se2aa4.island.team205;
 
-
 public class Drone {
 
-    public Integer battery;
+    private Integer battery;
 
     private final Information info;
 
@@ -74,7 +73,6 @@ public class Drone {
     }
 
 
-
     public void drain(Integer cost){
         battery -= cost;
     }
@@ -84,6 +82,10 @@ public class Drone {
         battery = info.budget();
         Direction initial = initialDirection(info.direction());
         setDirection(initial);
+    }
+
+    public Integer getBattery(){
+        return battery;
     }
 
     public Direction getRightDirection() {
