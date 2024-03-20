@@ -52,32 +52,32 @@ class PhotoScannerTest {
     @Test
     void testSiteNotFound() {
         usingJSON.results("{\"extras\":{\"sites\":[]}}"); 
-        assertFalse(photoScanner.siteFound(), "siteFound should return false when no site is present.");
+        assertFalse(photoScanner.siteFound());
     }
 
     @Test
     void testOverCoastWhenPresent() {
         usingJSON.results("{\"extras\":{\"biomes\":[\"LAND\", \"OCEAN\"]}}");
-        assertTrue(photoScanner.overCoast(), "overCoast should return true when OCEAN is present.");
+        assertTrue(photoScanner.overCoast());
     }
 
     @Test
     void testOverCoastWhenAbsent() {
         usingJSON.results("{\"extras\":{\"biomes\":[\"LAND\"]}}");
-        assertFalse(photoScanner.overCoast(), "overCoast should return false when OCEAN is not present.");
+        assertFalse(photoScanner.overCoast());
     }
 
     @Test
     void testGetSiteWhenFound() {
-        usingJSON.results("{\"extras\":{\"sites\":[\"Site1\"]}}"); // Simulate finding a site
-        photoScanner.siteFound(); // Trigger siteFound to set the site
-        assertNotNull(photoScanner.getSite(), "getSite should return a site when one is found.");
+        usingJSON.results("{\"extras\":{\"sites\":[\"Site1\"]}}");
+        photoScanner.siteFound();
+        assertNotNull(photoScanner.getSite());
     }
 /* 
     @Test
     void testGetSiteWhenNotFound() {
         usingJSON.results("{\"extras\":{\"site\":[]}}"); 
-        assertFalse(photoScanner.getSite(), "getSite should return null when no site is found.");
+        assertFalse(photoScanner.getSite());
     }
 */
 }

@@ -42,11 +42,7 @@ public class GridSearch2Test {
         PointOfInterest site = new PointOfInterest("Site", new int[]{5, 5});
         PointOfInterest creek1 = new PointOfInterest("Creek1", new int[]{1, 1});
         PointOfInterest creek2 = new PointOfInterest("Creek2", new int[]{10, 10});
-        // Simulate adding creeks to the search algorithm, might need indirect methods
-
-        // Assuming you have a way to set the 'site' in PhotoScanner
         gridSearch.getPhotoScanner().setSite(site);
-        // Add creeks to the GridSearch2's creek locations
         gridSearch.getCreekLocations().addCreek(creek1);
         gridSearch.getCreekLocations().addCreek(creek2);
 
