@@ -11,19 +11,20 @@ public class CreekLocations {
     int y = 1000;
     private final Map<PointOfInterest, int[]> creeks = new HashMap<>();
 
+    private PointOfInterest closest = null;
+
 
     public void addCreek(PointOfInterest poi){
+
         creeks.put(poi,  poi.location);
+        closest = poi;
     }
 
     public PointOfInterest closestCreak(PointOfInterest site){
         int minimum = 1000;
 
-        PointOfInterest closest = null;
         if(site == null){
-            for(PointOfInterest poi : creeks.keySet()){
-                return poi;
-            }
+            return closest;
         }
         for(PointOfInterest poi : creeks.keySet()){
             int distanceToSite = Math.abs(poi.location[0] -  site.location[0]) + Math.abs(poi.location[1] -  site.location[1]);
@@ -35,14 +36,6 @@ public class CreekLocations {
             }
         }
         return closest;
-    }
-
-    public int[] coord(){
-        return new int[] {x,y};
-    }
-
-    public Map<PointOfInterest, int[]> all(){
-        return creeks;
     }
 
     public List<String> identifiers(){

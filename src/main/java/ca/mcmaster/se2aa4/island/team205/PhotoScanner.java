@@ -1,103 +1,76 @@
 package ca.mcmaster.se2aa4.island.team205;
 
 import java.util.List;
-import java.util.ArrayList;
 
 public class PhotoScanner {
 
-    private final List <PointOfInterest> pointsOfInterest;
-
-    private Information info;
+    private final Information info;
 
     private final CreekLocations creeks;
-    private Drone drone;
+    private final Drone drone;
 
-    PointOfInterest site = null;
+    private final static String ocean = "OCEAN";
 
- 
-   public PhotoScanner(Information information, Drone drone1, CreekLocations creekLocations){
+    private PointOfInterest site = null;
 
-        pointsOfInterest = new ArrayList<>();
+    public PhotoScanner(Information information, Drone drone1, CreekLocations creekLocations) {
         info = information;
         drone = drone1;
         creeks = creekLocations;
     }
 
-    public void scanTerrain(){
+    public void scanTerrain() {
         info.scan();
     }
-    public boolean scanResults(){
 
-        if(info.terrain().size() == 1){
+    public boolean scanResults() {
+
+        if (info.terrain().size() == 1) {
             return !info.terrain().contains("OCEAN");
-        }
-        else{
+        } else {
             return true;
         }
     }
 
-    public boolean siteFound(){
-        if(!info.site().isEmpty()){
+    public boolean siteFound() {
+        if (!info.site().isEmpty()) {
             site = new PointOfInterest(info.site().toString(), drone.getLocation());
             return true;
-        }
-        else{
+        } else {
             return false;
         }
     }
 
-    public boolean overCoast(){
+    public boolean overCoast() {
 
-        if(info.terrain().size() >= 2){
-            return info.terrain().contains("OCEAN");
-        }
-        else{
+        if (info.terrain().size() >= 2) {
+            return info.terrain().contains(ocean);
+        } else {
             return false;
         }
     }
 
 
-    public boolean creekScan() {
+    public void creekScan() {
         List<String> creekList = info.creek();
         if (!info.creek().isEmpty()) {
             String identifier = creekList.get(0);
-            if(!creeks.identifiers().contains(identifier)){
+            if (!creeks.identifiers().contains(identifier)) {
                 creeks.addCreek(new PointOfInterest(identifier, drone.getLocation()));
-                return true;
             }
-            return false;
         }
-        return true;
     }
 
-
-    public PointOfInterest getSite(){
-        if(site != null){
+    public PointOfInterest getSite() {
+        if (site != null) {
             return site;
-        }
-        else{
+        } else {
             return null;
         }
     }
 
-    public int numberOfCreeks(){
-        return creeks.numberOfCreeks();
-    }
-
-    public List<String> getSiteResults(){
-        return info.site();
-    }
-
-    public boolean scanCreek(){
-        return !info.creek().isEmpty();
-    }
-
-    public boolean scanSite(){
-        return !info.site().isEmpty();
-    }
-
     public boolean scanOcean(){
-        return info.terrain().contains("OCEAN");
+        return info.terrain().contains(ocean);
     }
 
 }

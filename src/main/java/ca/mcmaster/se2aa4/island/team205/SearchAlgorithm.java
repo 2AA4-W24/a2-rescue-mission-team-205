@@ -4,8 +4,7 @@ public interface SearchAlgorithm {
 
     void findEmergencySite();
 
-    void findCreeks();
-
     PointOfInterest closestCreek();
+
     boolean isSiteFound();
 }
