@@ -1,60 +1,71 @@
 package ca.mcmaster.se2aa4.island.team205;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 public class GridSearch2 implements SearchAlgorithm{
 
-    private final Information info;
     private final PhotoScanner photoScanner;
+
     private final Radar radar;
+
     private final Drone drone;
+
     private final ActionLog actionLog;
-    private boolean sliding = false;
-    private int slideStage = 1;
+
     private final CreekLocations creeks = new CreekLocations();
-    boolean afterSlide = false;
-    boolean siteFound = false;
+
     private Drone.Direction previousD;
+
     private Drone.Direction slideDirection = Drone.Direction.E;
-    boolean both = false;
-    boolean finished = false;
-    boolean transition = false;
-    boolean site = false;
-    private int i = 0;
+
+    private Drone.Direction loopDirection;
+
+    private boolean finished = false;
+
+    private boolean initial = true;
+
+    private boolean afterSlide = false;
+
+    private boolean siteFound = false;
+
+    private boolean looping = false;
+
+    private boolean eastCoast = true;
+
+    private boolean sliding = false;
+
+    private int slideStage = 1;
+
     private int range = -1;
-    private int turned = 0;
 
     public GridSearch2(Information information, Drone drone1, Radar radar1, ActionLog log){
-        info = information;
         radar = radar1;
         drone = drone1;
-        photoScanner = new PhotoScanner(info, drone, creeks);
+        photoScanner = new PhotoScanner(information, drone, creeks);
         actionLog = log;
 
     }
+
     @Override
     public void findEmergencySite() {
         if(actionLog.getPrev() == Action.SCAN){
             photoScanner.creekScan();
-
             if(photoScanner.siteFound()) {
                 siteFound = true;
                 closestCreek();
             }
         }
 
-        if(i == 0 && !siteFound){
+        if(initial && !siteFound){
             previousD = drone.getDirection();
             if(drone.getDirection() == Drone.Direction.E || drone.getDirection() == Drone.Direction.W){
                 drone.turnLeft();
                 actionLog.addLog(Action.TURN);
             }
             else{
-                drone.fly();
-                actionLog.addLog(Action.FLY);
+                photoScanner.scanTerrain();
+                actionLog.addLog(Action.SCAN);
+                initial = false;
             }
-            i++;
+
         }
         else{
             verticalSearch();
@@ -71,45 +82,41 @@ public class GridSearch2 implements SearchAlgorithm{
         if(sliding){
             verticalSlide();
         }
-        else if(actionLog.getPrev() == Action.TURN){
-            photoScanner.scanTerrain();
-            actionLog.addLog(Action.SCAN);
-            finished = true;
-
+        else if(looping){
+            loop();
         }
         else if(finished){
-            if(transition){
-                drone.fly();
-                actionLog.addLog(Action.FLY);
-            }
-            else {
                 radar.useRadarFront(drone.getDirection());
                 actionLog.addLog(Action.ECHOF);
                 afterSlide = true;
 
-            }
+
             finished = false;
         }
-        else if(actionLog.getPrev() == Action.SCAN){
-            scanDecision();
-        }
-        else if(actionLog.getPrev() == Action.ECHOF) {
-            echoFrontDecision();
-        }
-        else if(actionLog.getPrev() == Action.ECHOL) {
-            echoSideDirection();
+        else if(actionLog.getPrev() == Action.TURN){
+            photoScanner.scanTerrain();
+            actionLog.addLog(Action.SCAN);
+            finished = true;
         }
         else{
-            if(transition){
-                transition = false;
-                both = true;
-                verticalSlide();
-
+            switch (actionLog.getPrev()){
+                case SCAN -> scanDecision();
+                case NONE -> radarSurrounding();
+                case ECHOF -> echoFrontDecision();
+                case ECHOR,ECHOL ->echoSideDirection();
+                default ->  generalMovement();
             }
-            else{
-                generalMovement();
-            }
+        }
+    }
 
+    private void radarSurrounding(){
+        if(actionLog.getPrev(1) == Action.ECHOR){
+            radar.useRadar(drone.getRightDirection());
+            actionLog.addLog(Action.ECHOR);
+        }
+        else{
+            radar.useRadar(drone.getLeftDirection());
+            actionLog.addLog(Action.ECHOL);
         }
     }
 
@@ -124,6 +131,7 @@ public class GridSearch2 implements SearchAlgorithm{
             actionLog.addLog(Action.SCAN);
         }
     }
+
     private void verticalSlide(){
 
         sliding = true;
@@ -161,7 +169,6 @@ public class GridSearch2 implements SearchAlgorithm{
             drone.fly();
             actionLog.addLog(Action.FLY);
             siteFound = true;
-
         }
         else if(photoScanner.scanResults()){
             drone.fly();
@@ -179,18 +186,57 @@ public class GridSearch2 implements SearchAlgorithm{
         }
     }
 
+    private void loop(){
+        looping  = true;
+        switch (slideStage % 6) {
+            case 1, 3, 4, 5 -> {
+                if ((eastCoast && loopDirection == Drone.Direction.N) || (!eastCoast && loopDirection == Drone.Direction.S)){
+                    drone.turnLeft();
+                }
+                else{
+                    drone.turnRight();
+                }
+                actionLog.addLog(Action.TURN);
+            }
+            case 2 -> {
+                drone.fly();
+                actionLog.addLog(Action.FLY);
+            }
+            default -> {
+                radar.useRadarFront(drone.getDirection());
+                actionLog.addLog(Action.ECHOF);
+                slideStage = 0;
+                looping = false;
+                eastCoast = !eastCoast;
+            }
+        }
+        slideStage++;
+    }
+
     private void echoFrontDecision(){
         if(radar.distanceToLand() == -1 && afterSlide){
-            switchSlideDirection();
+            looping = true;
+            if(slideDirection == Drone.Direction.E){
+                slideDirection = Drone.Direction.W;
+                loopDirection = drone.getDirection();
+                eastCoast = true;
+            }
+            else{
+                eastCoast = false;
+                loopDirection = drone.getDirection();
+                slideDirection = Drone.Direction.E;
+            }
+            loop();
         }
         else if(radar.distanceToLand() == -1){
             if(drone.getRightDirection() == slideDirection){
                 radar.useRadarRight(drone.getRightDirection());
+                actionLog.addLog(Action.ECHOR);
             }
             else{
                 radar.useRadarLeft(drone.getLeftDirection());
+                actionLog.addLog(Action.ECHOL);
             }
-            actionLog.addLog(Action.ECHOL);
         }
         else{
             range = radar.distanceToLand();
@@ -201,49 +247,13 @@ public class GridSearch2 implements SearchAlgorithm{
         afterSlide = false;
     }
 
-    private void switchSlideDirection(){
-        if(turned == 3){
-            if(siteFound){
-                site = true;
-            }
-            else{
-                drone.returnHome();
-            }
-        }
-        else if(slideDirection == Drone.Direction.E){
-            slideDirection = Drone.Direction.W;
-            afterSlide = false;
-            if(drone.getDirection() == Drone.Direction.N){
-                drone.turnLeft();
-            }
-            else{
-                drone.turnRight();
-            }
-
-        }
-        else{
-            slideDirection = Drone.Direction.E;
-            afterSlide = false;
-            if(drone.getDirection() == Drone.Direction.S){
-                drone.turnLeft();
-            }
-            else{
-                drone.turnRight();
-            }
-
-        }
-        actionLog.addLog(Action.TURN);
-        slideStage = 2;
-        turned ++;
-        transition = true;
-    }
     private void echoSideDirection(){
-        if(radar.distanceToLand() == -1 || radar.distanceToLand() > 1){
+        if(radar.distanceToLand() == -1){
             verticalSlide();
         }
         else{
             drone.fly();
-            actionLog.addLog(Action.FLY);
+            actionLog.addLog(Action.NONE);
         }
     }
 
@@ -269,6 +279,6 @@ public class GridSearch2 implements SearchAlgorithm{
 
     @Override
     public boolean isSiteFound(){
-        return site;
+        return siteFound;
     }
 }
