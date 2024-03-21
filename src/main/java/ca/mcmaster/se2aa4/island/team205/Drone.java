@@ -61,8 +61,8 @@ public class Drone {
         info.turnDrone(direction);
     }
 
-    public int[] getLocation(){
-        return point.getCoordinates();
+    public Point getLocation(){
+        return point;
     }
 
     public Direction getDirection(){

@@ -1,23 +1,25 @@
 package ca.mcmaster.se2aa4.island.team205;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.*;
 
 public class CreekLocations {
 
     int x = 1000;
     int y = 1000;
-    private final Map<PointOfInterest, int[]> creeks = new HashMap<>();
+    private final Map<PointOfInterest, Point> creeks = new HashMap<>();
 
     private PointOfInterest closest = null;
 
+    private final Logger logger = LogManager.getLogger();
+
 
     public void addCreek(PointOfInterest poi){
-
-        creeks.put(poi,  poi.location);
+        creeks.put(poi, poi.location);
         closest = poi;
+        logger.info("YES: " + Arrays.toString(poi.location.getCoordinates()));
     }
 
     public PointOfInterest closestCreak(PointOfInterest site){
@@ -27,10 +29,11 @@ public class CreekLocations {
             return closest;
         }
         for(PointOfInterest poi : creeks.keySet()){
-            int distanceToSite = Math.abs(poi.location[0] -  site.location[0]) + Math.abs(poi.location[1] -  site.location[1]);
+            logger.info(Arrays.toString(poi.location.getCoordinates()));
+            int distanceToSite = Math.abs(poi.location.getXCoordinate() -  site.location.getXCoordinate()) + Math.abs(poi.location.getYCoordinate() -  site.location.getYCoordinate());
             if(distanceToSite <= minimum){
-                x = Math.abs(poi.location[0] -  site.location[0]);
-                y = Math.abs(poi.location[1] -  site.location[1]);
+                x = Math.abs(poi.location.getXCoordinate() -  site.location.getXCoordinate());
+                y = Math.abs(poi.location.getYCoordinate() -  site.location.getYCoordinate());
                 minimum = distanceToSite;
                 closest = poi;
             }

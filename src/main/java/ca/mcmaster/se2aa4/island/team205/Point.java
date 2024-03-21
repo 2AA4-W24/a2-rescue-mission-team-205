@@ -4,6 +4,14 @@ public class Point {
     int xCoordinate = 0;
     int yCoordinate = 0;
 
+    public Point(int x, int y){
+        xCoordinate = x;
+        yCoordinate = y;
+    }
+
+
+
+
     public int getXCoordinate() {
         return xCoordinate;
     }

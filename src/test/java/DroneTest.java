@@ -18,7 +18,7 @@ class DroneTest {
     @BeforeEach
     void setUp() {
         info = new UsingJSON();
-        Point point = new Point();
+        Point point = new Point(0,0);
         testDrone = new Drone(info, point);
         testDrone.initialize(s);
     }
