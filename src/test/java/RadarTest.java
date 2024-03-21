@@ -5,7 +5,6 @@ import ca.mcmaster.se2aa4.island.team205.Drone;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Assertions;
 
 class RadarTest {
 
@@ -25,19 +24,19 @@ class RadarTest {
 
     @Test
     void testUseRadarFront() {
-        radar.useRadarFront(Drone.Direction.N);
+        radar.useRadar(Drone.Direction.N);
         Assertions.assertEquals("{\"action\":\"echo\",\"parameters\":{\"direction\":\"N\"}}", usingJSON.decision());
     }
 
     @Test
     void testUseRadarRight() {
-        radar.useRadarRight(Drone.Direction.E);
+        radar.useRadar(Drone.Direction.E);
         Assertions.assertEquals("{\"action\":\"echo\",\"parameters\":{\"direction\":\"E\"}}", usingJSON.decision());
     }
 
     @Test
     void testUseRadarLeft() {
-        radar.useRadarLeft(Drone.Direction.W);
+        radar.useRadar(Drone.Direction.W);
         Assertions.assertEquals("{\"action\":\"echo\",\"parameters\":{\"direction\":\"W\"}}", usingJSON.decision());
     }
 

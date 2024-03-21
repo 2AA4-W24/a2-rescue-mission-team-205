@@ -6,18 +6,20 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 public class UsingJSONLand implements LandActions {
-    
+
 
     private final JSONObject decision = new JSONObject();
     private final JSONObject parameters = new JSONObject();
     private JSONObject response;
+
+    private final String actionCommand = "action";
 
     public UsingJSONLand() {
         // empty constructor
     }
     @Override
     public void land(String creekId, int people){
-        decision.put("action", "land");
+        decision.put(actionCommand, "land");
         parameters.put("creek", creekId);
         parameters.put("people", people);
         decision.put("parameters", parameters);
@@ -25,21 +27,21 @@ public class UsingJSONLand implements LandActions {
 
     @Override
     public void scout(String direction){
-        decision.put("action", "scout");
+        decision.put(actionCommand, "scout");
         parameters.put("direction", direction);
         decision.put("parameters", parameters);
     }
 
     @Override
     public void moveTo(String direction){
-        decision.put("action", "move_to");
+        decision.put(actionCommand, "move_to");
         parameters.put("direction", direction);
         decision.put("parameters", parameters);
     }
 
     @Override
     public void explore(){
-        decision.put("action", "explore");
+        decision.put(actionCommand, "explore");
         // no params
     }
 
