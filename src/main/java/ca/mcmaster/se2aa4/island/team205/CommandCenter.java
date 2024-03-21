@@ -20,6 +20,10 @@ public class CommandCenter {
 
     private boolean land = false;
 
+    boolean positioning = false;
+
+    int turns = 1;
+
     private PointOfInterest creek;
 
     public CommandCenter(String s){
@@ -40,6 +44,14 @@ public class CommandCenter {
         if(drone.getBattery() <= 30){
             creek = closestCreek();
             drone.returnHome();
+        }
+        else if(positioning){
+            if (actionLog.getPrev() == Action.ECHOL){
+                landLeftSide();
+            }
+            else{
+                landRightSide();
+            }
         }
         else if(range != 0 && !land){
             phaseOne();
@@ -84,8 +96,8 @@ public class CommandCenter {
         else if (actionLog.getPrev() == Action.ECHOR) {
             if (radar.distanceToLand() != -1) {
                 findRange();
-                drone.turnRight();
-                actionLog.addLog(Action.TURN);
+                range--;
+                landRightSide();
             }
             else {
                 radar.useRadarLeft(drone.getLeftDirection());
@@ -96,8 +108,8 @@ public class CommandCenter {
         else if (actionLog.getPrev() == Action.ECHOL) {
             if (radar.distanceToLand() != -1) {
                 findRange();
-                drone.turnLeft();
-                actionLog.addLog(Action.TURN);
+                range--;
+                landLeftSide();
             }
             else {
                 drone.fly();
@@ -112,6 +124,44 @@ public class CommandCenter {
         landSpotted = true;
     }
 
+    private void landRightSide(){
+        positioning = true;
+        switch (turns % 4) {
+            case  2, 3 -> {
+                drone.turnRight();
+                range --;
+            }
+            case 1 -> {
+                drone.fly();
+            }
+            default -> {
+                drone.turnLeft();
+                turns = 0;
+                positioning = false;
+                range--;
+            }
+        }
+        turns ++;
+    }
+
+    private void landLeftSide(){
+        positioning = true;
+        switch (turns % 4) {
+            case  2, 3 -> {
+                drone.turnLeft();
+            }
+            case 1 -> {
+                drone.fly();
+            }
+            default -> {
+                drone.turnRight();
+                turns = 0;
+                positioning = false;
+            }
+        }
+        turns ++;
+    }
+
     private void flyToLand(){
         if(range > 0){
             drone.fly();
@@ -119,9 +169,8 @@ public class CommandCenter {
             actionLog.addLog(Action.FLY);
         }
         else{
-            drone.fly();
-            actionLog.addLog(Action.FLY);
             land = true;
+            findSite();
         }
     }
 
