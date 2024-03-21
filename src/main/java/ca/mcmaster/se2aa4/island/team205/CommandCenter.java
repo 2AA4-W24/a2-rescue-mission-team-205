@@ -1,10 +1,15 @@
 package ca.mcmaster.se2aa4.island.team205;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Arrays;
+
 public class CommandCenter {
 
     private final Information info = new UsingJSON();
 
-    private final Point point = new Point();
+    private final Point point = new Point(0,0);
 
     private final Radar radar = new Radar(info);
 
@@ -21,6 +26,8 @@ public class CommandCenter {
     private boolean landSpotted = false;
 
     private boolean land = false;
+
+    private final Logger logger = LogManager.getLogger();
 
     private int range = -1;
 
@@ -170,6 +177,7 @@ public class CommandCenter {
 
     public String finalReport(){
         creek = closestCreek();
+        logger.info(Arrays.toString(drone.getLocation().getCoordinates()));
         return creek.identifier;
     }
 

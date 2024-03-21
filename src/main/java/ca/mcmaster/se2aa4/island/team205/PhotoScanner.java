@@ -1,5 +1,9 @@
 package ca.mcmaster.se2aa4.island.team205;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Arrays;
 import java.util.List;
 
 public class PhotoScanner {
@@ -9,14 +13,17 @@ public class PhotoScanner {
     private final CreekLocations creeks;
     private final Drone drone;
 
-    private final String oceanCheck = "OCEAN";
+    private final String oceanCheck;
 
     private PointOfInterest site = null;
+
+    private final Logger logger = LogManager.getLogger();
 
     public PhotoScanner(Information information, Drone drone1, CreekLocations creekLocations) {
         info = information;
         drone = drone1;
         creeks = creekLocations;
+        oceanCheck = "OCEAN";
     }
 
     public void scanTerrain() {
@@ -34,7 +41,7 @@ public class PhotoScanner {
 
     public boolean siteFound() {
         if (!info.site().isEmpty()) {
-            site = new PointOfInterest(info.site().toString(), drone.getLocation());
+            site = new PointOfInterest(info.site().toString(), new Point(drone.getLocation().xCoordinate, drone.getLocation().yCoordinate));
             return true;
         } else {
             return false;
@@ -53,10 +60,11 @@ public class PhotoScanner {
 
     public void creekScan() {
         List<String> creekList = info.creek();
+
         if (!info.creek().isEmpty()) {
             String identifier = creekList.get(0);
             if (!creeks.identifiers().contains(identifier)) {
-                creeks.addCreek(new PointOfInterest(identifier, drone.getLocation()));
+                creeks.addCreek(new PointOfInterest(identifier,  new Point(drone.getLocation().xCoordinate, drone.getLocation().yCoordinate)));
             }
         }
     }

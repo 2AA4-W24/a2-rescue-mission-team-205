@@ -16,7 +16,7 @@ class MovementTest {
 
     @BeforeEach
     void setUp() {
-        point = new Point();
+        point = new Point(0,0);
         usingJSON = new UsingJSON();
         testDrone = new Drone(usingJSON, point);
         movement = new Movement(testDrone, usingJSON, point);

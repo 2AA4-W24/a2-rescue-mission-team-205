@@ -23,7 +23,7 @@ class PhotoScannerTest {
     @BeforeEach
     void setUp() {
         usingJSON = new UsingJSON();
-        drone = new Drone(usingJSON, new Point());
+        drone = new Drone(usingJSON, new Point(0,0));
         creeks = new CreekLocations();
         photoScanner = new PhotoScanner(usingJSON, drone, creeks);
     }
