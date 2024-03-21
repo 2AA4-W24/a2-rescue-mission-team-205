@@ -9,7 +9,7 @@ public class PhotoScanner {
     private final CreekLocations creeks;
     private final Drone drone;
 
-    private final static String ocean = "OCEAN";
+    private final String oceanCheck = "OCEAN";
 
     private PointOfInterest site = null;
 
@@ -26,7 +26,7 @@ public class PhotoScanner {
     public boolean scanResults() {
 
         if (info.terrain().size() == 1) {
-            return !info.terrain().contains("OCEAN");
+            return !info.terrain().contains(oceanCheck);
         } else {
             return true;
         }
@@ -44,7 +44,7 @@ public class PhotoScanner {
     public boolean overCoast() {
 
         if (info.terrain().size() >= 2) {
-            return info.terrain().contains(ocean);
+            return info.terrain().contains(oceanCheck);
         } else {
             return false;
         }
@@ -70,7 +70,7 @@ public class PhotoScanner {
     }
 
     public boolean scanOcean(){
-        return info.terrain().contains(ocean);
+        return info.terrain().contains(oceanCheck);
     }
 
 }

@@ -10,23 +10,30 @@ import java.util.List;
 public class UsingJSON implements Information{
 
     private final JSONObject decision = new JSONObject();
+
     private final JSONObject parameters = new JSONObject();
+
     private JSONObject response;
 
+    private final String actionCommand;
+
+    private final String getExtras;
+
     public UsingJSON(){
-        // empty constructor
+        actionCommand = "action";
+        getExtras = "extras";
     }
 
     @Override
     public void echo(Drone.Direction direction) {
-        decision.put("action", "echo");
+        decision.put(actionCommand, "echo");
         parameters.put("direction", direction.toString());
         decision.put("parameters", parameters);
     }
 
     @Override
     public void scan() {
-        decision.put("action","scan");
+        decision.put(actionCommand,"scan");
     }
 
     @Override
@@ -36,19 +43,19 @@ public class UsingJSON implements Information{
 
     @Override
     public void turnDrone(Drone.Direction direction) {
-        decision.put("action", "heading");
+        decision.put(actionCommand, "heading");
         parameters.put("direction", direction.toString());
         decision.put("parameters", parameters);
     }
 
     @Override
     public void goHome() {
-        decision.put("action", "stop");
+        decision.put(actionCommand, "stop");
     }
 
     @Override
     public void fly() {
-        decision.put("action", "fly");
+        decision.put(actionCommand, "fly");
     }
 
     @Override
@@ -82,30 +89,30 @@ public class UsingJSON implements Information{
 
     @Override
     public List<String> terrain(){
-        List<Object> list = response.getJSONObject("extras").getJSONArray("biomes").toList();
+        List<Object> list = response.getJSONObject(getExtras).getJSONArray("biomes").toList();
         return toArrayList(list);
     }
 
     @Override
     public List<String> creek(){
-        List<Object> list = response.getJSONObject("extras").getJSONArray("creeks").toList();
+        List<Object> list = response.getJSONObject(getExtras).getJSONArray("creeks").toList();
         return toArrayList(list);
     }
 
     @Override
     public List<String> site(){
-        List<Object> list = response.getJSONObject("extras").getJSONArray("sites").toList();
+        List<Object> list = response.getJSONObject(getExtras).getJSONArray("sites").toList();
         return toArrayList(list);
     }
 
     @Override
     public String echoReceived(){
-        return response.getJSONObject("extras").getString("found");
+        return response.getJSONObject(getExtras).getString("found");
     }
 
     @Override
     public int range(){
-        return response.getJSONObject("extras").getInt("range");
+        return response.getJSONObject(getExtras).getInt("range");
     }
 
     @Override

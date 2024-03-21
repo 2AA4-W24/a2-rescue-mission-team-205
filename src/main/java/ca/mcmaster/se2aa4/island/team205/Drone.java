@@ -12,13 +12,11 @@ public class Drone {
 
     private final Point point;
 
-
     public Drone(Information information, Point myPoint){
         info = information;
         point = myPoint;
         move = new Movement(this, info, point);
     }
-
 
     public void fly(){
         move.fly();
@@ -35,7 +33,6 @@ public class Drone {
     public void turnLeft(){
         move.turnLeft();
     }
-
 
     private Direction initialDirection(String newDirection){
         Direction startingDirection;
@@ -71,7 +68,6 @@ public class Drone {
     public Direction getDirection(){
         return direction;
     }
-
 
     public void drain(Integer cost){
         battery -= cost;

@@ -14,17 +14,17 @@ public class CommandCenter {
 
     private final SearchAlgorithm gridSearch = new GridSearch2(info, drone, radar, actionLog);
 
-    private int range = -1;
+    private PointOfInterest creek;
+
+    private boolean positioning = false;
 
     private boolean landSpotted = false;
 
     private boolean land = false;
 
-    boolean positioning = false;
+    private int range = -1;
 
-    int turns = 1;
-
-    private PointOfInterest creek;
+    private int turns = 1;
 
     public CommandCenter(String s){
         info.results(s);
@@ -46,12 +46,7 @@ public class CommandCenter {
             drone.returnHome();
         }
         else if(positioning){
-            if (actionLog.getPrev() == Action.ECHOL){
-                landLeftSide();
-            }
-            else{
-                landRightSide();
-            }
+            landSpottedOnSide();
         }
         else if(range != 0 && !land){
             phaseOne();
@@ -72,11 +67,11 @@ public class CommandCenter {
 
 
     private void generalMovement(){
-        radar.useRadarFront(drone.getDirection());
+        radar.useRadar(drone.getDirection());
         actionLog.addLog(Action.ECHOF);
 
     }
-    
+
     private void findLand(){
         if (actionLog.getPrev() == Action.NONE || actionLog.getPrev() == Action.FLY) {
             generalMovement();
@@ -89,7 +84,7 @@ public class CommandCenter {
                 actionLog.addLog(Action.FLY);
             }
             else {
-                radar.useRadarRight(drone.getRightDirection());
+                radar.useRadar(drone.getRightDirection());
                 actionLog.addLog(Action.ECHOR);
             }
         }
@@ -97,10 +92,10 @@ public class CommandCenter {
             if (radar.distanceToLand() != -1) {
                 findRange();
                 range--;
-                landRightSide();
+                landSpottedOnSide();
             }
             else {
-                radar.useRadarLeft(drone.getLeftDirection());
+                radar.useRadar(drone.getLeftDirection());
                 actionLog.addLog(Action.ECHOL);
 
             }
@@ -109,7 +104,7 @@ public class CommandCenter {
             if (radar.distanceToLand() != -1) {
                 findRange();
                 range--;
-                landLeftSide();
+                landSpottedOnSide();
             }
             else {
                 drone.fly();
@@ -124,39 +119,30 @@ public class CommandCenter {
         landSpotted = true;
     }
 
-    private void landRightSide(){
+    private void landSpottedOnSide(){
         positioning = true;
         switch (turns % 4) {
             case  2, 3 -> {
-                drone.turnRight();
+                if (actionLog.getPrev() == Action.ECHOL){
+                    drone.turnLeft();
+                }
+                else{
+                    drone.turnRight();
+                }
+
                 range --;
             }
-            case 1 -> {
-                drone.fly();
-            }
+            case 1 -> drone.fly();
             default -> {
-                drone.turnLeft();
+                if (actionLog.getPrev() == Action.ECHOL){
+                    drone.turnRight();
+                }
+                else{
+                    drone.turnLeft();
+                }
                 turns = 0;
                 positioning = false;
                 range--;
-            }
-        }
-        turns ++;
-    }
-
-    private void landLeftSide(){
-        positioning = true;
-        switch (turns % 4) {
-            case  2, 3 -> {
-                drone.turnLeft();
-            }
-            case 1 -> {
-                drone.fly();
-            }
-            default -> {
-                drone.turnRight();
-                turns = 0;
-                positioning = false;
             }
         }
         turns ++;
