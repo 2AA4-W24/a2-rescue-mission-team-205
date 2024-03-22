@@ -2,7 +2,6 @@ package ca.mcmaster.se2aa4.island.team205;
 
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +33,6 @@ public class UsingJSON implements Information{
     @Override
     public void scan() {
         decision.put(actionCommand,"scan");
-    }
-
-    @Override
-    public Integer batteryLevel() {
-        return null;
     }
 
     @Override

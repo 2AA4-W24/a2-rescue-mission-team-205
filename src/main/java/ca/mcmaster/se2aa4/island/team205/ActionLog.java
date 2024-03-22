@@ -20,9 +20,6 @@ public class ActionLog {
         }
     }
 
-    public String getList(){
-        return log.toString();
-    }
     public Action getPrev(int previousActions){
         if (!log.isEmpty()) {
             return log.get(log.size()-1 - previousActions);

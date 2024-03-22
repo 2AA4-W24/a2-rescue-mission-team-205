@@ -1,8 +1,5 @@
 package ca.mcmaster.se2aa4.island.team205;
 
-
-import java.util.Arrays;
-
 public class CommandCenter implements Mission{
 
     private final Information info = new UsingJSON();
