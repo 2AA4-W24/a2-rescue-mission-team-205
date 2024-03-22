@@ -49,7 +49,7 @@ public class GridSearch2 implements SearchAlgorithm{
 
     @Override
     public void findEmergencySite() {
-        logger.info("CREAKS "+ creeks.numberOfCreeks());
+        logger.info(creeks.numberOfCreeks());
         if(actionLog.getPrev() == Action.SCAN){
             photoScanner.creekScan();
             if(photoScanner.siteFound()) {
@@ -272,7 +272,7 @@ public class GridSearch2 implements SearchAlgorithm{
 
     @Override
     public boolean isSiteFound(){
-        return siteFound;
+        return siteFound && creeks.numberOfCreeks() == 10;
     }
 }
 

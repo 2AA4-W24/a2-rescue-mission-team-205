@@ -1,7 +1,7 @@
 package ca.mcmaster.se2aa4.island.team205;
 
-
-import java.util.Arrays;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CommandCenter implements Mission{
 
@@ -28,6 +28,8 @@ public class CommandCenter implements Mission{
     private int range = -1;
 
     private int turns = 1;
+    private final Logger logger = LogManager.getLogger();
+
 
     public CommandCenter(String s){
         info.results(s);
@@ -46,7 +48,11 @@ public class CommandCenter implements Mission{
 
     @Override
     public void takeCommand(){
-        if(drone.getBattery() <= 30){
+        logger.info(drone.getBattery());
+        if(gridSearch.isSiteFound()){
+            drone.returnHome();
+        }
+        else if(drone.getBattery() <= 30){
             creek = closestCreek();
             drone.returnHome();
         }
