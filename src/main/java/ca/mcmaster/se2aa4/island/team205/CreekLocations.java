@@ -17,15 +17,17 @@ public class CreekLocations {
 
     public PointOfInterest closestCreak(PointOfInterest site){
         int minimum = 1000;
-
+        Point poiLocation;
         if(site == null){
             return closest;
         }
+        Point siteLocation = site.location;
         for(PointOfInterest poi : creeks.keySet()){
-            int distanceToSite = Math.abs(poi.location.getXCoordinate() -  site.location.getXCoordinate()) + Math.abs(poi.location.getYCoordinate() -  site.location.getYCoordinate());
+            poiLocation = poi.location;
+            int distanceToSite = Math.abs(poiLocation.getXCoordinate() -  siteLocation.getXCoordinate()) + Math.abs(poiLocation.getYCoordinate() -  siteLocation.getYCoordinate());
             if(distanceToSite <= minimum){
-                x = Math.abs(poi.location.getXCoordinate() -  site.location.getXCoordinate());
-                y = Math.abs(poi.location.getYCoordinate() -  site.location.getYCoordinate());
+                x = Math.abs(poiLocation.getXCoordinate() -  siteLocation.getXCoordinate());
+                y = Math.abs(poiLocation.getYCoordinate() -  siteLocation.getYCoordinate());
                 minimum = distanceToSite;
                 closest = poi;
             }
