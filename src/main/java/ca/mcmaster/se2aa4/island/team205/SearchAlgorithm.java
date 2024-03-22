@@ -6,5 +6,4 @@ public interface SearchAlgorithm {
 
     PointOfInterest closestCreek();
 
-    boolean isSiteFound();
 }

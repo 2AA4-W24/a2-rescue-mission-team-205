@@ -4,7 +4,6 @@ public class Radar {
 
     private final Information info;
 
-
     public Radar(Information information){
         info = information;
     }
@@ -21,7 +20,5 @@ public class Radar {
             return -1;
         }
     }
-
-
 }
 

@@ -55,7 +55,6 @@ public class PhotoScanner {
 
     public void creekScan() {
         List<String> creekList = info.creek();
-
         if (!info.creek().isEmpty()) {
             String identifier = creekList.get(0);
             if (!creeks.identifiers().contains(identifier)) {

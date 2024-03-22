@@ -1,6 +1,5 @@
 package ca.mcmaster.se2aa4.island.team205;
 
-
 public class GridSearch2 implements SearchAlgorithm{
 
     private final PhotoScanner photoScanner;
@@ -35,13 +34,13 @@ public class GridSearch2 implements SearchAlgorithm{
 
     private int range = -1;
 
+    private int iterations = 0;
 
     public GridSearch2(Information information, Drone drone1, Radar radar1, ActionLog log){
         radar = radar1;
         drone = drone1;
         photoScanner = new PhotoScanner(information, drone, creeks);
         actionLog = log;
-
     }
 
     @Override
@@ -77,7 +76,10 @@ public class GridSearch2 implements SearchAlgorithm{
     }
 
     private void verticalSearch(){
-        if(sliding){
+        if(iterations >= 3){
+            drone.returnHome();
+        }
+        else if(sliding){
             if(actionLog.getPrev() == Action.SCAN){
                 sliding = false;
                 postTurnAction();
@@ -208,6 +210,7 @@ public class GridSearch2 implements SearchAlgorithm{
                 slideStage = 0;
                 looping = false;
                 eastCoast = !eastCoast;
+                iterations ++;
             }
         }
         slideStage++;
@@ -277,9 +280,5 @@ public class GridSearch2 implements SearchAlgorithm{
         }
     }
 
-    @Override
-    public boolean isSiteFound(){
-        return siteFound && creeks.numberOfCreeks() == 10;
-    }
 }
 

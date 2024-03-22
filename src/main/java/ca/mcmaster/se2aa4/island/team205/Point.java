@@ -1,16 +1,13 @@
 package ca.mcmaster.se2aa4.island.team205;
 
 public class Point {
-    int xCoordinate = 0;
-    int yCoordinate = 0;
+    int xCoordinate;
+    int yCoordinate;
 
     public Point(int x, int y){
         xCoordinate = x;
         yCoordinate = y;
     }
-
-
-
 
     public int getXCoordinate() {
         return xCoordinate;

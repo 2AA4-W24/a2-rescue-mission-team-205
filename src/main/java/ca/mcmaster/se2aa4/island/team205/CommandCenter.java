@@ -26,7 +26,6 @@ public class CommandCenter implements Mission{
 
     private int turns = 1;
 
-
     public CommandCenter(String s){
         info.results(s);
         drone.initialize(s);
@@ -44,11 +43,7 @@ public class CommandCenter implements Mission{
 
     @Override
     public void takeCommand(){
-        if(gridSearch.isSiteFound()){
-            creek = closestCreek();
-            drone.returnHome();
-        }
-        else if(drone.getBattery() <= 30){
+        if(drone.getBattery() <= 30){
             creek = closestCreek();
             drone.returnHome();
         }

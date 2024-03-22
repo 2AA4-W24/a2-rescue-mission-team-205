@@ -4,10 +4,6 @@ import java.util.*;
 
 public class CreekLocations {
 
-    int x = 1000;
-
-    int y = 1000;
-
     private final Map<PointOfInterest, Point> creeks = new HashMap<>();
 
     private PointOfInterest closest = null;
@@ -28,8 +24,6 @@ public class CreekLocations {
             poiLocation = poi.location;
             int distanceToSite = Math.abs(poiLocation.getXCoordinate() -  siteLocation.getXCoordinate()) + Math.abs(poiLocation.getYCoordinate() -  siteLocation.getYCoordinate());
             if(distanceToSite <= minimum){
-                x = Math.abs(poiLocation.getXCoordinate() -  siteLocation.getXCoordinate());
-                y = Math.abs(poiLocation.getYCoordinate() -  siteLocation.getYCoordinate());
                 minimum = distanceToSite;
                 closest = poi;
             }
@@ -43,10 +37,6 @@ public class CreekLocations {
             identifiers.add(pointOfInterest.identifier);
         }
         return identifiers;
-    }
-
-    public int numberOfCreeks(){
-        return creeks.size();
     }
 
 }
