@@ -1,9 +1,5 @@
 package ca.mcmaster.se2aa4.island.team205;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.util.Arrays;
 import java.util.List;
 
 public class PhotoScanner {
@@ -17,7 +13,6 @@ public class PhotoScanner {
 
     private PointOfInterest site = null;
 
-    private final Logger logger = LogManager.getLogger();
 
     public PhotoScanner(Information information, Drone drone1, CreekLocations creekLocations) {
         info = information;

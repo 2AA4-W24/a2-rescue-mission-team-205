@@ -5,7 +5,9 @@ import java.util.*;
 public class CreekLocations {
 
     int x = 1000;
+
     int y = 1000;
+
     private final Map<PointOfInterest, Point> creeks = new HashMap<>();
 
     private PointOfInterest closest = null;

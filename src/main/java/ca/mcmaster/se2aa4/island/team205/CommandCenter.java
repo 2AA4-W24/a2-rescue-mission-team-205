@@ -1,11 +1,9 @@
 package ca.mcmaster.se2aa4.island.team205;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 
-public class CommandCenter {
+public class CommandCenter implements Mission{
 
     private final Information info = new UsingJSON();
 
@@ -27,8 +25,6 @@ public class CommandCenter {
 
     private boolean land = false;
 
-    private final Logger logger = LogManager.getLogger();
-
     private int range = -1;
 
     private int turns = 1;
@@ -42,11 +38,13 @@ public class CommandCenter {
         return drone;
     }
 
+    @Override
     public void updateInformation(String s){
         info.results(s);
         drone.drain(info.cost());
     }
 
+    @Override
     public void takeCommand(){
         if(drone.getBattery() <= 30){
             creek = closestCreek();
@@ -72,11 +70,9 @@ public class CommandCenter {
         }
     }
 
-
     private void generalMovement(){
         radar.useRadar(drone.getDirection());
         actionLog.addLog(Action.ECHOF);
-
     }
 
     private void findLand(){
@@ -175,12 +171,13 @@ public class CommandCenter {
         return gridSearch.closestCreek();
     }
 
+    @Override
     public String finalReport(){
         creek = closestCreek();
-        logger.info(Arrays.toString(drone.getLocation().getCoordinates()));
         return creek.identifier;
     }
 
+    @Override
     public String decision(){
         return info.decision();
     }
