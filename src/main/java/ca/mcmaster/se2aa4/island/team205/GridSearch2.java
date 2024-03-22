@@ -1,7 +1,5 @@
 package ca.mcmaster.se2aa4.island.team205;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class GridSearch2 implements SearchAlgorithm{
 
@@ -37,7 +35,6 @@ public class GridSearch2 implements SearchAlgorithm{
 
     private int range = -1;
 
-    private final Logger logger = LogManager.getLogger();
 
     public GridSearch2(Information information, Drone drone1, Radar radar1, ActionLog log){
         radar = radar1;
@@ -49,7 +46,6 @@ public class GridSearch2 implements SearchAlgorithm{
 
     @Override
     public void findEmergencySite() {
-        logger.info(creeks.numberOfCreeks());
         if(actionLog.getPrev() == Action.SCAN){
             photoScanner.creekScan();
             if(photoScanner.siteFound()) {
@@ -82,7 +78,14 @@ public class GridSearch2 implements SearchAlgorithm{
 
     private void verticalSearch(){
         if(sliding){
-            verticalSlide();
+            if(actionLog.getPrev() == Action.SCAN){
+                sliding = false;
+                postTurnAction();
+            }
+            else{
+                verticalSlide();
+            }
+
         }
         else if(looping){
             loop();
@@ -130,7 +133,7 @@ public class GridSearch2 implements SearchAlgorithm{
 
     private void verticalSlide(){
         sliding = true;
-        if(slideStage %2 == 1){
+        if(slideStage %3 == 1){
             if(drone.getLeftDirection() == slideDirection){
                 previousD = drone.getDirection();
                 drone.turnLeft();
@@ -142,7 +145,7 @@ public class GridSearch2 implements SearchAlgorithm{
             actionLog.addLog(Action.TURN);
             slideStage++;
         }
-        else{
+        else if(slideStage %3 == 2){
             if(drone.getLeftDirection()== towardsMiddle(previousD)){
                 previousD = drone.getDirection();
                 drone.turnLeft();
@@ -152,8 +155,12 @@ public class GridSearch2 implements SearchAlgorithm{
                 drone.turnRight();
             }
             actionLog.addLog(Action.TURN);
+            slideStage++;
+        }
+        else{
+            photoScanner.scanTerrain();
+            actionLog.addLog(Action.SCAN);
             slideStage = 1;
-            sliding = false;
         }
     }
 
