@@ -1,8 +1,5 @@
 package ca.mcmaster.se2aa4.island.team205;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.*;
 
 public class CreekLocations {
@@ -13,13 +10,9 @@ public class CreekLocations {
 
     private PointOfInterest closest = null;
 
-    private final Logger logger = LogManager.getLogger();
-
-
     public void addCreek(PointOfInterest poi){
         creeks.put(poi, poi.location);
         closest = poi;
-        logger.info("YES: " + Arrays.toString(poi.location.getCoordinates()));
     }
 
     public PointOfInterest closestCreak(PointOfInterest site){
@@ -29,7 +22,6 @@ public class CreekLocations {
             return closest;
         }
         for(PointOfInterest poi : creeks.keySet()){
-            logger.info(Arrays.toString(poi.location.getCoordinates()));
             int distanceToSite = Math.abs(poi.location.getXCoordinate() -  site.location.getXCoordinate()) + Math.abs(poi.location.getYCoordinate() -  site.location.getYCoordinate());
             if(distanceToSite <= minimum){
                 x = Math.abs(poi.location.getXCoordinate() -  site.location.getXCoordinate());
