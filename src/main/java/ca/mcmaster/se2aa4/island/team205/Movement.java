@@ -50,7 +50,7 @@ public class Movement {
             case N -> point.incrementY();
             case E -> point.incrementX();
             case S -> point.decrementY();
-            default -> point.decrementX();
+            case W -> point.decrementX();
         }
     }
 
