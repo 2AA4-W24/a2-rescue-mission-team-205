@@ -1,4 +1,4 @@
-package ca.mcmaster.se2aa4.island.team205;
+package ca.mcmaster.se2aa4.island.team205.Bonus;
 
 public interface LandActions {
 

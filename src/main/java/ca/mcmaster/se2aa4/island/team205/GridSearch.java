@@ -1,6 +1,6 @@
 package ca.mcmaster.se2aa4.island.team205;
 
-public class GridSearch2 implements SearchAlgorithm{
+public class GridSearch implements SearchAlgorithm{
 
     private final PhotoScanner photoScanner;
 
@@ -36,7 +36,7 @@ public class GridSearch2 implements SearchAlgorithm{
 
     private int iterations = 0;
 
-    public GridSearch2(Information information, Drone drone1, Radar radar1, ActionLog log){
+    public GridSearch(Information information, Drone drone1, Radar radar1, ActionLog log){
         radar = radar1;
         drone = drone1;
         photoScanner = new PhotoScanner(information, drone, creeks);

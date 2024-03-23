@@ -1,7 +1,8 @@
-package ca.mcmaster.se2aa4.island.team205;
+package ca.mcmaster.se2aa4.island.team205.Bonus;
 
 import java.io.StringReader;
 
+import ca.mcmaster.se2aa4.island.team205.Bonus.LandActions;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
