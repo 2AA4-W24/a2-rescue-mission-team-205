@@ -12,7 +12,7 @@ public class CommandCenter implements Mission{
 
     private final ActionLog actionLog = new ActionLog();
 
-    private final SearchAlgorithm gridSearch = new GridSearch2(info, drone, radar, actionLog);
+    private final SearchAlgorithm gridSearch = new GridSearch(info, drone, radar, actionLog);
 
     private boolean positioning = false;
 
