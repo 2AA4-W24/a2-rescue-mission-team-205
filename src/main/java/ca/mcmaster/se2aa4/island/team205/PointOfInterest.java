@@ -2,13 +2,21 @@ package ca.mcmaster.se2aa4.island.team205;
 
 public class PointOfInterest {
 
-    final String identifier;
+    private final String identifier;
 
-    public final Point location;
+    private final Point location;
 
-    public PointOfInterest (String identifier, Point location) {
-        this.identifier = identifier;
-        this.location = location;
+    public PointOfInterest (String identifier1, Point location1) {
+        identifier = identifier1;
+        location = location1;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public Point getLocation() {
+        return location;
     }
 
 }

@@ -9,7 +9,7 @@ public class CreekLocations {
     private PointOfInterest closest = null;
 
     public void addCreek(PointOfInterest poi){
-        creeks.put(poi, poi.location);
+        creeks.put(poi, poi.getLocation());
         closest = poi;
     }
 
@@ -19,9 +19,9 @@ public class CreekLocations {
         if(site == null){
             return closest;
         }
-        Point siteLocation = site.location;
+        Point siteLocation = site.getLocation();
         for(PointOfInterest poi : creeks.keySet()){
-            poiLocation = poi.location;
+            poiLocation = poi.getLocation();
             int distanceToSite = Math.abs(poiLocation.getXCoordinate() -  siteLocation.getXCoordinate()) + Math.abs(poiLocation.getYCoordinate() -  siteLocation.getYCoordinate());
             if(distanceToSite <= minimum){
                 minimum = distanceToSite;
@@ -34,7 +34,7 @@ public class CreekLocations {
     public List<String> identifiers(){
         List<String> identifiers = new ArrayList<>();
         for(PointOfInterest pointOfInterest : creeks.keySet()){
-            identifiers.add(pointOfInterest.identifier);
+            identifiers.add(pointOfInterest.getIdentifier());
         }
         return identifiers;
     }

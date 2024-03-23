@@ -1,0 +1,34 @@
+@startuml
+
+class Point {
+ -xCoordinate: int
+ -yCoordinate: int
+ +Point(x: int, y: int)
+ +getXCoordinate(): int
+ +getYCoordinate(): int
+ +incrementX()
+ +incrementY()
+ +decrementX()
+ +decrementY()
+ +getCoordinates(): int[]
+}
+
+class PointOfInterest {
+ -identifier: String
+ -location: Point
+ +PointOfInterest(identifier: String, location: Point)
+}
+Point <--o PointOfInterest
+
+
+class CreekLocations {
+ -creeks: Map<PointOfInterest, Point>
+ -closest: PointOfInterest
+ +addCreek(creek: PointOfInterest)
+ +closestCreek(site: PointOfInterest): PointOfInterest
+ +identifiers(): List<String>
+}
+Point <.. CreekLocations
+PointOfInterest <--o CreekLocations
+
+@enduml

@@ -168,7 +168,7 @@ public class CommandCenter implements Mission{
     @Override
     public String finalReport(){
         PointOfInterest creek = closestCreek();
-        return creek.identifier;
+        return creek.getIdentifier();
     }
 
     @Override

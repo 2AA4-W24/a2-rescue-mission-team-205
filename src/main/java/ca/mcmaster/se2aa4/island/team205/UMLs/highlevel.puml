@@ -1,0 +1,59 @@
+@startuml
+
+interface Information
+Information <|.. UsingJSON
+
+interface SearchAlgorithm
+SearchAlgorithm <|.. GridSearch
+
+interface Mission
+Mission <|.. CommandCentre
+
+class GridSearch
+CreekLocations <--o GridSearch
+PhotoScanner <--o GridSearch
+
+class CommandCentre
+Radar <--o CommandCentre
+ActionLog <--o CommandCentre
+Drone <--o CommandCentre
+GridSearch <--o CommandCentre
+
+enum Action
+
+class ActionLog
+Action <.. ActionLog
+
+class Drone
+Movement <--* Drone
+Point <-- Drone
+Information <.. Drone
+
+class Explorer
+Mission <-- Explorer
+
+class Movement
+Point <-- Movement
+Information <.. Movement
+
+class PhotoScanner
+Drone <.. PhotoScanner
+CreekLocations <.. PhotoScanner
+Information <.. PhotoScanner
+
+class Point
+
+class PointOfInterest
+Point <--o PointOfInterest
+
+class Radar
+Information <.. Radar
+
+class Runner
+Explorer <.. Runner
+
+class CreekLocations
+Point <.. CreekLocations
+PointOfInterest <--o CreekLocations
+
+@enduml
