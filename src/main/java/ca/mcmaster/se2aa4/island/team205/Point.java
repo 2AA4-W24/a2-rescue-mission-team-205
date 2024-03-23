@@ -1,8 +1,8 @@
 package ca.mcmaster.se2aa4.island.team205;
 
 public class Point {
-    int xCoordinate;
-    int yCoordinate;
+    private int xCoordinate;
+    private int yCoordinate;
 
     public Point(int x, int y){
         xCoordinate = x;

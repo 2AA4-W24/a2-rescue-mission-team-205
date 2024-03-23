@@ -32,7 +32,8 @@ public class PhotoScanner {
 
     public boolean siteFound() {
         if (!info.site().isEmpty()) {
-            site = new PointOfInterest(info.site().toString(), new Point(drone.getLocation().xCoordinate, drone.getLocation().yCoordinate));
+            Point curLocation = drone.getLocation();
+            site = new PointOfInterest(info.site().toString(), new Point(curLocation.getXCoordinate(), curLocation.getYCoordinate()));
             return true;
         } else {
             return false;
@@ -52,9 +53,10 @@ public class PhotoScanner {
     public void creekScan() {
         List<String> creekList = info.creek();
         if (!info.creek().isEmpty()) {
+            Point curLocation = drone.getLocation();
             String identifier = creekList.get(0);
             if (!creeks.identifiers().contains(identifier)) {
-                creeks.addCreek(new PointOfInterest(identifier,  new Point(drone.getLocation().xCoordinate, drone.getLocation().yCoordinate)));
+                creeks.addCreek(new PointOfInterest(identifier,  new Point(curLocation.getXCoordinate(), curLocation.getYCoordinate())));
             }
         }
     }
