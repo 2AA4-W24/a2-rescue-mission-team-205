@@ -70,4 +70,30 @@ class DroneTest {
         Assertions.assertEquals(Drone.Direction.W, testDrone.getDirection(), "Direction after sequential turns");
     }
 
+    @Test
+    void testLeftAndRight() {
+        Drone.Direction left;
+        Drone.Direction right;
+        testDrone.setDirection(Drone.Direction.N);
+        left = testDrone.getLeftDirection();
+        right = testDrone.getRightDirection();
+        Assertions.assertEquals(Drone.Direction.W, left);
+        Assertions.assertEquals(Drone.Direction.E, right);
+        testDrone.setDirection(Drone.Direction.E);
+        left = testDrone.getLeftDirection();
+        right = testDrone.getRightDirection();
+        Assertions.assertEquals(Drone.Direction.N, left);
+        Assertions.assertEquals(Drone.Direction.S, right);
+        testDrone.setDirection(Drone.Direction.S);
+        left = testDrone.getLeftDirection();
+        right = testDrone.getRightDirection();
+        Assertions.assertEquals(Drone.Direction.E, left);
+        Assertions.assertEquals(Drone.Direction.W, right);
+        testDrone.setDirection(Drone.Direction.W);
+        left = testDrone.getLeftDirection();
+        right = testDrone.getRightDirection();
+        Assertions.assertEquals(Drone.Direction.S, left);
+        Assertions.assertEquals(Drone.Direction.N, right);
+    }
+
 }
