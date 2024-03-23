@@ -18,16 +18,16 @@ public class ActionLogTest {
     @Test
     void testEmptyLog(){
         prevAction = testLog.getPrev();
-        assertEquals(prevAction, Action.NONE);
+        assertEquals(Action.NONE, prevAction);
         prevAction = testLog.getPrev(1);
-        assertEquals(prevAction, Action.NONE);
+        assertEquals(Action.NONE, prevAction);
     }
 
     @Test
     void testLastLog(){
         testLog.addLog(Action.FLY);
         prevAction = testLog.getPrev();
-        assertEquals(prevAction, Action.FLY);
+        assertEquals(Action.FLY, prevAction);
     }
 
     @Test
@@ -36,10 +36,10 @@ public class ActionLogTest {
         testLog.addLog(Action.ECHOF);
         testLog.addLog(Action.SCAN);
         prevAction = testLog.getPrev(2);
-        assertEquals(prevAction, Action.FLY);
+        assertEquals(Action.FLY, prevAction);
         prevAction = testLog.getPrev(1);
-        assertEquals(prevAction, Action.ECHOF);
+        assertEquals(Action.ECHOF, prevAction);
         prevAction = testLog.getPrev(0);
-        assertEquals(prevAction, Action.SCAN);
+        assertEquals(Action.SCAN, prevAction);
     }
 }
