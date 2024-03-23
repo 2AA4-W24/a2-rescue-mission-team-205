@@ -29,7 +29,7 @@ public class Movement {
             case N -> drone.setDirection(Drone.Direction.E);
             case E -> drone.setDirection(Drone.Direction.S);
             case S -> drone.setDirection(Drone.Direction.W);
-            case W -> drone.setDirection(Drone.Direction.N);
+            default -> drone.setDirection(Drone.Direction.N);
         }
         adjustPosition();
     }
@@ -40,7 +40,7 @@ public class Movement {
             case N -> drone.setDirection(Drone.Direction.W);
             case E -> drone.setDirection(Drone.Direction.N);
             case S -> drone.setDirection(Drone.Direction.E);
-            case W -> drone.setDirection(Drone.Direction.S);
+            default -> drone.setDirection(Drone.Direction.S);
         }
         adjustPosition();
     }
@@ -50,7 +50,7 @@ public class Movement {
             case N -> point.incrementY();
             case E -> point.incrementX();
             case S -> point.decrementY();
-            case W -> point.decrementX();
+            default-> point.decrementX();
         }
     }
 

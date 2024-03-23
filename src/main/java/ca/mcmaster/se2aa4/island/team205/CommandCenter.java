@@ -14,8 +14,6 @@ public class CommandCenter implements Mission{
 
     private final SearchAlgorithm gridSearch = new GridSearch2(info, drone, radar, actionLog);
 
-    private PointOfInterest creek;
-
     private boolean positioning = false;
 
     private boolean landSpotted = false;
@@ -44,7 +42,6 @@ public class CommandCenter implements Mission{
     @Override
     public void takeCommand(){
         if(drone.getBattery() <= 30){
-            creek = closestCreek();
             drone.returnHome();
         }
         else if(positioning){
@@ -170,7 +167,7 @@ public class CommandCenter implements Mission{
 
     @Override
     public String finalReport(){
-        creek = closestCreek();
+        PointOfInterest creek = closestCreek();
         return creek.identifier;
     }
 

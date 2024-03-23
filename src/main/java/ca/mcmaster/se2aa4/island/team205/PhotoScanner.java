@@ -26,12 +26,8 @@ public class PhotoScanner {
     }
 
     public boolean scanResults() {
-
-        if (info.terrain().size() == 1) {
-            return !info.terrain().contains(oceanCheck);
-        } else {
-            return true;
-        }
+        List<String> results = info.terrain();
+        return !(results.size() == 1 && results.contains(oceanCheck));
     }
 
     public boolean siteFound() {
