@@ -1,14 +1,14 @@
-import ca.mcmaster.se2aa4.island.team205.*;
+import ca.mcmaster.se2aa4.island.team205.UsingJSON;
+import ca.mcmaster.se2aa4.island.team205.Drone;
+import ca.mcmaster.se2aa4.island.team205.PhotoScanner;
+import ca.mcmaster.se2aa4.island.team205.CreekLocations;
+import ca.mcmaster.se2aa4.island.team205.Point;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import java.util.Collections;
-
-import org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
@@ -30,7 +30,7 @@ class PhotoScannerTest {
 
     @Test
     void testScanResultsWhenOceanIsNotPresent() {
-        usingJSON.results("{\"extras\":{\"biomes\":[\"LAND\", \"MOUNTAIN\"]}}");
+        usingJSON.results("{\"extras\":{\"biomes\":[\"MOUNTAIN\"]}}");
         Assertions.assertFalse(photoScanner.scanOcean());
     }
 
@@ -38,6 +38,25 @@ class PhotoScannerTest {
     void testScanResultsWhenOceanIsPresent() {
         usingJSON.results("{\"extras\":{\"biomes\":[\"LAND\", \"OCEAN\"]}}");
         Assertions.assertTrue(photoScanner.scanOcean());
+    }
+
+    @Test
+    void testScanResultsWithSingleOceanTerrain() {
+        usingJSON.results("{\"extras\":{\"biomes\":[\"OCEAN\"]}}");
+        assertFalse(photoScanner.scanResults());
+    }
+
+    @Test
+    void testScanResultsWithMultipleBiomesExcludingOcean() {
+        usingJSON.results("{\"extras\":{\"biomes\":[\"FOREST\", \"MOUNTAIN\"]}}");
+        assertTrue(photoScanner.scanResults());
+    }
+
+    
+    @Test
+    void testScanResultsWithMultipleBiomesIncludingOcean() {
+        usingJSON.results("{\"extras\":{\"biomes\":[\"OCEAN\", \"FOREST\"]}}");
+        assertTrue(photoScanner.scanResults());
     }
 
     @Test
@@ -66,9 +85,16 @@ class PhotoScannerTest {
     }
 /* 
     @Test
-    void testGetSiteWhenNotFound() {
-        usingJSON.results("{\"extras\":{\"site\":[]}}"); 
-        assertFalse(photoScanner.getSite());
+    void testCreekScanWithNoNewCreek() {
+        usingJSON.results("{\"extras\":{\"creeks\":[\"Creek1\"]}}");
+        photoScanner.creekScan(); 
+        int initialCreekCount = creeks.numberOfCreeks();
+        photoScanner.creekScan(); 
+        assertEquals(initialCreekCount, creeks.numberOfCreeks());
     }
 */
+    @Test
+    void testGetSiteWhenNotFound() {
+        assertNull(photoScanner.getSite());
+    }
 }
