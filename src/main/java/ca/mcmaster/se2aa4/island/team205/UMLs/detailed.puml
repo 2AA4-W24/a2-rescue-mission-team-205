@@ -16,7 +16,9 @@ class Point {
 class PointOfInterest {
  -identifier: String
  -location: Point
- +PointOfInterest(identifier: String, location: Point)
+ +PointOfInterest(poiIdentifier: String, poiLocation: Point)
+ +getIdentifier(): String
+ +getLocation(): Point
 }
 Point <--o PointOfInterest
 

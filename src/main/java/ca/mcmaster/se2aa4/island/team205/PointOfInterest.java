@@ -6,9 +6,9 @@ public class PointOfInterest {
 
     private final Point location;
 
-    public PointOfInterest (String identifier1, Point location1) {
-        identifier = identifier1;
-        location = location1;
+    public PointOfInterest (String poiIdentifier, Point poiLocation) {
+        identifier = poiIdentifier;
+        location = poiLocation;
     }
 
     public String getIdentifier() {
