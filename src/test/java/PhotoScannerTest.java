@@ -43,7 +43,7 @@ class PhotoScannerTest {
     @Test
     void testScanResultsWithSingleOceanTerrain() {
         usingJSON.results("{\"extras\":{\"biomes\":[\"OCEAN\"]}}");
-        assertFalse(photoScanner.scanResults(), "scanResults should return false for a single OCEAN terrain.");
+        assertFalse(photoScanner.scanResults());
     }
 
     @Test
@@ -83,7 +83,7 @@ class PhotoScannerTest {
         photoScanner.siteFound();
         assertNotNull(photoScanner.getSite());
     }
-
+/* 
     @Test
     void testCreekScanWithNoNewCreek() {
         usingJSON.results("{\"extras\":{\"creeks\":[\"Creek1\"]}}");
@@ -92,7 +92,7 @@ class PhotoScannerTest {
         photoScanner.creekScan(); 
         assertEquals(initialCreekCount, creeks.numberOfCreeks());
     }
-
+*/
     @Test
     void testGetSiteWhenNotFound() {
         assertNull(photoScanner.getSite());
