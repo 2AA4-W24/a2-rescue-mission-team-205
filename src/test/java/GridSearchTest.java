@@ -1,24 +1,18 @@
 import ca.mcmaster.se2aa4.island.team205.ActionLog;
 import ca.mcmaster.se2aa4.island.team205.Drone;
-import ca.mcmaster.se2aa4.island.team205.GridSearch2;
+import ca.mcmaster.se2aa4.island.team205.GridSearch;
 import ca.mcmaster.se2aa4.island.team205.Information;
-import ca.mcmaster.se2aa4.island.team205.Movement;
-import ca.mcmaster.se2aa4.island.team205.PhotoScanner;
 import ca.mcmaster.se2aa4.island.team205.Radar;
 import ca.mcmaster.se2aa4.island.team205.UsingJSON;
-import ca.mcmaster.se2aa4.island.team205.PointOfInterest;
-import ca.mcmaster.se2aa4.island.team205.CreekLocations;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import org.junit.jupiter.api.Assertions;
-
-public class GridSearch2Test {
+public class GridSearchTest {
     
-    private GridSearch2 gridSearch;
+    private GridSearch gridSearch;
     private Information info;
     private Drone drone;
     private Radar radar;
@@ -30,7 +24,7 @@ public class GridSearch2Test {
         //drone = new Drone(info);
         radar = new Radar(info); 
         actionLog = new ActionLog();
-        gridSearch = new GridSearch2(info, drone, radar, actionLog);
+        gridSearch = new GridSearch(info, drone, radar, actionLog);
     }
     @Test
     void testFindCreeksInitialFly() {
