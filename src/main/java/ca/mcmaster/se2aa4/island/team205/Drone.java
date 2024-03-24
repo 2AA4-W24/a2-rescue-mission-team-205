@@ -89,7 +89,7 @@ public class Drone {
             case N -> Drone.Direction.E;
             case S -> Drone.Direction.W;
             case W -> Drone.Direction.N;
-            case E -> Drone.Direction.S;
+            default -> Drone.Direction.S;
         };
     }
 
@@ -98,7 +98,7 @@ public class Drone {
             case N -> Drone.Direction.W;
             case S -> Drone.Direction.E;
             case W -> Drone.Direction.S;
-            case E -> Drone.Direction.N;
+            default -> Drone.Direction.N;
         };
     }
 
