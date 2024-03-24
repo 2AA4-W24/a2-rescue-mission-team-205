@@ -25,7 +25,7 @@ class CreekLocationsTest {
 
         PointOfInterest site = new PointOfInterest("Site", new Point(12, 12));
 
-        PointOfInterest closestCreek = creekLocations.closestCreak(site);
+        PointOfInterest closestCreek = creekLocations.closestCreek(site);
 
         Assertions.assertEquals(creek1, closestCreek, "Closest creek should be Creek1");
     }

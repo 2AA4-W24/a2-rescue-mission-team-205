@@ -13,7 +13,7 @@ public class CreekLocations {
         closest = poi;
     }
 
-    public PointOfInterest closestCreak(PointOfInterest site){
+    public PointOfInterest closestCreek(PointOfInterest site){
         int minimum = 1000;
         Point poiLocation;
         if(site == null){

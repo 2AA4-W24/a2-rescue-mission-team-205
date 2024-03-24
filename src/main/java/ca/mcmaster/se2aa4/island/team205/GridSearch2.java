@@ -72,7 +72,7 @@ public class GridSearch2 implements SearchAlgorithm{
 
     @Override
     public PointOfInterest closestCreek() {
-        return creeks.closestCreak(photoScanner.getSite());
+        return creeks.closestCreek(photoScanner.getSite());
     }
 
     private void verticalSearch(){
