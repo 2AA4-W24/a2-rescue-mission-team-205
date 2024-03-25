@@ -11,10 +11,10 @@ class DroneTest {
 
     private Drone testDrone;
 
-    private static final String east = "{\"heading\":\"E\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
-    private static final String north = "{\"heading\":\"N\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
-    private static final String west = "{\"heading\":\"W\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
-    private static final String south = "{\"heading\":\"S\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+    private final String s = "{\"heading\":\"E\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+    private final String x = "{\"heading\":\"W\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+    private final String y = "{\"heading\":\"S\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+    private final String z = "{\"heading\":\"N\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
 
     private Information info;
 
@@ -29,28 +29,27 @@ class DroneTest {
 
     @Test
     void initialDirectionWestTest() {
+        testDrone.initialize(x);
+        Assertions.assertEquals(Drone.Direction.W, testDrone.getDirection());
+    }
+
+    
+    @Test
+    void initialDirectionNorthTest() {
+        testDrone.initialize(z);
+        Assertions.assertEquals(Drone.Direction.N, testDrone.getDirection());
+    }
+
+
+    @Test
+    void initialDirectionEastTest() {
         testDrone.initialize(s);
         Assertions.assertEquals(Drone.Direction.E, testDrone.getDirection());
     }
 
     @Test
-    void whenHeadingIsNorth_thenDirectionIsNorth() {
-        String json = "{\"heading\":\"N\",\"budget\":7000}";
-        testDrone.initialize(json);
-        Assertions.assertEquals(Drone.Direction.N, testDrone.getDirection());
-    }
-
-    
-
-    @Test
-    void initialDirectionEastTest() {
-        testDrone.setDirection(Drone.Direction.E);
-        Assertions.assertEquals(Drone.Direction.E, testDrone.getDirection());
-    }
-
-    @Test
     void initialDirectionSouthTest() {
-        testDrone.setDirection(Drone.Direction.S);
+        testDrone.initialize(y);
         Assertions.assertEquals(Drone.Direction.S, testDrone.getDirection());
     }
 
