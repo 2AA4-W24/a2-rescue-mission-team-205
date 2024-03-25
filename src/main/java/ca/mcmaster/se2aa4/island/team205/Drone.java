@@ -73,8 +73,7 @@ public class Drone {
         battery -= cost;
     }
 
-    public void initialize(String s){
-        info.results(s);
+    public void initialize(){
         battery = info.budget();
         Direction initial = initialDirection(info.direction());
         setDirection(initial);
