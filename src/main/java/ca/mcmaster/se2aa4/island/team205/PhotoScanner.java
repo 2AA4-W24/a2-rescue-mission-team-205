@@ -41,7 +41,6 @@ public class PhotoScanner {
     }
 
     public boolean overCoast() {
-
         if (info.terrain().size() >= 2) {
             return info.terrain().contains(oceanCheck);
         } else {
