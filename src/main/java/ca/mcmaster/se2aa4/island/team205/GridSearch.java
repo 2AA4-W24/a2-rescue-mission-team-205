@@ -30,6 +30,8 @@ public class GridSearch implements SearchAlgorithm{
 
     private boolean sliding = false;
 
+    private boolean edge = false;
+
     private int slideStage = 1;
 
     private int range = -1;
@@ -136,6 +138,8 @@ public class GridSearch implements SearchAlgorithm{
     private void verticalSlide(){
         sliding = true;
         if(slideStage %3 == 1){
+            edge = actionLog.getPrev() == Action.SCAN;
+
             if(drone.getLeftDirection() == slideDirection){
                 previousD = drone.getDirection();
                 drone.turnLeft();
@@ -160,8 +164,16 @@ public class GridSearch implements SearchAlgorithm{
             slideStage++;
         }
         else{
-            photoScanner.scanTerrain();
-            actionLog.addLog(Action.SCAN);
+            if(edge){
+                photoScanner.scanTerrain();
+                actionLog.addLog(Action.SCAN);
+                edge = false;
+            }
+            else{
+                sliding = false;
+                postTurnAction();
+            }
+
             slideStage = 1;
         }
     }

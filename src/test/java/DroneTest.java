@@ -21,9 +21,10 @@ class DroneTest {
     @BeforeEach
     void setUp() {
         info = new UsingJSON();
+        info.results(s);
         Point point = new Point(0,0);
         testDrone = new Drone(info, point);
-        testDrone.initialize(s);
+        testDrone.initialize(east);
     }
 
     @Test
@@ -78,7 +79,7 @@ class DroneTest {
 
     @Test
     void initializeTest() {
-        testDrone.initialize(s);
+        testDrone.initialize(east);
         Integer expectedBattery = info.budget();
         Assertions.assertEquals(expectedBattery, testDrone.getBattery());
     }

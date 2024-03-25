@@ -26,7 +26,7 @@ public class CommandCenter implements Mission{
 
     public CommandCenter(String s){
         info.results(s);
-        drone.initialize(s);
+        drone.initialize();
     }
 
     public Drone getDrone(){
