@@ -86,7 +86,7 @@ class MovementTest {
     @Test
     void testAdjustPosition() {
         testDrone.setDirection(Drone.Direction.N);
-        movement.fly(); // incremets y coord
+        movement.fly();
         Assertions.assertArrayEquals(new int[]{0, 1}, point.getCoordinates());
     }
 

@@ -9,9 +9,7 @@ import org.junit.jupiter.api.Assertions;
 
 class DroneTest {
 
-
     private Drone testDrone;;
-
 
     private Information info;
 
@@ -24,7 +22,6 @@ class DroneTest {
         testDrone = new Drone(info, point);
         testDrone.initialize();
     }
-
 
     @Test
     void westStart(){
