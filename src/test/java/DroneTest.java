@@ -12,8 +12,6 @@ class DroneTest {
 
     private Drone testDrone;;
 
-    private Drone testDrone;
-
 
     private Information info;
 
@@ -24,7 +22,7 @@ class DroneTest {
         info.results(east);
         Point point = new Point(0,0);
         testDrone = new Drone(info, point);
-        testDrone.initialize(east);
+        testDrone.initialize();
     }
 
 
@@ -76,12 +74,6 @@ class DroneTest {
         Assertions.assertEquals(realDir, expectedDir);
     }
 
-    @Test
-    void initializeTest() {
-        testDrone.initialize(east);
-        Integer expectedBattery = info.budget();
-        Assertions.assertEquals(expectedBattery, testDrone.getBattery());
-    }
     @Test
     void drainTest() {
         Integer initialBattery = testDrone.getBattery();
