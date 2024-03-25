@@ -4,7 +4,6 @@ import ca.mcmaster.se2aa4.island.team205.PhotoScanner;
 import ca.mcmaster.se2aa4.island.team205.CreekLocations;
 import ca.mcmaster.se2aa4.island.team205.Point;
 
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -20,13 +19,12 @@ class PhotoScannerTest {
 
     private PhotoScanner photoScanner;
     private UsingJSON usingJSON;
-    private Drone drone;
     private CreekLocations creeks;
 
     @BeforeEach
     void setUp() {
         usingJSON = new UsingJSON();
-        drone = new Drone(usingJSON, new Point(0,0));
+        Drone drone = new Drone(usingJSON, new Point(0, 0));
         creeks = new CreekLocations();
         photoScanner = new PhotoScanner(usingJSON, drone, creeks);
     }
@@ -123,6 +121,6 @@ class PhotoScannerTest {
 
     @Test
     void testGetSiteWhenNotFound() {
-        assertNull(photoScanner.getSite());
+        Assertions.assertNull(photoScanner.getSite());
     }
 }

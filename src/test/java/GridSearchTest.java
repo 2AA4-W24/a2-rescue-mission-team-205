@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 class GridSearchTest {
     
     private GridSearch gridSearch;
@@ -75,6 +74,18 @@ class GridSearchTest {
         info.results(scanNothing);
         gridSearch.findEmergencySite();
         assertEquals(Action.ECHOF, actionLog.getPrev());
+    }
+
+    @Test
+    void scannedNothing(){
+        actionLog.addLog(Action.FLY);
+        gridSearch.findEmergencySite();
+        drone.setDirection(Drone.Direction.N);
+        gridSearch.findEmergencySite();
+        info.results(scanNothing);
+        drone.setDirection(Drone.Direction.E);
+        gridSearch.findEmergencySite();
+        assertEquals(Action.FLY, actionLog.getPrev());
     }
 
     @Test
@@ -241,6 +252,5 @@ class GridSearchTest {
         gridSearch.findEmergencySite();
         assertEquals(Action.ECHOF, actionLog.getPrev());
     }
-
 
 }

@@ -29,6 +29,10 @@ public class CommandCenter implements Mission{
         drone.initialize();
     }
 
+    public Drone getDrone(){
+        return drone;
+    }
+
     @Override
     public void updateInformation(String s){
         info.results(s);
@@ -90,7 +94,6 @@ public class CommandCenter implements Mission{
             else {
                 radar.useRadar(drone.getLeftDirection());
                 actionLog.addLog(Action.ECHOL);
-
             }
         }
         else if (actionLog.getPrev() == Action.ECHOL) {
@@ -104,7 +107,6 @@ public class CommandCenter implements Mission{
                 actionLog.addLog(Action.FLY);
             }
         }
-
     }
 
     private void findRange(){
@@ -122,7 +124,6 @@ public class CommandCenter implements Mission{
                 else{
                     drone.turnRight();
                 }
-
                 range --;
             }
             case 1 -> drone.fly();
@@ -164,7 +165,12 @@ public class CommandCenter implements Mission{
     @Override
     public String finalReport(){
         PointOfInterest creek = closestCreek();
-        return creek.getIdentifier();
+        if(creek == null){
+            return "";
+        }
+        else{
+            return creek.getIdentifier();
+        }
     }
 
     @Override
