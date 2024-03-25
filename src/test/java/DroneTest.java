@@ -29,25 +29,28 @@ class DroneTest {
 
     @Test
     void initialDirectionWestTest() {
-        testDrone.initialize(west);
-        Assertions.assertEquals(Drone.Direction.W, testDrone.getDirection());
+        testDrone.initialize(s);
+        Assertions.assertEquals(Drone.Direction.E, testDrone.getDirection());
     }
 
     @Test
-    void initialDirectionNorthTest() {
-        testDrone.initialize(north);
+    void whenHeadingIsNorth_thenDirectionIsNorth() {
+        String json = "{\"heading\":\"N\",\"budget\":7000}";
+        testDrone.initialize(json);
         Assertions.assertEquals(Drone.Direction.N, testDrone.getDirection());
     }
 
+    
+
     @Test
     void initialDirectionEastTest() {
-        testDrone.initialize(east);
+        testDrone.setDirection(Drone.Direction.E);
         Assertions.assertEquals(Drone.Direction.E, testDrone.getDirection());
     }
 
     @Test
     void initialDirectionSouthTest() {
-        testDrone.initialize(south);
+        testDrone.setDirection(Drone.Direction.S);
         Assertions.assertEquals(Drone.Direction.S, testDrone.getDirection());
     }
 
