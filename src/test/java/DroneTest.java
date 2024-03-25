@@ -11,7 +11,10 @@ class DroneTest {
 
     private Drone testDrone;
 
-    private static final String s = "{\"heading\":\"E\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+    private static final String east = "{\"heading\":\"E\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+    private static final String north = "{\"heading\":\"N\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+    private static final String west = "{\"heading\":\"W\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+    private static final String south = "{\"heading\":\"S\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
 
     private Information info;
 
@@ -20,34 +23,30 @@ class DroneTest {
         info = new UsingJSON();
         Point point = new Point(0,0);
         testDrone = new Drone(info, point);
-        testDrone.initialize(s);
+        testDrone.initialize(east);
     }
 
     @Test
     void initialDirectionWestTest() {
-        String json = "{\"heading\":\"W\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}";
-        testDrone.initialize(json);
+        testDrone.initialize(west);
         Assertions.assertEquals(Drone.Direction.W, testDrone.getDirection());
     }
 
     @Test
     void initialDirectionNorthTest() {
-        String json = "{\"heading\":\"N\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}";
-        testDrone.initialize(json);
+        testDrone.initialize(north);
         Assertions.assertEquals(Drone.Direction.N, testDrone.getDirection());
     }
 
     @Test
     void initialDirectionEastTest() {
-        String json = "{\"heading\":\"E\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}";
-        testDrone.initialize(json);
+        testDrone.initialize(east);
         Assertions.assertEquals(Drone.Direction.E, testDrone.getDirection());
     }
 
     @Test
     void initialDirectionSouthTest() {
-        String json = "{\"heading\":\"S\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}";
-        testDrone.initialize(json);
+        testDrone.initialize(south);
         Assertions.assertEquals(Drone.Direction.S, testDrone.getDirection());
     }
 
@@ -77,16 +76,16 @@ class DroneTest {
 
     @Test
     void initializeTest() {
-        testDrone.initialize(s);
+        testDrone.initialize(east);
         Integer expectedBattery = info.budget();
-        Assertions.assertEquals(expectedBattery, testDrone.getBattery(), "InitializeTest");
+        Assertions.assertEquals(expectedBattery, testDrone.getBattery());
     }
     @Test
     void drainTest() {
         Integer initialBattery = testDrone.getBattery();
         Integer expectedDrain = initialBattery - 15;
         testDrone.drain(15);
-        Assertions.assertEquals(expectedDrain, testDrone.getBattery(), "DrainTest");
+        Assertions.assertEquals(expectedDrain, testDrone.getBattery());
     }
 
     @Test
@@ -95,7 +94,7 @@ class DroneTest {
         testDrone.turnRight(); 
         testDrone.turnLeft(); 
         testDrone.turnLeft();
-        Assertions.assertEquals(Drone.Direction.W, testDrone.getDirection(), "Direction after sequential turns");
+        Assertions.assertEquals(Drone.Direction.W, testDrone.getDirection());
     }
 
     @Test
