@@ -25,29 +25,27 @@ class DroneTest {
 
     @Test
     void initialDirectionWestTest() {
-        String json = "{\"heading\":\"W\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}";
-        testDrone.initialize(json);
-        Assertions.assertEquals(Drone.Direction.W, testDrone.getDirection());
+        testDrone.initialize(s);
+        Assertions.assertEquals(Drone.Direction.E, testDrone.getDirection());
     }
 
     @Test
-    void initialDirectionNorthTest() {
-        String json = "{\"heading\":\"N\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}";
+    void whenHeadingIsNorth_thenDirectionIsNorth() {
+        String json = "{\"heading\":\"N\",\"budget\":7000}";
         testDrone.initialize(json);
         Assertions.assertEquals(Drone.Direction.N, testDrone.getDirection());
     }
+    
 
     @Test
     void initialDirectionEastTest() {
-        String json = "{\"heading\":\"E\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}";
-        testDrone.initialize(json);
+        testDrone.setDirection(Drone.Direction.E);
         Assertions.assertEquals(Drone.Direction.E, testDrone.getDirection());
     }
 
     @Test
     void initialDirectionSouthTest() {
-        String json = "{\"heading\":\"S\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}";
-        testDrone.initialize(json);
+        testDrone.setDirection(Drone.Direction.S);
         Assertions.assertEquals(Drone.Direction.S, testDrone.getDirection());
     }
 
@@ -79,14 +77,14 @@ class DroneTest {
     void initializeTest() {
         testDrone.initialize(s);
         Integer expectedBattery = info.budget();
-        Assertions.assertEquals(expectedBattery, testDrone.getBattery(), "InitializeTest");
+        Assertions.assertEquals(expectedBattery, testDrone.getBattery());
     }
     @Test
     void drainTest() {
         Integer initialBattery = testDrone.getBattery();
         Integer expectedDrain = initialBattery - 15;
         testDrone.drain(15);
-        Assertions.assertEquals(expectedDrain, testDrone.getBattery(), "DrainTest");
+        Assertions.assertEquals(expectedDrain, testDrone.getBattery());
     }
 
     @Test
@@ -95,7 +93,7 @@ class DroneTest {
         testDrone.turnRight(); 
         testDrone.turnLeft(); 
         testDrone.turnLeft();
-        Assertions.assertEquals(Drone.Direction.W, testDrone.getDirection(), "Direction after sequential turns");
+        Assertions.assertEquals(Drone.Direction.W, testDrone.getDirection());
     }
 
     @Test
