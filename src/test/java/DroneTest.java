@@ -24,6 +24,34 @@ class DroneTest {
         testDrone.initialize();
     }
 
+    @Test
+    void initialDirectionWestTest() {
+        String json = "{\"heading\":\"W\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}";
+        testDrone.initialize(json);
+        Assertions.assertEquals(Drone.Direction.W, testDrone.getDirection());
+    }
+
+    @Test
+    void initialDirectionNorthTest() {
+        String json = "{\"heading\":\"N\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}";
+        testDrone.initialize(json);
+        Assertions.assertEquals(Drone.Direction.N, testDrone.getDirection());
+    }
+
+    @Test
+    void initialDirectionEastTest() {
+        String json = "{\"heading\":\"E\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}";
+        testDrone.initialize(json);
+        Assertions.assertEquals(Drone.Direction.E, testDrone.getDirection());
+    }
+
+    @Test
+    void initialDirectionSouthTest() {
+        String json = "{\"heading\":\"S\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}";
+        testDrone.initialize(json);
+        Assertions.assertEquals(Drone.Direction.S, testDrone.getDirection());
+    }
+
 
     @Test
     void turnLeftTest() {

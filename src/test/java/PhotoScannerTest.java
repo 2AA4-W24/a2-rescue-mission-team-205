@@ -13,6 +13,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
+import java.util.List;
+
+
 class PhotoScannerTest {
 
     private PhotoScanner photoScanner;
@@ -83,16 +86,41 @@ class PhotoScannerTest {
         photoScanner.siteFound();
         assertNotNull(photoScanner.getSite());
     }
-/* 
+
+    @Test
+    void testScanTerrainUpdatesInfo() {
+        usingJSON.results("{\"extras\":{\"biomes\":[\"LAND\"]}}");
+        assertFalse(photoScanner.scanOcean());
+        
+        usingJSON.results("{\"extras\":{\"biomes\":[\"LAND\", \"OCEAN\"]}}");
+        photoScanner.scanTerrain();
+        
+        assertTrue(photoScanner.scanOcean());
+    }
+
+    @Test
+    void testCreekScanWithNewCreek() {
+        usingJSON.results("{\"extras\":{\"creeks\":[\"Creek1\"]}}");
+        photoScanner.creekScan();
+
+        assertEquals(1, creeks.numberOfCreeks());
+
+        String expectedIdentifier = "Creek1";
+        List<String> creekIdentifiers = creeks.identifiers();
+        assertTrue(creekIdentifiers.contains(expectedIdentifier));
+    }
+    
     @Test
     void testCreekScanWithNoNewCreek() {
         usingJSON.results("{\"extras\":{\"creeks\":[\"Creek1\"]}}");
-        photoScanner.creekScan(); 
+        photoScanner.creekScan();
         int initialCreekCount = creeks.numberOfCreeks();
-        photoScanner.creekScan(); 
+        
+        photoScanner.creekScan();
         assertEquals(initialCreekCount, creeks.numberOfCreeks());
     }
-*/
+
+
     @Test
     void testGetSiteWhenNotFound() {
         assertNull(photoScanner.getSite());
