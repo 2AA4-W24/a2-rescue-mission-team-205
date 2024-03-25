@@ -29,10 +29,6 @@ public class CommandCenter implements Mission{
         drone.initialize();
     }
 
-    public Drone getDrone(){
-        return drone;
-    }
-
     @Override
     public void updateInformation(String s){
         info.results(s);

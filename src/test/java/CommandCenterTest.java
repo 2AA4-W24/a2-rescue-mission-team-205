@@ -16,19 +16,23 @@ class CommandCenterTest {
 
     private CommandCenter testCommands;
 
-    private static final String expectedFly = "{\"action\":\"fly\",\"parameters\":{\"direction\":\"E\"}}";
+    private final String expectedFly = "{\"action\":\"fly\",\"parameters\":{\"direction\":\"E\"}}";
 
-    private static final String unexpectedFly = "{\"action\":\"fly\",\"parameters\":{\"direction\":\"N\"}}";
+    private final String unexpectedFly = "{\"action\":\"fly\",\"parameters\":{\"direction\":\"N\"}}";
 
-    private UsingJSON usingJSON;
+    private Information info;
     @BeforeEach
     void setUp() {
-        String initialJSON = "{\"budget\":7000, \"cost\":100}";
-        usingJSON = new UsingJSON();
-        usingJSON.results(initialJSON);
-
         String s = "{\"heading\":\"E\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+        info = new UsingJSON();
+        info.results(s);
         testCommands = new CommandCenter(s);
     }
+
+    @Test
+    void updateInfo(){
+    }
+
+
 
 }
