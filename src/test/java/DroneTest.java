@@ -11,16 +11,20 @@ class DroneTest {
 
     private Drone testDrone;
 
-    private static final String s = "{\"heading\":\"E\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+    private static final String east = "{\"heading\":\"E\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+    private static final String north = "{\"heading\":\"N\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+    private static final String west = "{\"heading\":\"W\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+    private static final String south = "{\"heading\":\"S\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
 
     private Information info;
 
     @BeforeEach
     void setUp() {
         info = new UsingJSON();
+        info.results(s);
         Point point = new Point(0,0);
         testDrone = new Drone(info, point);
-        testDrone.initialize(s);
+        testDrone.initialize(east);
     }
 
     @Test
@@ -35,6 +39,7 @@ class DroneTest {
         testDrone.initialize(json);
         Assertions.assertEquals(Drone.Direction.N, testDrone.getDirection());
     }
+
     
 
     @Test
@@ -75,7 +80,7 @@ class DroneTest {
 
     @Test
     void initializeTest() {
-        testDrone.initialize(s);
+        testDrone.initialize(east);
         Integer expectedBattery = info.budget();
         Assertions.assertEquals(expectedBattery, testDrone.getBattery());
     }

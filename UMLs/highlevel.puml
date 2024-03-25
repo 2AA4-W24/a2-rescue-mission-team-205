@@ -17,7 +17,7 @@ class CommandCentre
 Radar <--o CommandCentre
 ActionLog <--o CommandCentre
 Drone <--o CommandCentre
-GridSearch <--o CommandCentre
+SearchAlgorithm <-- CommandCentre
 
 enum Action
 

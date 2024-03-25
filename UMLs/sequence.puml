@@ -1,0 +1,49 @@
+@startuml
+actor       Explorer
+Explorer -> "mission: CommandCentre" : initialize(String: s)
+"mission: CommandCentre" -> "info: Information" : «create»
+"info: Information" -> "info: Information" : results(String: s)
+"info: Information" -> "mission: CommandCentre"
+"mission: CommandCentre" -> "drone: Drone" : «create»
+"drone: Drone" -> "drone: Drone" : initialize()
+"drone: Drone" -> "mission: CommandCentre"
+"mission: CommandCentre" -> Explorer: mission
+
+alt droneBattery() <= 30
+
+    Explorer -> "mission: CommandCentre" : takeDecision()
+    "mission: CommandCentre" -> "drone: Drone" : takeCommand()
+    "drone: Drone" -> "info: Information" : returnHome()
+    "info: Information" -> "info: Information" : goHome()
+    "info: Information" -> "mission: CommandCentre"
+    "mission: CommandCentre" -> Explorer: decision()
+
+else int: range != 0 and !boolean: land
+
+    Explorer -> "mission: CommandCentre" : takeDecision()
+    "mission: CommandCentre" -> "mission: CommandCentre" : takeCommand()
+    "mission: CommandCentre" -> "mission: CommandCentre" : phaseOne()
+    "mission: CommandCentre" -> Explorer: decision()
+
+else else
+
+   Explorer -> "mission: CommandCentre" : takeDecision()
+   "mission: CommandCentre" -> "mission: CommandCentre" : takeCommand()
+   "mission: CommandCentre" -> "mission: CommandCentre" : findSite()
+   "mission: CommandCentre" -> Explorer: decision()
+
+end
+
+Explorer -> "mission: CommandCentre" : acknowledgeResults(String: s)
+"mission: CommandCentre" -> "info: Information" : updateInformation(String: s)
+"info: Information" -> "info: Information" : results(String: s)
+"info: Information" -> "mission: CommandCentre"
+"mission: CommandCentre" -> "drone: Drone" : updateInformation(String: s)
+"drone: Drone" -> "drone: Drone" : drain()
+"drone: Drone" -> "mission: CommandCentre"
+"mission: CommandCentre" -> Explorer: mission
+
+Explorer -> "mission: CommandCentre" : deliverFinalReport()
+"mission: CommandCentre" -> Explorer : finalReport()
+
+@enduml
