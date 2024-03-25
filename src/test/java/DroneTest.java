@@ -9,7 +9,11 @@ import org.junit.jupiter.api.Assertions;
 
 class DroneTest {
 
+
     private Drone testDrone;;
+
+    private Drone testDrone;
+
 
     private Information info;
 
@@ -20,8 +24,9 @@ class DroneTest {
         info.results(east);
         Point point = new Point(0,0);
         testDrone = new Drone(info, point);
-        testDrone.initialize();
+        testDrone.initialize(east);
     }
+
 
     @Test
     void westStart(){
@@ -73,16 +78,16 @@ class DroneTest {
 
     @Test
     void initializeTest() {
-        testDrone.initialize();
+        testDrone.initialize(east);
         Integer expectedBattery = info.budget();
-        Assertions.assertEquals(expectedBattery, testDrone.getBattery(), "InitializeTest");
+        Assertions.assertEquals(expectedBattery, testDrone.getBattery());
     }
     @Test
     void drainTest() {
         Integer initialBattery = testDrone.getBattery();
         Integer expectedDrain = initialBattery - 15;
         testDrone.drain(15);
-        Assertions.assertEquals(expectedDrain, testDrone.getBattery(), "DrainTest");
+        Assertions.assertEquals(expectedDrain, testDrone.getBattery());
     }
 
     @Test
@@ -91,7 +96,7 @@ class DroneTest {
         testDrone.turnRight(); 
         testDrone.turnLeft(); 
         testDrone.turnLeft();
-        Assertions.assertEquals(Drone.Direction.W, testDrone.getDirection(), "Direction after sequential turns");
+        Assertions.assertEquals(Drone.Direction.W, testDrone.getDirection());
     }
 
     @Test

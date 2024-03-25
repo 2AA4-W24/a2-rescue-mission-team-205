@@ -39,4 +39,8 @@ public class CreekLocations {
         return identifiers;
     }
 
+    public int numberOfCreeks() {
+        return creeks.size();
+    }
+
 }
