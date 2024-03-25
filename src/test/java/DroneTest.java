@@ -9,19 +9,42 @@ import org.junit.jupiter.api.Assertions;
 
 class DroneTest {
 
-    private Drone testDrone;
-
-    private static final String s = "{\"heading\":\"E\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+    private Drone testDrone;;
 
     private Information info;
 
     @BeforeEach
     void setUp() {
         info = new UsingJSON();
-        info.results(s);
+        String east = "{\"heading\":\"E\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+        info.results(east);
         Point point = new Point(0,0);
         testDrone = new Drone(info, point);
         testDrone.initialize();
+    }
+
+    @Test
+    void westStart(){
+        String west = "{\"heading\":\"W\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+        info.results(west);
+        testDrone.initialize();
+        Assertions.assertEquals(Drone.Direction.W, testDrone.getDirection());
+    }
+
+    @Test
+    void northStart(){
+        String north = "{\"heading\":\"N\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+        info.results(north);
+        testDrone.initialize();
+        Assertions.assertEquals(Drone.Direction.N, testDrone.getDirection());
+    }
+
+    @Test
+    void southStart(){
+        String south = "{\"heading\":\"S\",\"men\":5,\"contracts\":[{\"amount\":1000,\"resource\":\"WOOD\"}],\"budget\":7000}\n";
+        info.results(south);
+        testDrone.initialize();
+        Assertions.assertEquals(Drone.Direction.S, testDrone.getDirection());
     }
 
 
